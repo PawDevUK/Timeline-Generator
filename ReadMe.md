@@ -2,6 +2,21 @@ Time Line Generator
 
 It is package to allow track the changes of selected repositories with use of git changes made by the user. TLG reads what is done in the selected repositories and based on changes, updates, insertions, deletetions generates summary of the work done during the day and then uploads it to the server which then saves it in the DataBase.
 
+## 📚 Documentation
+
+Comprehensive documentation has been created for this project:
+
+- **[SUMMARY.md](SUMMARY.md)** - Start here! Executive summary with recommendations and quick start guide
+- **[WORK_REPORT.md](WORK_REPORT.md)** - Detailed project status, completed work, and remaining tasks
+- **[IMPLEMENTATION_IDEAS.md](IMPLEMENTATION_IDEAS.md)** - Complete implementation guide with architecture options and code examples
+- **[SETUP.md](SETUP.md)** - Step-by-step setup instructions and troubleshooting guide
+
+### Quick Links
+- Want to understand the project? → Read [SUMMARY.md](SUMMARY.md)
+- Ready to build? → Follow [IMPLEMENTATION_IDEAS.md](IMPLEMENTATION_IDEAS.md)
+- Need to set up? → Use [SETUP.md](SETUP.md)
+- Check progress? → See [WORK_REPORT.md](WORK_REPORT.md)
+
 ToDo
 
 **Phase 1: Planning & Decisions**
