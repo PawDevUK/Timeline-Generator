@@ -4,12 +4,19 @@ It is package to allow track the changes of selected repositories with use of gi
 
 ToDo
 
+**Phase 1: Planning & Decisions**
 - [ ] Find good name for this package.
-- [ ] Create article object structure with all keys which will be used to generate the articles.
-- [ ] Create MongoDB schema.
-- [ ] Create server route to process recived article e.g save in DataBase.
-- [ ] Create steps to generate an article.
 - [ ] Think what stack need to be used.
-- [ ] Decide which approach will be used to run the app. Not sure if it will be run locally or it will be run on GitHub actions.
-- [ ] Create separate project which will be independent repository.
 - [ ] Decide if the chatGPT API will be used to generate the articles or if locally run LLM will be used.
+- [ ] Decide which approach will be used to run the app. Not sure if it will be run locally or it will be run on GitHub actions.
+
+**Phase 2: Project Setup**
+- [ ] Create separate project which will be independent repository.
+
+**Phase 3: Data Structure Design**
+- [ ] Create article object structure with all keys which will be used to generate the articles.
+- [ ] Create steps to generate an article.
+
+**Phase 4: Backend Development**
+- [ ] Create MongoDB schema.
+- [ ] Create server route to process received article e.g save in DataBase.
