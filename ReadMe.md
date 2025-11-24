@@ -19,4 +19,4 @@ ToDo
 
 **Phase 4: Backend Development**
 - [ ] Create MongoDB schema.
-- [ ] Create server route to process recived article e.g save in DataBase.
+- [ ] Create server route to process received article e.g save in DataBase.
