@@ -1,29 +1,41 @@
-type UpdateItem = { period: string | null; description: string };
-type Article = { title: string; date: string; updates: UpdateItem[] };
+import { Article } from './article.type';
+import { GitCommit, getGitHubCommits, fetchMultipleRepos, parseGitHubUrl, RepoConfig } from './API/githubFetcher';
 
-export async function fetchTimeline() {
-	const res = await fetch('/api/timeline');
-	if (!res.ok) throw new Error('Failed to fetch timeline');
-	const payload = await res.json();
-	return payload.data as Article[];
-}
+/**
+ * Get git changes from multiple remote repositories
+ * @param repoUrls - Array of GitHub repository URLs or owner/repo strings
+ * @param since - Date string (ISO format or relative like '2025-11-25')
+ * @param token - GitHub personal access token for authentication
+ * @param author - Optional: filter by GitHub username
+ * @returns Map of repository names to their commits
+ */
+export const getGitChanges = async (repoUrls: string[], since: string, token: string, author?: string): Promise<Map<string, GitCommit[]>> => {
+	return fetchMultipleRepos(repoUrls, since, token, author);
+};
 
-export async function postTimelineEntry(entry: Article) {
-	const res = await fetch('/api/timeline', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(entry),
-	});
+/**
+ * Generate a summary of git changes
+ * @param commits - Array of commits to summarize
+ * @returns Summary string
+ */
+export const generateCommitSummary = (commits: GitCommit[]): string => {
+	const totalInsertions = commits.reduce((sum, c) => sum + c.insertions, 0);
+	const totalDeletions = commits.reduce((sum, c) => sum + c.deletions, 0);
+	const totalFiles = new Set(commits.flatMap((c) => c.files)).size;
 
-	if (!res.ok) {
-		const err = await res.json().catch(() => ({}));
-		throw new Error(err?.error || 'Failed to post timeline entry');
-	}
+	const summary = `
+Total commits: ${commits.length}
+Total files changed: ${totalFiles}
+Total insertions: ${totalInsertions}
+Total deletions: ${totalDeletions}
 
-	const payload = await res.json();
-	return payload.data as Article;
-}
+Commits:
+${commits.map((c) => `- ${c.message} (${c.date.toLocaleString()})`).join('\n')}
+	`.trim();
 
-// Usage (example):
-// import { postTimelineEntry } from 'lib/timelineClient';
-// await postTimelineEntry({ title: 'My update', date: '20/11/25', updates: [{ period: 'Morning', description: 'Did X' }] });
+	return summary;
+};
+
+console.log(getGitChanges('https://github.com/PawDevUK/Portfolio-react.git', '24/11/25', 'null'));
+
+export { GitCommit, RepoConfig, getGitHubCommits, parseGitHubUrl };
