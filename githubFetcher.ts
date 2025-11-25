@@ -171,12 +171,7 @@ export const getGitHubCommits = async (config: RepoConfig, since: string, author
  * @param author - Optional: filter by GitHub username
  * @returns Map of repository names to their commits
  */
-export const fetchMultipleRepos = async (
-	repoUrls: string[],
-	since: string,
-	token: string,
-	author?: string
-): Promise<Map<string, GitCommit[]>> => {
+export const fetchMultipleRepos = async (repoUrls: string[], since: string, token: string, author?: string): Promise<Map<string, GitCommit[]>> => {
 	const changes = new Map<string, GitCommit[]>();
 
 	// Process repositories in parallel
