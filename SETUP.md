@@ -1,16 +1,20 @@
-# TLG Setup Guide
+# Time Line Generator (TLG) - Setup Guide
 
-Complete guide to setting up and using the Time Line Generator.
+Complete guide to setting up and using the **Time Line Generator** as a Next.js application.
+
+## Overview
+
+**Time Line Generator** is a Next.js application that automatically tracks your repository changes and generates timeline articles. This guide will help you set up the project for development and deployment.
 
 ## Prerequisites
 
 - Node.js 20+ installed
 - Git installed
-- GitHub account (for Actions) OR local machine for cron
-- OpenAI API key (or local LLM setup)
-- MongoDB database (Atlas free tier recommended)
+- MongoDB database (MongoDB Atlas free tier recommended)
+- OpenAI API key (for LLM-powered article generation)
+- npm or pnpm package manager
 
-## Quick Start
+## Quick Start for Next.js
 
 ### 1. Install Dependencies
 
@@ -23,34 +27,107 @@ npm install
 Copy the example environment file:
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
-Edit `.env` with your configuration:
+Edit `.env.local` with your configuration:
 
 ```bash
-# Repository paths (absolute paths, comma-separated)
-REPOS=/home/user/projects/repo1,/home/user/projects/repo2
+# Git Configuration
+REPOS=/path/to/repo1,/path/to/repo2
+GIT_AUTHOR=Your Name
 
-# OpenAI API key
-OPENAI_API_KEY=sk-your-key-here
+# LLM Configuration
+OPENAI_API_KEY=sk-your-api-key-here
+LLM_MODEL=gpt-4-turbo-preview
 
-# Backend API endpoint
-API_ENDPOINT=https://your-backend-api.com
+# Database Configuration
+MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/tlg
+
+# API Configuration (for external integrations)
+API_ENDPOINT=https://your-api.com
 API_KEY=your-api-key
 ```
 
-### 3. Test Locally
+### 3. Start Development Server
 
-Run article generation manually:
+```bash
+npm run dev
+```
 
+The application will be available at `http://localhost:3000`.
+
+### 4. Build for Production
+
+```bash
+npm run build
+npm start
+```
+
+## Deployment Options for Next.js
+
+### Option A: Vercel (Recommended)
+
+Vercel is the easiest way to deploy Next.js applications:
+
+1. **Push code to GitHub**
+2. **Connect repository to Vercel** at [vercel.com](https://vercel.com)
+3. **Add environment variables** in Vercel dashboard:
+   - `OPENAI_API_KEY`: Your OpenAI API key
+   - `MONGODB_URI`: Your MongoDB connection string
+   - `REPOS`: Repository paths
+   - `GIT_AUTHOR`: (Optional) Your git name
+4. **Deploy** - Vercel will automatically build and deploy
+
+```bash
+# Build locally to test
+npm run build
+```
+
+### Option B: Self-Hosted
+
+1. **Build the application**:
+```bash
+npm run build
+```
+
+2. **Start production server**:
 ```bash
 npm start
 ```
 
-## Setup Options
+3. **Set up reverse proxy** (nginx/Apache) to forward traffic to port 3000
 
-### Option A: GitHub Actions (Recommended)
+### Option C: Docker Deployment
+
+Create a `Dockerfile`:
+
+```dockerfile
+FROM node:20-alpine
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+Build and run:
+```bash
+docker build -t tlg-nextjs .
+docker run -p 3000:3000 --env-file .env.local tlg-nextjs
+```
+
+## Alternative Deployment: GitHub Actions
+
+For automated background processing without a web interface, you can use GitHub Actions:
+
+### Setup GitHub Actions
+
+### Setup GitHub Actions
 
 1. **Add Repository Secrets** (Settings → Secrets and variables → Actions):
    - `OPENAI_API_KEY`: Your OpenAI API key
@@ -68,7 +145,9 @@ npm start
    - Daily at 11 PM UTC
    - Manually from Actions tab
 
-### Option B: Local Cron
+Note: GitHub Actions is provided as an alternative approach for background processing. The primary deployment method is Next.js.
+
+### Option D: Local Cron (Alternative)
 
 1. **Create run script**:
 
@@ -205,11 +284,11 @@ npm run dev
 
 ## Next Steps
 
-1. **Implement Core Modules**: See IMPLEMENTATION_IDEAS.md for detailed code examples
-2. **Set Up Backend**: Create Express server with MongoDB
-3. **Test End-to-End**: Run full workflow with real data
-4. **Deploy Backend**: Deploy to Vercel, Railway, or similar
-5. **Enable Automation**: Set up GitHub Actions or cron
+1. **Complete Next.js Setup**: Follow [RUNNING_AS_NEXTJS.md](RUNNING_AS_NEXTJS.md) for detailed Next.js implementation
+2. **Implement Core Modules**: See [IMPLEMENTATION_IDEAS.md](docs/IMPLEMENTATION_IDEAS.md) for detailed code examples
+3. **Set Up API Routes**: Create Next.js API routes for timeline CRUD operations
+4. **Test End-to-End**: Run full workflow with real data
+5. **Deploy to Vercel**: Deploy your Next.js app for production use
 6. **Monitor**: Add logging and error alerting
 
 ## Cost Estimation

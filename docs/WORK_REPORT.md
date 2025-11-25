@@ -3,7 +3,8 @@
 ## Executive Summary
 
 **Project Name:** Time Line Generator (TLG)  
-**Purpose:** Automated tracking and article generation system for GitHub repository changes  
+**Purpose:** Next.js application for automated tracking and article generation from GitHub repository changes  
+**Architecture:** Next.js with App Router, MongoDB, and OpenAI integration  
 **Current Status:** Early planning and prototyping phase  
 **Progress:** ~20% complete
 
@@ -11,15 +12,17 @@
 
 ## Project Overview
 
-TLG is a package designed to track changes in selected GitHub repositories and automatically generate comprehensive summaries of work done. The system reads git changes (updates, insertions, deletions) and creates daily work summaries that can be uploaded to a server and stored in a database.
+**Time Line Generator** is a Next.js application designed to track changes in selected GitHub repositories and automatically generate comprehensive summaries of work done. The system reads git changes (updates, insertions, deletions) and creates daily work summaries through an interactive web interface. Articles are stored in MongoDB and displayed via a modern React-based timeline UI.
 
 ### Core Value Proposition
 
+- **Next.js Web Application**: Full-featured web interface with server-side rendering
 - **Automated Work Documentation**: Eliminates manual work logging
 - **Multi-Repository Tracking**: Monitors multiple projects simultaneously
-- **AI-Enhanced Summaries**: Generates human-readable articles from git diffs
-- **Centralized Database**: Stores all work history for easy retrieval and analysis
-- **Portfolio Integration**: Can be displayed on personal portfolio websites
+- **AI-Enhanced Summaries**: Generates human-readable articles from git diffs using OpenAI
+- **Centralized Database**: MongoDB storage for all work history
+- **Portfolio Integration**: Beautiful timeline display for personal portfolio websites
+- **REST API**: Built-in API routes for external integrations
 
 ---
 

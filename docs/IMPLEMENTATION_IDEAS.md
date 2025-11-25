@@ -1,4 +1,4 @@
-# TLG Implementation Ideas & Approaches
+# Time Line Generator (TLG) - Implementation Ideas & Approaches
 
 ## Table of Contents
 1. [Architecture Approaches](#architecture-approaches)
@@ -14,7 +14,36 @@
 
 ## Architecture Approaches
 
-### Option 1: GitHub Actions-Based (Recommended for MVP)
+### Option 1: Next.js Application (PRIMARY - Recommended)
+
+**Architecture Flow**:
+```
+User Interface → Next.js App Router → API Routes → Git Parser → OpenAI LLM → MongoDB → Timeline Display
+```
+
+**Pros**:
+- ✅ Full-featured web interface with React
+- ✅ Built-in API routes (no separate backend needed)
+- ✅ Server-side rendering for SEO
+- ✅ Easy deployment to Vercel (one-click)
+- ✅ TypeScript support out of the box
+- ✅ Interactive timeline display
+- ✅ Real-time article generation
+- ✅ User authentication support (NextAuth.js)
+- ✅ Modern developer experience
+
+**Cons**:
+- ❌ Requires hosting (but Vercel free tier is generous)
+- ❌ More initial setup than simple scripts
+- ❌ Needs database connection management
+
+**Best For**: Production applications, portfolio integration, team collaboration, interactive features
+
+**This is the PRIMARY approach for Time Line Generator.**
+
+---
+
+### Option 2: GitHub Actions-Based (Alternative)
 
 **Architecture Flow**:
 ```
@@ -29,16 +58,17 @@ Git Push → GitHub Actions Trigger → Parse Commits → Call LLM → Generate 
 - ✅ Easy to set up and maintain
 
 **Cons**:
+- ❌ No web interface
 - ❌ 6-hour maximum execution time
 - ❌ Limited to GitHub-hosted repos
 - ❌ Secrets management required for API keys
 - ❌ Can be costly for very active repos
 
-**Best For**: MVP, individual developers, small teams
+**Best For**: Background processing, automated summaries without UI
 
 ---
 
-### Option 2: Local Scheduled Task
+### Option 3: Local Scheduled Task (Alternative)
 
 **Architecture Flow**:
 ```

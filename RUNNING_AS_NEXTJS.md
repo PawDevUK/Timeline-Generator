@@ -1,10 +1,10 @@
-# Running TLG as a Next.js App with Front-End
+# Running Time Line Generator as a Next.js Application
 
-This document describes how to run the Time Line Generator (TLG) as a Next.js application with a front-end interface.
+This document describes how to run **Time Line Generator (TLG)** as a Next.js application - the primary and recommended approach for this project.
 
 ## Overview
 
-Running TLG as a Next.js application provides a full-featured web interface for:
+**Time Line Generator** is designed as a Next.js application that provides a full-featured web interface for:
 - Viewing generated timeline articles
 - Manually triggering article generation
 - Managing repository configurations
@@ -215,35 +215,57 @@ Use services like cron-job.org to trigger the generation endpoint:
 - Schedule: Daily at 11 PM
 - Method: POST
 
-## Advantages of Next.js Approach
+## Why Next.js is the Primary Approach
 
 | Advantage | Description |
 |-----------|-------------|
 | **Interactive UI** | Full web interface for viewing and managing timeline |
 | **Real-time Updates** | Instant feedback when generating articles |
-| **API Integration** | RESTful API for external integrations |
-| **Easy Deployment** | One-click deployment to Vercel |
+| **Built-in API** | REST API routes included (no separate backend needed) |
+| **Easy Deployment** | One-click deployment to Vercel with free tier |
 | **SEO Friendly** | Server-side rendering for public timeline pages |
-| **Authentication** | Easy to add user authentication (NextAuth.js) |
+| **Modern Stack** | React, TypeScript, and Next.js App Router |
+| **Authentication Ready** | Easy to add user authentication (NextAuth.js) |
+| **Scalable** | Handles growth from personal to team use |
 
-## Disadvantages
+## Comparison with Alternatives
 
-| Disadvantage | Description |
-|--------------|-------------|
-| **Infrastructure** | Requires hosting and database |
-| **Complexity** | More setup than GitHub Actions |
-| **Cost** | Potential hosting costs (though Vercel free tier is generous) |
-| **Maintenance** | Requires ongoing server maintenance |
+## Comparison with Alternatives
 
-## Best Use Cases
+### vs. GitHub Actions
+| Feature | Next.js (Primary) | GitHub Actions |
+|---------|------------------|----------------|
+| Web Interface | ✅ Yes | ❌ No |
+| Manual Control | ✅ Yes | ⚠️ Limited |
+| Real-time Preview | ✅ Yes | ❌ No |
+| Infrastructure | Vercel (free) | GitHub (free) |
+| Setup Complexity | Medium | Low |
+| Best For | Full application | Background jobs |
 
-The Next.js approach is best when you need:
-- A public-facing timeline website
-- Manual control over article generation
-- Integration with other web applications
-- User authentication and access control
-- Custom UI/UX for timeline display
-- Multiple users or team collaboration
+### vs. Local Scripts
+| Feature | Next.js (Primary) | Local Scripts |
+|---------|------------------|---------------|
+| Accessibility | ✅ Anywhere | ❌ Local only |
+| UI | ✅ Modern web app | ❌ CLI only |
+| Multi-user | ✅ Supported | ❌ Single user |
+| Deployment | ✅ Cloud-based | ❌ Manual |
+| Maintenance | ✅ Easy updates | ⚠️ Manual |
+
+## When to Use Next.js (Primary Approach)
+
+## When to Use Next.js (Primary Approach)
+
+Next.js is the recommended approach for Time Line Generator and is ideal when you need:
+- ✅ A professional web interface for timeline display
+- ✅ Interactive control over article generation
+- ✅ Portfolio integration with beautiful UI
+- ✅ User authentication and access control
+- ✅ Custom UI/UX for timeline display
+- ✅ API endpoints for external integrations
+- ✅ Multiple users or team collaboration
+- ✅ Modern development experience with React and TypeScript
+
+**Recommendation**: Use Next.js as your primary deployment unless you specifically only need background processing without any user interface.
 
 ## Troubleshooting
 
@@ -283,4 +305,14 @@ npm run lint
 
 ## Summary
 
-Running TLG as a Next.js application provides a comprehensive web-based solution for timeline generation and display. While it requires more initial setup than the GitHub Actions approach, it offers greater flexibility, a better user experience, and easier integration with other web-based tools and services.
+**Time Line Generator** is designed as a Next.js application providing a comprehensive web-based solution for timeline generation and display. With its interactive interface, built-in API routes, and easy deployment to Vercel, Next.js offers the best balance of features, usability, and maintainability for this project.
+
+### Key Benefits:
+- 🚀 **Modern Stack**: React, TypeScript, Next.js App Router
+- 🎨 **Beautiful UI**: Interactive timeline with responsive design
+- 🔌 **Built-in API**: No separate backend server needed
+- ☁️ **Easy Deploy**: One-click deployment to Vercel
+- 🔒 **Secure**: Easy authentication and authorization
+- 📈 **Scalable**: Grows with your needs
+
+Start building with Next.js today to create a professional, full-featured timeline application!
