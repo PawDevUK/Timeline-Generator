@@ -11,11 +11,20 @@ Comprehensive documentation has been created for this project:
 - **[IMPLEMENTATION_IDEAS.md](IMPLEMENTATION_IDEAS.md)** - Complete implementation guide with architecture options and code examples
 - **[SETUP.md](SETUP.md)** - Step-by-step setup instructions and troubleshooting guide
 
+### Running the App
+
+Two strategies are available for running TLG:
+
+- **[RUNNING_AS_NEXTJS.md](RUNNING_AS_NEXTJS.md)** - Run as a Next.js app with front-end interface
+- **[RUNNING_WITH_GITHUB_ACTIONS.md](RUNNING_WITH_GITHUB_ACTIONS.md)** - Run automated via GitHub Actions
+
 ### Quick Links
 - Want to understand the project? → Read [SUMMARY.md](SUMMARY.md)
 - Ready to build? → Follow [IMPLEMENTATION_IDEAS.md](IMPLEMENTATION_IDEAS.md)
 - Need to set up? → Use [SETUP.md](SETUP.md)
 - Check progress? → See [WORK_REPORT.md](WORK_REPORT.md)
+- Run with Next.js? → See [RUNNING_AS_NEXTJS.md](RUNNING_AS_NEXTJS.md)
+- Run with GitHub Actions? → See [RUNNING_WITH_GITHUB_ACTIONS.md](RUNNING_WITH_GITHUB_ACTIONS.md)
 
 ToDo
 
