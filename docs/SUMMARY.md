@@ -1,8 +1,17 @@
-# TLG Project - Executive Summary
+# Time Line Generator (TLG) - Executive Summary
 
 ## 📋 Documents Overview
 
-This repository now contains comprehensive documentation for the Time Line Generator (TLG) project:
+This repository contains comprehensive documentation for the **Time Line Generator (TLG)** project - a Next.js application that automatically tracks and generates timeline articles from git repository changes.
+
+### About Time Line Generator
+
+**Time Line Generator** is a Next.js application designed to:
+- Automatically track changes in your git repositories
+- Generate AI-powered summaries of your work
+- Display timelines through an interactive web interface
+- Provide REST API for external integrations
+- Store work history in MongoDB for portfolio display
 
 ### 1. **WORK_REPORT.md** - Current Status & Analysis
 
@@ -94,13 +103,20 @@ This repository now contains comprehensive documentation for the Time Line Gener
 
 ### Best Architecture for Your Use Case
 
-**GitHub Actions** is recommended because:
+**Next.js** is the primary architecture because:
 
-- ✅ Free for your use case
-- ✅ Automatic triggering on git push
-- ✅ No server infrastructure needed
-- ✅ Easy secrets management
-- ✅ Native GitHub integration
+- ✅ Full-featured web interface
+- ✅ Interactive timeline display
+- ✅ Built-in API routes (no separate backend needed)
+- ✅ Easy deployment to Vercel (one-click)
+- ✅ Server-side rendering for SEO
+- ✅ Modern React-based UI
+- ✅ TypeScript support out of the box
+
+**Alternative: GitHub Actions** for background processing only:
+- Use when you don't need a web interface
+- Suitable for automated daily summaries
+- Lower overhead but less flexibility
 
 ### Best LLM Choice
 
@@ -172,14 +188,15 @@ This repository now contains comprehensive documentation for the Time Line Gener
 
 ## 🚀 Implementation Approaches Compared
 
-| Aspect | GitHub Actions | Local Cron | Cloud Service |
-|--------|---------------|------------|---------------|
+| Aspect | Next.js (Primary) | GitHub Actions | Cloud Service |
+|--------|------------------|----------------|---------------|
 | **Setup Complexity** | ⭐⭐ Easy | ⭐⭐⭐ Medium | ⭐⭐⭐⭐ Complex |
-| **Cost** | Free | Free | $$$ |
-| **Scalability** | Good | Limited | Excellent |
+| **Cost** | Free (Vercel) | Free | $$$ |
+| **Scalability** | Excellent | Good | Excellent |
 | **Maintenance** | Low | Medium | Low |
-| **Best For** | Personal/Small | Multi-source | Enterprise |
-| **Our Recommendation** | ✅ **Recommended** | Alternative | Future |
+| **User Interface** | ✅ Yes | ❌ No | ✅ Yes |
+| **Best For** | Full-featured app | Background jobs | Enterprise |
+| **Our Recommendation** | ✅ **PRIMARY** | Alternative | Future |
 
 ---
 
@@ -251,9 +268,9 @@ This repository now contains comprehensive documentation for the Time Line Gener
 ### You Need to Decide
 
 1. **Which Architecture?**
-   - Recommendation: GitHub Actions
-   - Alternative: Local cron
-   - Future: Cloud service
+   - Recommendation: **Next.js** (primary approach)
+   - Alternative: GitHub Actions (for background processing only)
+   - Future: Cloud service for enterprise features
 
 2. **Which LLM Provider?**
    - Recommendation: OpenAI GPT-4 Turbo
@@ -265,8 +282,9 @@ This repository now contains comprehensive documentation for the Time Line Gener
    - Use smart grouping for related repos
 
 4. **Deployment Strategy?**
-   - Recommendation: Vercel (frontend) + Railway (backend)
-   - Alternative: All-in-one (Render, Fly.io)
+   - Recommendation: **Vercel** (for Next.js - easiest and free)
+   - Alternative: Self-hosted with Docker
+   - Alternative: Railway/Render for self-hosting
 
 ---
 
@@ -364,13 +382,14 @@ This project is **well-positioned for success**. You have:
 3. ✅ Complete implementation guide
 4. ✅ Real-world use case
 5. ✅ Proven need (your Portfolio shows the value)
+6. ✅ Modern tech stack (Next.js + MongoDB + OpenAI)
 
-**Recommendation**: Proceed with implementation using GitHub Actions + OpenAI approach. Start with single repository, validate, then expand.
+**Recommendation**: Proceed with implementation using **Next.js** as the primary architecture with OpenAI for LLM. Start with single repository, validate, then expand.
 
 **Estimated Timeline**: 2-3 weeks to MVP, 4-6 weeks to production-ready.
 
-**Expected Outcome**: Automated, professional work timeline that saves time and enhances your portfolio.
+**Expected Outcome**: A full-featured web application with automated timeline generation, interactive display, and professional portfolio integration.
 
 ---
 
-**Ready to build? Start with SETUP.md → Then IMPLEMENTATION_IDEAS.md for code!** 🚀
+**Ready to build? Start with [RUNNING_AS_NEXTJS.md](../RUNNING_AS_NEXTJS.md) → Then [IMPLEMENTATION_IDEAS.md](IMPLEMENTATION_IDEAS.md) for code!** 🚀
