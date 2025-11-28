@@ -1,4 +1,12 @@
-const repos = [
+type Repos = {
+	name: string;
+	description?: string;
+	date: string;
+	iconUrl?: string;
+	importUrl?: string;
+};
+
+const repos: Repos[] = [
 	{
 		name: 'filesconverto',
 		date: 'Nov 25',

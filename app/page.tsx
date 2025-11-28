@@ -3,14 +3,6 @@ import repos from '../articles/repoList';
 // RepoList.tsx
 import React from 'react';
 
-type Repo = {
-	name: string;
-	description?: string;
-	date: string;
-	iconUrl?: string;
-	importUrl?: string;
-};
-
 export default function Home() {
 	return (
 		<div className='py-8 lg:pr-8 flex-1 w-full lg:border-r border-gray-300 self-stretch'>
