@@ -1,13 +1,17 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 import { RepoList } from './repoList.types';
-
+const token = process.env.GITHUB_TOKEN;
 export async function GET(request: Request) {
 	try {
 		const { searchParams } = new URL(request.url);
 		const user = searchParams.get('user');
 
-		const response = await axios.get(`https://api.github.com/users/${user}/repos`);
+		const response = await axios.get(`https://api.github.com/users/${user}/repos`, {
+			headers: {
+				Authorization: token,
+			},
+		});
 		const repos: RepoList = response.data.map((repo: RepoList) => ({
 			id: repo.id,
 			node_id: repo.node_id,
