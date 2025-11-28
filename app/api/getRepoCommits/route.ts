@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
+import { GitHubCommit } from './commits.types';
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
@@ -15,17 +16,6 @@ export async function GET(request: Request) {
 
 	try {
 		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits`);
-		type GitHubCommit = {
-			commit: {
-				title: string;
-				author: {
-					name: string;
-					date: string;
-				};
-				message: string;
-				updates: [period: string, description: string];
-			};
-		};
 
 		const commits = response.data.map((com: GitHubCommit) => ({
 			title: repo,
