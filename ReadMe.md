@@ -42,30 +42,35 @@ See **[RUNNING_AS_NEXTJS.md](RUNNING_AS_NEXTJS.md)** for complete setup instruct
 - Check progress? → See [WORK_REPORT.md](docs/WORK_REPORT.md)
 - Alternative: GitHub Actions? → See [RUNNING_WITH_GITHUB_ACTIONS.md](RUNNING_WITH_GITHUB_ACTIONS.md)
 
-## Development Roadmap
+## ToDo
 
-**Phase 1: Planning & Decisions**
+**Front-end**
+
+- [ ] Add functionality to sort repo list in last_update, created, alphabetical.
+
+**Planning & Decisions**
 
 - [x] Find good name for this package: **Time Line Generator**
 - [x] Decide on stack: **Next.js** with MongoDB and OpenAI
 - [x] Decide on LLM: OpenAI API will be used for article generation
 - [x] Decide on approach: **Next.js application** with web interface
 
-**Phase 2: Project Setup**
+**Project Setup**
 
 - [x] Create separate project which will be independent repository
-- [ ] Set up Next.js project structure with App Router
-- [ ] Configure TypeScript and ESLint
+- [x] Set up Next.js project structure with App Router
+- [x] Configure TypeScript and ESLint
 - [ ] Set up MongoDB connection
 
-**Phase 3: Data Structure Design**
+**Data Structure Design**
 
 - [x] Create article object structure with all keys (see `articles.js`)
 - [ ] Create steps to generate an article
 - [ ] Implement article type definitions in TypeScript
 
-**Phase 4: Backend Development (Next.js API Routes)**
+**Backend Development (Next.js API Routes)**
 
+- [ ] OpenAI API integration.
 - [ ] Create MongoDB schema for articles
 - [ ] Create API routes for article CRUD operations (`/api/timeline`)
 - [ ] Implement git repository parsing logic
