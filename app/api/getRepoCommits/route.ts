@@ -23,16 +23,18 @@ export async function GET(request: Request) {
 					date: string;
 				};
 				message: string;
-				time: string;
-				updates: [Period: string, description: string];
+				updates: [period: string, description: string];
 			};
 		};
 
 		const commits = response.data.map((com: GitHubCommit) => ({
 			title: repo,
-			date: com.commit?.author.date,
 			author: com.commit?.author?.name,
-			message: com.commit?.message,
+			date: com.commit?.author.date,
+			updates: {
+				period: null,
+				description: com.commit?.message,
+			},
 		}));
 
 		return NextResponse.json(commits);
