@@ -15,4 +15,7 @@ export type RepoList = {
 	pushed_at: string;
 	date: string;
 	language: string;
+	TLG: {
+		tracking: boolean;
+	};
 };
