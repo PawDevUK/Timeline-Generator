@@ -17,16 +17,22 @@ export async function GET(request: Request) {
 		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits`);
 		type GitHubCommit = {
 			commit: {
-				message: string;
+				title: string;
 				author: {
 					name: string;
+					date: string;
 				};
+				message: string;
+				time: string;
+				updates: [Period: string, description: string];
 			};
 		};
 
 		const commits = response.data.map((com: GitHubCommit) => ({
-			message: com.commit?.message,
+			title: repo,
+			date: com.commit?.author.date,
 			author: com.commit?.author?.name,
+			message: com.commit?.message,
 		}));
 
 		return NextResponse.json(commits);
