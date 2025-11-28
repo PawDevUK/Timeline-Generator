@@ -1,4 +1,4 @@
-import repos from '../articles/repoList';
+import { format } from 'date-fns';
 
 export default function Home() {
 	return (
@@ -17,7 +17,7 @@ export default function Home() {
 										<div>
 											<span className='font-medium text-lg'>{repo.name}</span>
 											<span className='mx-2 text-gray-400'>·</span>
-											<span className='text-gray-500'>{repo.date}</span>
+											<span className='text-gray-500'>{format(new Date(repo.updated_at), 'dd MMM yy HH:mm')}</span>
 											{repo.description && <div className='text-sm text-gray-400'>{repo.description}</div>}
 										</div>
 									</div>
