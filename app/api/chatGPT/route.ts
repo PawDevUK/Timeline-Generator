@@ -26,8 +26,14 @@ export async function GET(request: Request) {
 			temperature: 0.2,
 		});
 
-		// Return the result as JSON
-		return NextResponse.json({ result: completion.choices[0].message.content });
+		let parsed;
+		const content = completion.choices[0].message.content ?? '';
+		try {
+			parsed = JSON.parse(content);
+		} catch {
+			parsed = { raw: content };
+		}
+		return NextResponse.json(parsed);
 	} catch (error: any) {
 		return NextResponse.json({ error: error.message || 'Unknown error' }, { status: 500 });
 	}
