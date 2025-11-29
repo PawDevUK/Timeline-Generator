@@ -1,6 +1,10 @@
 import { RepoList } from '../types/repoList.types';
-import { format } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import Button from './Button';
+
+function getLastUpdated(repo: RepoList) {
+	return `Updated ${formatDistanceToNow(new Date(repo.updated_at))} ago`;
+}
 
 export default function RepoCard({ repo, addTracking }: { repo: RepoList; addTracking: (repo: RepoList) => void }) {
 	return (
@@ -10,7 +14,7 @@ export default function RepoCard({ repo, addTracking }: { repo: RepoList; addTra
 				<div>
 					<span className='font-medium text-lg text-[#0969da]'>{repo.name}</span>
 					<span className='mx-2 text-gray-400'>·</span>
-					<span className='text-gray-500'>{format(new Date(repo.updated_at), 'dd MMM yy HH:mm')}</span>
+					<span className='text-gray-500 text-sm'>{getLastUpdated(repo)}</span>
 					{/* {repo.description && <div className='text-sm text-gray-400'>{repo.description}</div>} */}
 				</div>
 			</div>
