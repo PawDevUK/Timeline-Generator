@@ -29,6 +29,9 @@ export async function GET(request: Request) {
 			pushed_at: repo.pushed_at,
 			date: repo.date,
 			language: repo.language,
+			TLG: {
+				tracking: false,
+			},
 		}));
 
 		return NextResponse.json(repos);

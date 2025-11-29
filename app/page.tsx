@@ -6,8 +6,9 @@ import { RepoList } from './api/getUserRepoList/repoList.types';
 import { format } from 'date-fns';
 
 export default function Home() {
-	const [repos, setRepos] = useState([]);
+	const [repos, setRepos] = useState<RepoList[]>([]);
 	const [user, setUser] = useState('PawDevUk');
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const repoList = await fetchRepoList(user);
@@ -15,6 +16,16 @@ export default function Home() {
 		};
 		fetchData();
 	}, [user]);
+
+	useEffect(() => {
+		console.log(repos);
+	}, [repos]);
+
+	const addTracking = (repo: RepoList) => {
+		setRepos((prevRepos) =>
+			prevRepos.map((stored_repo) => (stored_repo.id === repo.id ? { ...stored_repo, TLG: { ...stored_repo.TLG, tracking: !stored_repo.TLG.tracking } } : stored_repo))
+		);
+	};
 
 	return (
 		<div className='py-8 lg:pr-8 flex-1 w-full lg:border-r border-gray-300 self-stretch'>
@@ -36,11 +47,10 @@ export default function Home() {
 											{/* {repo.description && <div className='text-sm text-gray-400'>{repo.description}</div>} */}
 										</div>
 									</div>
-									{repo.url && (
-										<a href={repo.url} className='px-3 py-1 bg-gray-900 text-white rounded hover:bg-gray-700 text-sm'>
-											Track
-										</a>
-									)}
+
+									<a onClick={() => addTracking(repo)} className='px-3 py-1 bg-gray-900 text-white rounded hover:bg-gray-700 text-sm'>
+										Track
+									</a>
 								</div>
 							))}
 						</div>
