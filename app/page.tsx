@@ -3,8 +3,7 @@
 import { fetchRepoList } from './lib/api/getReposList';
 import { useEffect, useState } from 'react';
 import { RepoList } from './types/repoList.types';
-import { format } from 'date-fns';
-import Button from './Components/Button';
+import RepoCard from './Components/RepoCard';
 
 export default function Home() {
 	const [repos, setRepos] = useState<RepoList[]>([]);
@@ -38,19 +37,7 @@ export default function Home() {
 					<div className='bg-white rounded-lg shadow p-4 sm:w-[50vw]'>
 						<div className='flex flex-col gap-4'>
 							{repos.map((repo: RepoList) => (
-								<div key={repo.id} className='flex items-center justify-between border-b border-gray-200 pb-4 mb-4 last:border-b-0 last:mb-0'>
-									<div className='flex items-center gap-4'>
-										{/* {repo.iconUrl && <img src={repo.iconUrl} alt={repo.name} className='w-6 h-6 rounded' />} */}
-										<div>
-											<span className='font-medium text-lg'>{repo.name}</span>
-											<span className='mx-2 text-gray-400'>·</span>
-											<span className='text-gray-500'>{format(new Date(repo.updated_at), 'dd MMM yy HH:mm')}</span>
-											{/* {repo.description && <div className='text-sm text-gray-400'>{repo.description}</div>} */}
-										</div>
-									</div>
-
-									<Button addTracking={addTracking} repo={repo}></Button>
-								</div>
+								<RepoCard key={repo.id} repo={repo} addTracking={addTracking}></RepoCard>
 							))}
 						</div>
 						<p className='text-xs text-gray-400 mt-4'>
