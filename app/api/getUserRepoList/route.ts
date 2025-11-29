@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
-import { RepoList } from './repoList.types';
+import { RepoList } from '../../types/repoList.types';
 const token = process.env.GITHUB_TOKEN;
 export async function GET(request: Request) {
 	try {
