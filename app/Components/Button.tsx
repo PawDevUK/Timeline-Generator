@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StyledButton = styled.a<{ tracking?: boolean }>`
 	width: 5rem;
-	padding: 0.5rem 1rem;
+	padding: 0.4rem 1rem;
 	border-radius: 0.375rem;
 	text-align: center;
 	font-size: 0.875rem;
