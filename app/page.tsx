@@ -2,8 +2,9 @@
 'use client';
 import { fetchRepoList } from './lib/api/getReposList';
 import { useEffect, useState } from 'react';
-import { RepoList } from './api/getUserRepoList/repoList.types';
+import { RepoList } from './types/repoList.types';
 import { format } from 'date-fns';
+import Button from './Components/Button';
 
 export default function Home() {
 	const [repos, setRepos] = useState<RepoList[]>([]);
@@ -17,9 +18,9 @@ export default function Home() {
 		fetchData();
 	}, [user]);
 
-	useEffect(() => {
-		console.log(repos);
-	}, [repos]);
+	// useEffect(() => {
+	// 	console.log(repos);
+	// }, [repos]);
 
 	const addTracking = (repo: RepoList) => {
 		setRepos((prevRepos) =>
@@ -48,9 +49,7 @@ export default function Home() {
 										</div>
 									</div>
 
-									<a onClick={() => addTracking(repo)} className='px-3 py-1 bg-gray-900 text-white rounded hover:bg-gray-700 text-sm'>
-										Track
-									</a>
+									<Button addTracking={addTracking} repo={repo}></Button>
 								</div>
 							))}
 						</div>
