@@ -146,7 +146,7 @@ export default function RootLayout({
 					)}
 
 					{/* Main content */}
-					<main className=''>{children}</main>
+					<main className='w-full'>{children}</main>
 				</div>
 			</body>
 		</html>
