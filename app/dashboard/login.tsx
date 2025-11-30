@@ -1,7 +1,7 @@
 export default function Login() {
 	return (
 		<div className='flex min-h-screen items-center justify-center bg-gray-50'>
-			<div className='flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden'>
+			<div className='flex  min-h-screen flex-col md:flex-row w-full max-w-4xl bg-white overflow-hidden'>
 				<div className='flex flex-col justify-center p-8 md:w-1/2'>
 					<img src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600' alt='Your Company' className='h-10 w-auto mb-6 mx-auto' />
 					<h2 className='text-2xl font-bold text-gray-900 mb-2 text-center'>Sign in to your account</h2>
@@ -22,7 +22,7 @@ export default function Login() {
 								type='email'
 								autoComplete='email'
 								required
-								className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
+								className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 h-11 px-4'
 							/>
 						</div>
 						<div>
@@ -35,7 +35,7 @@ export default function Login() {
 								type='password'
 								autoComplete='current-password'
 								required
-								className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'
+								className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 h-11 px-4'
 							/>
 						</div>
 						<div className='flex items-center justify-between'>
@@ -53,7 +53,7 @@ export default function Login() {
 						</div>
 						<button
 							type='submit'
-							className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700'>
+							className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 h-11'>
 							Sign in
 						</button>
 					</form>
