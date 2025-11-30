@@ -41,7 +41,7 @@ export default function Home() {
 							))}
 						</div>
 						<p className='text-xs text-gray-400 mt-4'>
-							Missing Git repository? <span className='text-blue-500 underline cursor-pointer'>Adjust GitHub App Permissions →</span>
+							{/* Missing Git repository? <span className='text-blue-500 underline cursor-pointer'>Adjust GitHub App Permissions →</span> */}
 						</p>
 					</div>
 				</div>
