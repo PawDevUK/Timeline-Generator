@@ -22,7 +22,6 @@ export async function GET(request: Request) {
 		if (token) headers.Authorization = token;
 
 		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits?since=${since}&until=${until}`, { headers });
-		console.log(response);
 		const commits = response.data.map((com: GitHubCommit) => ({
 			title: repo,
 			author: com.commit?.author?.name,
