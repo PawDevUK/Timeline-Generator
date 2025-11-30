@@ -64,6 +64,8 @@ export async function GET(request: Request) {
 		const { searchParams } = new URL(request.url);
 		const user = searchParams.get('user');
 		const repo = searchParams.get('repo');
+		const since = searchParams.get('since');
+		const until = searchParams.get('until');
 		const tone = searchParams.get('tone') || 'professional';
 		const length = searchParams.get('length') || 'short';
 
@@ -76,21 +78,25 @@ export async function GET(request: Request) {
 
 		const origin = new URL(request.url).origin;
 
-		// Only process a single repo
-		const now = new Date();
+		// Use the local getRepoCommits endpoint and filter by the requested date
 		const allCommits: Array<{ repo: string; author: string | null; date: string; message: string }> = [];
-		const commits = await fetchJson(`${origin}/api/getRepoCommits?user=${user}&repo=${repo}`);
+		const commits = await fetchJson(`${origin}/api/getRepoCommits?user=${user}&repo=${repo}${since ? `&since=${since}` : ''}${until ? `&until=${until}` : ''}`);
+		let filterDate: Date | null = null;
+		if (since) {
+			// Use 'since' as the filter date (YYYY-MM-DD or ISO)
+			filterDate = new Date(since);
+		}
 		if (Array.isArray(commits)) {
 			for (const c of commits) {
 				if (!c?.date) continue;
-				if (isSameDay(c.date, now)) {
-					allCommits.push({ repo: c.title || repo, author: c.author || null, date: c.date, message: c.updates?.description || '' });
+				if (!filterDate || isSameDay(c.date, filterDate)) {
+					allCommits.push({ repo: c.title || repo, author: c.author || null, date: c.date, message: c.description || '' });
 				}
 			}
 		}
 
 		if (allCommits.length === 0) {
-			return NextResponse.json({ summary: 'No commits found for today.' });
+			return NextResponse.json({ summary: 'No commits found for selected date.' });
 		}
 
 		// Build bullets
@@ -98,7 +104,16 @@ export async function GET(request: Request) {
 
 		const titleHint = searchParams.get('title') || repo;
 		const dateParam = searchParams.get('date') || '';
-		const dateStr = dateParam || `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getFullYear()).slice(2)}`;
+		// Use filterDate if available, otherwise fallback to today
+		let dateObj: Date;
+		if (dateParam) {
+			dateObj = new Date(dateParam);
+		} else if (since) {
+			dateObj = new Date(since);
+		} else {
+			dateObj = new Date();
+		}
+		const dateStr = `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${String(dateObj.getFullYear()).slice(2)}`;
 
 		const completion = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
