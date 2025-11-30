@@ -6,6 +6,8 @@ export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
 	const user = searchParams.get('user');
 	const repo = searchParams.get('repo');
+	const since = searchParams.get('since');
+	const until = searchParams.get('until');
 
 	if (!user) {
 		return NextResponse.json({ error: 'No user selected.' }, { status: 400 });
@@ -19,23 +21,23 @@ export async function GET(request: Request) {
 		const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
 		if (token) headers.Authorization = token;
 
-		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits`, { headers });
-
+		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits?since=${since}&until=${until}`, { headers });
+		console.log(response);
 		const commits = response.data.map((com: GitHubCommit) => ({
 			title: repo,
 			author: com.commit?.author?.name,
 			date: com.commit?.author.date,
-			updates: {
-				period: null,
-				description: com.commit?.message,
-			},
+			description: com.commit?.message,
 		}));
 
 		return NextResponse.json(commits);
 	} catch (error: unknown) {
 		if (axios.isAxiosError(error) && error.response) {
 			const status = error.response.status || 500;
-			const message = (error.response.data as any)?.message || error.message || 'GitHub API error';
+			interface GitHubErrorResponse {
+				message?: string;
+			}
+			const message = (error.response.data as GitHubErrorResponse)?.message || error.message || 'GitHub API error';
 			console.error(`Error fetching commits for ${user}/${repo}:`, status, message);
 			return NextResponse.json({ error: message }, { status });
 		}
