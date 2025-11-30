@@ -31,7 +31,7 @@ export default function Home() {
 		<div className='py-8 lg:pr-8 flex-1 w-full lg:border-r border-gray-300 self-stretch'>
 			<div className='flex flex-col  gap-6'>
 				<div className='w-full text-center md:text-left md:pl-[100px]'>
-					<h3 className='text-2xl font-semibold'>List of Repositories.</h3>
+					<h3 className='text-2xl font-bold text-gray-900 mb-2 text-center'>List of Repositories.</h3>
 				</div>
 				<div className='flex justify-center pt-2'>
 					<div className='bg-white rounded-lg shadow p-4 sm:w-[50vw]'>
