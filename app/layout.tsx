@@ -146,7 +146,7 @@ export default function RootLayout({
 					)}
 
 					{/* Main content */}
-					<main className='flex-1 p-6'>{children}</main>
+					<main className=''>{children}</main>
 				</div>
 			</body>
 		</html>
