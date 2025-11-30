@@ -1,3 +1,4 @@
+'use client';
 import React, { useRef } from 'react';
 import { articles } from './articles';
 import Header from '../Components/common/Header';
