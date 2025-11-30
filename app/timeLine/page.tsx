@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { articles } from './articles';
-import Header from '../../Components/common/Header';
+import Header from '../Components/common/Header';
 
 const TimelineList = () => {
 	const scrollRef = useRef(null);
