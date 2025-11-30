@@ -80,6 +80,15 @@ node dist/timelineClient.js
 ### Front-end
 
 - [ ] Add functionality to sort repo list by last_update, created, alphabetical
+- [ ] Add Time Line component which will be rendering the articles.
+- [ ] Set the chatGPT to generate the article.
+
+### Data & Backend
+
+- [x] Article data shape exists (see `article.type.ts`)
+- [ ] Create steps to generate an article and wire them into API routes
+- [ ] Add OpenAI integration for automatic article generation (optional)
+- [ ] Set the chatGPT to generate the article.
 
 ### Planning & Decisions
 
@@ -91,12 +100,6 @@ node dist/timelineClient.js
 - [x] Initialize repository and TypeScript
 - [x] Add utility scripts for fetching commits from GitHub (`timelineClient.ts`, `githubFetcher.ts`)
 - [ ] Set up MongoDB connection and deployable back-end
-
-### Data & Backend
-
-- [x] Article data shape exists (see `article.type.ts`)
-- [ ] Create steps to generate an article and wire them into API routes
-- [ ] Add OpenAI integration for automatic article generation (optional)
 
 ---
 
