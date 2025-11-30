@@ -1,40 +1,138 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { systemPrompt, getUserPrompt } from './prompts';
 
-const openai = new OpenAI({
-	apiKey: process.env.CHATGPT_API || '',
-});
+const openai = new OpenAI({ apiKey: process.env.CHATGPT_API || '' });
+
+async function fetchJson(url: string) {
+	const res = await fetch(url);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch ${url}: ${res.statusText}`);
+	}
+	return res.json();
+}
+
+function isSameDay(dateStr: string, now = new Date()) {
+	const d = new Date(dateStr);
+	return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
+}
+
+function extractJsonFromCodeFence(text: string) {
+	const fenceRegex = /```(?:json)?\s*([\s\S]*?)```/i;
+	const match = text.match(fenceRegex);
+	return match ? match[1].trim() : null;
+}
+
+function findBalancedBracesJSON(text: string) {
+	const firstIndex = text.indexOf('{');
+	if (firstIndex === -1) return null;
+	let depth = 0;
+	for (let i = firstIndex; i < text.length; i++) {
+		const ch = text[i];
+		if (ch === '{') depth++;
+		if (ch === '}') depth--;
+		if (depth === 0) {
+			return text.substring(firstIndex, i + 1);
+		}
+	}
+	return null;
+}
+
+function tryParseJSON(c: string): unknown | null {
+	if (!c) return null;
+	try {
+		return JSON.parse(c);
+	} catch {
+		const fenced = extractJsonFromCodeFence(c);
+		if (fenced) {
+			try {
+				return JSON.parse(fenced);
+			} catch {}
+		}
+		const sub = findBalancedBracesJSON(c);
+		if (sub) {
+			try {
+				return JSON.parse(sub);
+			} catch {}
+		}
+		return null;
+	}
+}
 
 export async function GET(request: Request) {
 	try {
-		// Example: hardcoded prompt and bullets for demo
-		const systemPrompt = 'You are a concise technical writer. Output only valid JSON.';
-		const userPrompt = 'Please write a short timeline article.';
-		const bullets = ['Fix navbar mobile routing issue', 'Add metrics endpoint at api/metrics.js', 'CI build pipeline optimised; ~30% faster'];
-		const date = '2025-11-29';
-		const tone = 'professional';
-		const length = 'short';
+		const { searchParams } = new URL(request.url);
+		const user = searchParams.get('user');
+		const repo = searchParams.get('repo');
+		const tone = searchParams.get('tone') || 'professional';
+		const length = searchParams.get('length') || 'short';
 
-		// Call OpenAI Chat Completions
+		if (!user) {
+			return NextResponse.json({ error: 'Missing user parameter' }, { status: 400 });
+		}
+		if (!repo) {
+			return NextResponse.json({ error: 'Missing repo parameter' }, { status: 400 });
+		}
+
+		const origin = new URL(request.url).origin;
+
+		// Only process a single repo
+		const now = new Date();
+		const allCommits: Array<{ repo: string; author: string | null; date: string; message: string }> = [];
+		const commits = await fetchJson(`${origin}/api/getRepoCommits?user=${user}&repo=${repo}`);
+		if (Array.isArray(commits)) {
+			for (const c of commits) {
+				if (!c?.date) continue;
+				if (isSameDay(c.date, now)) {
+					allCommits.push({ repo: c.title || repo, author: c.author || null, date: c.date, message: c.updates?.description || '' });
+				}
+			}
+		}
+
+		if (allCommits.length === 0) {
+			return NextResponse.json({ summary: 'No commits found for today.' });
+		}
+
+		// Build bullets
+		const bullets = allCommits.map((c, i) => `${i + 1}. [${c.repo}] ${c.message} (${c.author || 'unknown'} - ${new Date(c.date).toLocaleTimeString()})`);
+
+		const titleHint = searchParams.get('title') || repo;
+		const dateParam = searchParams.get('date') || '';
+		const dateStr = dateParam || `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getFullYear()).slice(2)}`;
+
 		const completion = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
 			messages: [
 				{ role: 'system', content: systemPrompt },
-				{ role: 'user', content: `${userPrompt}\nDate: ${date}\nTone: ${tone}\nLength: ${length}\nBullets:\n${bullets.map((b, i) => `${i + 1}. ${b}`).join('\n')}` },
+				{ role: 'user', content: getUserPrompt(titleHint, dateStr, tone, length, bullets) },
 			],
-			max_tokens: 500,
+			max_tokens: 800,
 			temperature: 0.2,
 		});
 
-		let parsed;
-		const content = completion.choices[0].message.content ?? '';
-		try {
-			parsed = JSON.parse(content);
-		} catch {
-			parsed = { raw: content };
+		const content = completion.choices?.[0]?.message?.content ?? '';
+
+		const parsed = tryParseJSON(content);
+		if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+			// fallback: construct a minimal article using aggregated commits
+			const combinedDesc = allCommits.map((c) => `- [${c.repo}] ${c.message} (${c.author || 'unknown'})`).join('\n');
+			const fallbackArticle = {
+				title: titleHint,
+				date: dateStr,
+				description: `Unable to parse AI response; fallback summary generated from commits:\n${combinedDesc}`,
+			};
+			return NextResponse.json({ commits: allCommits, article: fallbackArticle, rawAI: content });
 		}
-		return NextResponse.json(parsed);
-	} catch (error: any) {
-		return NextResponse.json({ error: error.message || 'Unknown error' }, { status: 500 });
+
+		// Basic validation / normalization
+		const article = parsed as { title?: string; date?: string; description?: string };
+		if (!article.title) article.title = titleHint;
+		if (!article.date) article.date = dateStr;
+		if (!article.description) article.description = '';
+
+		return NextResponse.json({ article });
+	} catch (error: unknown) {
+		const message = error instanceof Error ? error.message : 'Unknown error';
+		return NextResponse.json({ error: message }, { status: 500 });
 	}
 }
