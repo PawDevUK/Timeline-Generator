@@ -7,7 +7,7 @@ export async function GET(request: Request) {
 		const { searchParams } = new URL(request.url);
 		const user = searchParams.get('user');
 
-		const response = await axios.get(`https://api.github.com/users/${user}/repos`, {
+		const response = await axios.get(`https://api.github.com/users/${user}/repos?per_page=100`, {
 			headers: {
 				Authorization: token,
 			},
