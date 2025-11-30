@@ -1,6 +1,6 @@
 export default function Login() {
 	return (
-		<div className='flex min-h-screen items-center justify-center bg-gray-50'>
+		<div className='flex min-h-screen items-center justify-center bg-gray-50 w-full overflow-x-hidden'>
 			<div className='flex  min-h-screen flex-col md:flex-row w-full max-w-4xl bg-white overflow-hidden'>
 				<div className='flex flex-col justify-center p-8 md:w-1/2'>
 					<img src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600' alt='Your Company' className='h-10 w-auto mb-6 mx-auto' />
