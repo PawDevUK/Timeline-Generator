@@ -3,17 +3,14 @@ import jwt from 'jsonwebtoken';
 
 const SECRET = process.env.JWT_SECRET;
 
-// Example: POST /api/auth with { username, password }
 export async function POST(request: Request) {
 	const { username, password } = await request.json();
 
-	// Replace with your real user validation logic
 	if (username === 'admin' && password === 'password') {
-		// Ensure SECRET is defined
 		if (!SECRET) {
 			return NextResponse.json({ error: 'JWT secret not configured' }, { status: 500 });
 		}
-		// Create JWT token
+
 		const token = jwt.sign({}, SECRET, { expiresIn: '30d' });
 		return NextResponse.json({ token });
 	}
@@ -21,7 +18,6 @@ export async function POST(request: Request) {
 	return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
 }
 
-// Example: GET /api/auth?token=...
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
 	const token = searchParams.get('token');
