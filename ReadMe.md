@@ -26,17 +26,8 @@ TLG is commonly run as a **Next.js application** and provides:
 - **REST API**: API routes for creating and retrieving timeline articles
 - **Database Integration**: MongoDB storage for timeline history
 
-## 📚 Documentation
 
-Comprehensive documentation has been created for this project:
-
-- **[SUMMARY.md](docs/SUMMARY.md)** - Start here! Executive summary with recommendations and quick start guide
-- **[RUNNING_AS_NEXTJS.md](RUNNING_AS_NEXTJS.md)** - **PRIMARY**: How to run TLG as a Next.js application (recommended approach)
-- **[SETUP.md](SETUP.md)** - Step-by-step setup instructions for Next.js deployment
-- **[WORK_REPORT.md](docs/WORK_REPORT.md)** - Detailed project status, completed work, and remaining tasks
-- **[IMPLEMENTATION_IDEAS.md](docs/IMPLEMENTATION_IDEAS.md)** - Complete implementation guide with architecture options and code examples
-
-### Quick Start (local development)
+## Quick Start (local development)
 
 The repository contains both Next.js app wiring and small TypeScript utilities you can run locally. The recommended flow for development is:
 
