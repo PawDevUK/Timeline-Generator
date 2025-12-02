@@ -12,6 +12,7 @@ Rules:
 - Description must be a detailed paragraph summarizing the change (what, files/components touched, reason, and impact). Do not invent facts beyond commits. If limited info is provided, state that details were inferred.
 - Do not include any commentary, example, or extra text beyond the JSON object.
 - Ignore and do not mention any changes to articles.js and package-lock.json even if present in the commit list.
+- Ignore and do not mention any changes to ReadMe.md even if present in the commit list.
 `;
 
 export function getUserPrompt(titleHint: string, dateStr: string, tone: string, length: string, bullets: string[]) {
