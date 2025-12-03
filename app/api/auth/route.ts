@@ -1,10 +1,21 @@
 import { NextResponse } from 'next/server';
+
 import jwt from 'jsonwebtoken';
+import { dbConnect } from '@/app/api/auth/db';
 
 const SECRET = process.env.JWT_SECRET;
 
 export async function POST(request: Request) {
 	const { username, password } = await request.json();
+
+	// Test DB connection
+	try {
+		await dbConnect();
+		console.log('MongoDB connected successfully');
+	} catch (err) {
+		console.error('MongoDB connection error:', err);
+		return NextResponse.json({ error: 'MongoDB connection failed' }, { status: 500 });
+	}
 
 	if (username === 'admin' && password === 'password') {
 		if (!SECRET) {
