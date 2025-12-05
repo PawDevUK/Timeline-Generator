@@ -6,15 +6,15 @@ if (!MONGO_DB_TLG) {
 	throw new Error('Please define the MONGO_DB_TLG environment variable in .env.local');
 }
 
-let cached = (global as any).mongoose;
+type MongooseCache = {
+	conn: typeof mongoose | null;
+	promise: Promise<typeof mongoose> | null;
+};
 
-if (!cached) {
-	cached = (global as any).mongoose = { conn: null, promise: null };
-}
+const cached: MongooseCache = (global as { mongoose?: MongooseCache }).mongoose || { conn: null, promise: null };
 
 export async function dbConnect() {
 	if (cached.conn) {
-		console.log('MongoDB connected successfully');
 		return cached.conn;
 	}
 	if (!cached.promise) {
@@ -23,6 +23,7 @@ export async function dbConnect() {
 				bufferCommands: false,
 			})
 			.then((mongoose) => {
+				console.log('MongoDB connected successfully');
 				return mongoose;
 			});
 	}
@@ -30,6 +31,9 @@ export async function dbConnect() {
 	return cached.conn;
 }
 
-export await function addUser(data){
-	
+export function checkConnection() {
+	const status = mongoose.connection.readyState;
+	// 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
+
+	console.log('MongoDB connection status:', status);
 }
