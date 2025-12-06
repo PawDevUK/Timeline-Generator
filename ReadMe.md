@@ -26,7 +26,6 @@ TLG is commonly run as a **Next.js application** and provides:
 - **REST API**: API routes for creating and retrieving timeline articles
 - **Database Integration**: MongoDB storage for timeline history
 
-
 ## Quick Start (local development)
 
 The repository contains both Next.js app wiring and small TypeScript utilities you can run locally. The recommended flow for development is:
@@ -94,7 +93,8 @@ node dist/timelineClient.js
 - [x] Utility scripts for fetching commits (`timelineClient.ts`, `githubFetcher.ts`)
 - [x] OpenAI API integration for article generation (`app/api/chatGPT/route.ts`)
 - [ ] Wire article generation into API routes and database
-- [ ] Set up MongoDB connection and deployable backend
+- [ ] Set up MongoDB connection and deployable backend.
+- [ ] Finish auth. Create the authorisation for login and register.
 
 ### Integration & Automation
 
