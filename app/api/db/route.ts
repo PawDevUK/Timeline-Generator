@@ -2,8 +2,9 @@ import { NextResponse } from 'next/server';
 import { dbConnect } from './db';
 import { User } from './models/user.model';
 
+await dbConnect();
+
 export async function POST(request: Request) {
-	await dbConnect();
 	const { username, password, email } = await request.json();
 
 	const existingUser = await User.findOne({ username });
