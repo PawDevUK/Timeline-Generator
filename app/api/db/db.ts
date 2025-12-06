@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { userTypes } from '../types/user.type';
 
 const MONGO_DB_TLG = process.env.MONGO_DB_TLG || '';
 
@@ -36,4 +37,12 @@ export function checkConnection() {
 	// 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
 
 	console.log('MongoDB connection status:', status);
+}
+
+export async function checkUser(User: typeof mongoose.Model, user: userTypes) {
+	try {
+		return await User.find(user);
+	} catch (err) {
+		console.error(err);
+	}
 }
