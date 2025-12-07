@@ -1,12 +1,6 @@
 import mongoose from 'mongoose';
 import { userTypes } from '../types/user.type';
 
-const MONGO_DB_TLG = process.env.MONGO_DB_TLG || '';
-
-if (!MONGO_DB_TLG) {
-	throw new Error('Please define the MONGO_DB_TLG environment variable in .env.local');
-}
-
 type MongooseCache = {
 	conn: typeof mongoose | null;
 	promise: Promise<typeof mongoose> | null;
@@ -15,6 +9,12 @@ type MongooseCache = {
 const cached: MongooseCache = (global as { mongoose?: MongooseCache }).mongoose || { conn: null, promise: null };
 
 export async function dbConnect() {
+	const MONGO_DB_TLG = process.env.MONGO_DB_TLG || '';
+
+	if (!MONGO_DB_TLG) {
+		throw new Error('Please define the MONGO_DB_TLG environment variable in .env.local');
+	}
+
 	if (cached.conn) {
 		return cached.conn;
 	}
