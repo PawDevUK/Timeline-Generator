@@ -1,5 +1,6 @@
 'use client';
 
+import { SessionProvider } from 'next-auth/react';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { useState } from 'react';
@@ -103,52 +104,54 @@ export default function RootLayout({
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
-		<html lang='en'>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}>
-				<div className='flex min-h-screen'>
-					{/* Sidebar for desktop */}
-					<aside className='hidden md:flex flex-col w-64 bg-white border-r border-gray-200 p-4'>
-						<SidebarContent />
-					</aside>
+		<SessionProvider>
+			<html lang='en'>
+				<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}>
+					<div className='flex min-h-screen'>
+						{/* Sidebar for desktop */}
+						<aside className='hidden md:flex flex-col w-64 bg-white border-r border-gray-200 p-4'>
+							<SidebarContent />
+						</aside>
 
-					{/* Burger button for mobile */}
-					<button
-						type='button'
-						className='md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-white shadow-lg border border-gray-200'
-						aria-label='Open sidebar'
-						onClick={() => setSidebarOpen(true)}>
-						<svg className='h-6 w-6 text-gray-700' fill='none' stroke='currentColor' strokeWidth='1.5' viewBox='0 0 24 24'>
-							<path d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' strokeLinecap='round' strokeLinejoin='round' />
-						</svg>
-					</button>
+						{/* Burger button for mobile */}
+						<button
+							type='button'
+							className='md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-white shadow-lg border border-gray-200'
+							aria-label='Open sidebar'
+							onClick={() => setSidebarOpen(true)}>
+							<svg className='h-6 w-6 text-gray-700' fill='none' stroke='currentColor' strokeWidth='1.5' viewBox='0 0 24 24'>
+								<path d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' strokeLinecap='round' strokeLinejoin='round' />
+							</svg>
+						</button>
 
-					{/* Mobile sidebar overlay */}
-					{sidebarOpen && (
-						<div className='fixed inset-0 z-50 flex md:hidden'>
-							{/* Backdrop */}
-							<div className='fixed inset-0  bg-opacity-40' aria-hidden='true' onClick={() => setSidebarOpen(false)} />
-							{/* Sidebar panel */}
-							<div className='relative flex flex-col w-64 bg-white border-r border-gray-200 p-4'>
-								<div className='flex items-center mb-8 justify-between'>
-									{/* <div className='flex items-center'>
+						{/* Mobile sidebar overlay */}
+						{sidebarOpen && (
+							<div className='fixed inset-0 z-50 flex md:hidden'>
+								{/* Backdrop */}
+								<div className='fixed inset-0  bg-opacity-40' aria-hidden='true' onClick={() => setSidebarOpen(false)} />
+								{/* Sidebar panel */}
+								<div className='relative flex flex-col w-64 bg-white border-r border-gray-200 p-4'>
+									<div className='flex items-center mb-8 justify-between'>
+										{/* <div className='flex items-center'>
 										<img src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600' alt='Logo' className='h-8 w-auto' />
 										<span className='ml-2 font-bold text-lg text-indigo-600'>Your Company</span>
 									</div> */}
-									<button type='button' className='p-2 rounded hover:bg-gray-100' aria-label='Close sidebar' onClick={() => setSidebarOpen(false)}>
-										<svg className='h-6 w-6 text-gray-700' fill='none' stroke='currentColor' strokeWidth='1.5' viewBox='0 0 24 24'>
-											<path d='M6 18 18 6M6 6l12 12' strokeLinecap='round' strokeLinejoin='round' />
-										</svg>
-									</button>
+										<button type='button' className='p-2 rounded hover:bg-gray-100' aria-label='Close sidebar' onClick={() => setSidebarOpen(false)}>
+											<svg className='h-6 w-6 text-gray-700' fill='none' stroke='currentColor' strokeWidth='1.5' viewBox='0 0 24 24'>
+												<path d='M6 18 18 6M6 6l12 12' strokeLinecap='round' strokeLinejoin='round' />
+											</svg>
+										</button>
+									</div>
+									<SidebarContent />
 								</div>
-								<SidebarContent />
 							</div>
-						</div>
-					)}
+						)}
 
-					{/* Main content */}
-					<main className='w-full'>{children}</main>
-				</div>
-			</body>
-		</html>
+						{/* Main content */}
+						<main className='w-full'>{children}</main>
+					</div>
+				</body>
+			</html>
+		</SessionProvider>
 	);
 }
