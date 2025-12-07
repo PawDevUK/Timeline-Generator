@@ -1,6 +1,5 @@
-'use client';
-import Login from './login';
+import React from 'react';
 
-export default function Dashboard() {
-	return <Login></Login>;
+export default function page() {
+	return <div>page</div>;
 }
