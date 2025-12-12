@@ -41,14 +41,14 @@ export async function POST(request: NextRequest) {
 		}
 
 		const summaryData = await chatGPTResponse.json();
-		const { title, summary, date } = summaryData;
+		const { title, description, date } = summaryData.article;
 
 		// Step 3: Save to database
 		await dbConnect();
 		const result = await AddArticle(Article, {
-			title: title || `Summary for ${user}/${repo}`,
-			date: date || new Date().toISOString().split('T')[0],
-			description: summary || JSON.stringify(summaryData),
+			title: title,
+			date: date,
+			description: description,
 		});
 
 		if (!result.success) {
@@ -59,7 +59,6 @@ export async function POST(request: NextRequest) {
 			{
 				message: 'Article generated and saved successfully',
 				article: result.data,
-				summary: summaryData,
 			},
 			{ status: 201 }
 		);
