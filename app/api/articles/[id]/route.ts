@@ -4,10 +4,11 @@ import { Article } from '../../db/models/article.model';
 import { GetArticle, EditArticle, DeleteArticle } from '../../db/articles.db';
 
 // GET - Get single article by ID
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> | { id: string } }) {
 	try {
 		await dbConnect();
-		const { id } = params;
+		const resolvedParams = params instanceof Promise ? await params : params;
+		const { id } = resolvedParams;
 
 		const result = await GetArticle(Article, id);
 
@@ -23,10 +24,11 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 }
 
 // PUT - Update article by ID
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> | { id: string } }) {
 	try {
 		await dbConnect();
-		const { id } = params;
+		const resolvedParams = params instanceof Promise ? await params : params;
+		const { id } = resolvedParams;
 		const body = await request.json();
 		const { title, date, description } = body;
 
@@ -54,10 +56,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 }
 
 // DELETE - Delete article by ID
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> | { id: string } }) {
 	try {
 		await dbConnect();
-		const { id } = params;
+		const resolvedParams = params instanceof Promise ? await params : params;
+		const { id } = resolvedParams;
 
 		const result = await DeleteArticle(Article, id);
 
