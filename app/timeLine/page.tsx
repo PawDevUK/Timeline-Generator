@@ -1,9 +1,29 @@
 'use client';
-import React, { useRef } from 'react';
-import { articles } from './articles';
+import React, { useRef, useEffect, useState } from 'react';
+// import { articles } from './articles';
 import Header from '../Components/common/Header';
 
+type Update = {
+	period?: string;
+	description: string;
+};
+
+type Article = {
+	title: string;
+	date: string;
+	updates: Update[];
+};
+
 const TimelineList = () => {
+	const [articles, setArticles] = useState<Article[]>([]);
+
+	// In useEffect for initial load
+	useEffect(() => {
+		fetch('/api/articles')
+			.then((res) => res.json())
+			.then((data) => setArticles(data.articles));
+	}, []);
+
 	const scrollRef = useRef(null);
 
 	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -29,6 +49,17 @@ const TimelineList = () => {
 		document.addEventListener('mouseup', handleMouseUp);
 	};
 
+	// In event handler for delete
+	const handleDelete = async (id: string) => {
+		await fetch(`/api/articles/${id}`, { method: 'DELETE' });
+		// Refresh articles
+	};
+
+	// In event handler for generate
+	const handleGenerate = async () => {
+		await fetch('/api/articles/generate?user=PawDevUK&repo=TLG&year=2025&month=12&day=12');
+	};
+
 	return (
 		<section className='bg-gray-50 py-6 md:py-10'>
 			<div className='max-w-2xl mx-auto'>
@@ -47,14 +78,8 @@ const TimelineList = () => {
 								{/* Date Header */}
 								<Header>{article.title}</Header>
 								<div className='text-sm text-gray-500 mb-2 font-bold'>{article.date}</div>
-								{/* Multiple updates for the same day */}
-								{article.updates.map((update, updateIndex) => (
-									<div key={updateIndex} className={updateIndex !== article.updates.length - 1 ? 'mb-2' : ''}>
-										{/* Show period only if there are multiple updates for this day */}
-										{article.updates.length > 1 && update.period && <div className='text-xs text-gray-400 italic mb-1'>{update.period}</div>}
-										<p>{update.description}</p>
-									</div>
-								))}
+								{/* Description */}
+								<p className='text-gray-700 text-sm'>{article.description}</p>
 							</div>
 						))}
 					</div>
