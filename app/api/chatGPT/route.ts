@@ -147,7 +147,9 @@ export async function GET(request: Request) {
 
 		return NextResponse.json({ article });
 	} catch (error: unknown) {
+		console.error('Error in GET /api/chatGPT:', error);
 		const message = error instanceof Error ? error.message : 'Unknown error';
-		return NextResponse.json({ error: message }, { status: 500 });
+		const stack = error instanceof Error ? error.stack : undefined;
+		return NextResponse.json({ error: message, details: stack }, { status: 500 });
 	}
 }
