@@ -117,13 +117,13 @@ TLG is built as a **Next.js App Router** application with:
 
 ### In Progress / Planned
 
-- [ ] Add repository management UI (add/remove repos).
-- [ ] Implement timeline display component.
-- [ ] Automate daily summary generation (cron jobs).
 - [ ] Add error handling and logging.
 - [ ] Password hashing with bcrypt.
 - [ ] Email verification for registration.
-- [ ] Deploy the app to vercel.
+- [x] Add repository management UI (add/remove repos).
+- [x] Implement timeline display component.
+- [x] Automate daily summary generation (cron jobs).
+- [x] Deploy the app to vercel.
 
 ## Troubleshooting
 
