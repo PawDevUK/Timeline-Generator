@@ -8,7 +8,7 @@ export async function GET() {
 	try {
 		await dbConnect();
 		const result = await GetAllArticles(Article);
-		
+
 		if (!result.success) {
 			return NextResponse.json({ error: result.error }, { status: 500 });
 		}
@@ -29,10 +29,7 @@ export async function POST(request: NextRequest) {
 
 		// Validate required fields
 		if (!title || !date || !description) {
-			return NextResponse.json(
-				{ error: 'Missing required fields: title, date, description' },
-				{ status: 400 }
-			);
+			return NextResponse.json({ error: 'Missing required fields: title, date, description' }, { status: 400 });
 		}
 
 		const result = await AddArticle(Article, { title, date, description });
