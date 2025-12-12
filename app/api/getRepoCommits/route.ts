@@ -6,8 +6,9 @@ export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
 	const user = searchParams.get('user');
 	const repo = searchParams.get('repo');
-	const since = searchParams.get('since');
-	const until = searchParams.get('until');
+	const year = searchParams.get('year');
+	const month = searchParams.get('month');
+	const day = searchParams.get('day');
 
 	if (!user) {
 		return NextResponse.json({ error: 'No user selected.' }, { status: 400 });
@@ -19,9 +20,10 @@ export async function GET(request: Request) {
 	try {
 		const token = process.env.GITHUB_TOKEN;
 		const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
-		if (token) headers.Authorization = token;
-
-		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits?since=${since}&until=${until}`, { headers });
+		if (token) headers.Authorization = `Bearer ${token}`;
+		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits?since=${year}-${month}-${day}T00:00:00Z&until=${year}-${month}-${day}T23:59:59Z`, {
+			headers,
+		});
 		const commits = response.data.map((com: GitHubCommit) => ({
 			title: repo,
 			author: com.commit?.author?.name,
