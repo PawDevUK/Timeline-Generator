@@ -9,20 +9,28 @@ type Update = {
 };
 
 type Article = {
+	_id?: string;
 	title: string;
 	date: string;
 	updates: Update[];
 };
 
 const TimelineList = () => {
+	function fetchArticles() {
+		fetch('/api/articles')
+			.then((res) => res.json())
+			.then((data) => setArticles(data.articles));
+	}
 	const [articles, setArticles] = useState<Article[]>([]);
 
 	// In useEffect for initial load
 	useEffect(() => {
-		fetch('/api/articles')
-			.then((res) => res.json())
-			.then((data) => setArticles(data.articles));
+		fetchArticles();
 	}, []);
+
+	useEffect(() => {
+		console.log(articles);
+	}, [articles]);
 
 	const scrollRef = useRef(null);
 
@@ -53,6 +61,7 @@ const TimelineList = () => {
 	const handleDelete = async (id: string) => {
 		await fetch(`/api/articles/${id}`, { method: 'DELETE' });
 		// Refresh articles
+		fetchArticles();
 	};
 
 	// In event handler for generate
@@ -76,7 +85,7 @@ const TimelineList = () => {
 								{/* Marker */}
 								<span className='absolute left-0 top-3 w-3 h-3 rounded-full border-2 border-gray-50 bg-blue-500' style={{ zIndex: 1 }} />
 								{/* Date Header */}
-								<Header>{article.title}</Header>
+								<Header>{article.title}</Header> <button onClick={() => article._id && handleDelete(article._id)}>Delette</button>
 								<div className='text-sm text-gray-500 mb-2 font-bold'>{article.date}</div>
 								{/* Description */}
 								<p className='text-gray-700 text-sm'>{article.description}</p>
