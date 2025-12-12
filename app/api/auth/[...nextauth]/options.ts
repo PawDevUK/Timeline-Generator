@@ -26,9 +26,11 @@ export const options: NextAuthOptions = {
 			},
 			async authorize(credentials) {
 				await dbConnect();
-
+				console.log('Credentials', credentials);
 				const user = await User.findOne({ username: credentials?.username as string });
-				console.log(user);
+				const allDB = await User.find();
+				console.log(user, allDB);
+
 				if (user && user.password === credentials?.password) {
 					return {
 						id: user._id.toString(),
@@ -42,9 +44,12 @@ export const options: NextAuthOptions = {
 			},
 		}),
 	],
-	// session: {
-	// 	strategy: 'jwt',
-	// 	maxAge: 30 * 24 * 60 * 60,
-	// 	updateAge: 24 * 60 * 60,
-	// },
+	pages: {
+		signIn: '/login',
+	},
+	session: {
+		strategy: 'jwt',
+		maxAge: 30 * 24 * 60 * 60,
+		updateAge: 24 * 60 * 60,
+	},
 };
