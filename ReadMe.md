@@ -87,11 +87,24 @@ TLG is built as a **Next.js App Router** application with:
 
 ## API Endpoints
 
-- `GET /api/getRepoCommits?repo=owner/repo&since=YYYY-MM-DD&until=YYYY-MM-DD`: Fetch commits from a repository.
-- `POST /api/chatGPT`: Generate a summary article from commit data.
+### Authentication
+
 - `POST /api/auth/register`: Register a new user.
 - `POST /api/auth/login`: Login with credentials.
 - `GET /api/auth/session`: Get current session (handled by NextAuth).
+
+### GitHub & Summaries
+
+- `GET /api/getRepoCommits?repo=owner/repo&since=YYYY-MM-DD&until=YYYY-MM-DD`: Fetch commits from a repository.
+- `POST /api/chatGPT`: Generate a summary article from commit data.
+
+### Articles (CRUD)
+
+- `GET /api/articles`: Get all articles.
+- `POST /api/articles`: Create a new article (requires `title`, `date`, `description`).
+- `GET /api/articles/:id`: Get a specific article by ID.
+- `PUT /api/articles/:id`: Update an article by ID (partial updates supported).
+- `DELETE /api/articles/:id`: Delete an article by ID.
 
 ## Project Structure
 
