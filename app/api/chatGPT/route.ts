@@ -109,13 +109,13 @@ export async function GET(request: Request) {
 		// Build bullets
 		const bullets = allCommits.map((c, i) => `${i + 1}. [${c.repo}] ${c.message} (${c.author || 'unknown'} - ${new Date(c.date).toLocaleTimeString()})`);
 
-		const titleHint = searchParams.get('title') || repo;
+		const titleHint = searchParams.get('title') || repo || '';
 
 		const completion = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
 			messages: [
 				{ role: 'system', content: systemPrompt },
-				{ role: 'user', content: getUserPrompt(titleHint, date, tone, length, bullets) },
+				{ role: 'user', content: getUserPrompt(titleHint, date || '', tone || '', length || '', bullets) },
 			],
 			max_tokens: 800,
 			temperature: 0.2,
