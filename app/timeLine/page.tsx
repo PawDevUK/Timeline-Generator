@@ -1,18 +1,12 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
-// import { articles } from './articles';
 import Header from '../Components/common/Header';
-
-type Update = {
-	period?: string;
-	description: string;
-};
 
 type Article = {
 	_id?: string;
 	title: string;
 	date: string;
-	updates: Update[];
+	description: string;
 };
 
 const TimelineList = () => {
@@ -27,10 +21,6 @@ const TimelineList = () => {
 	useEffect(() => {
 		fetchArticles();
 	}, []);
-
-	useEffect(() => {
-		console.log(articles);
-	}, [articles]);
 
 	const scrollRef = useRef(null);
 
@@ -80,15 +70,18 @@ const TimelineList = () => {
 					<div className='relative'>
 						{/* Timeline vertical line */}
 						<div className='absolute left-2 top-0 h-full w-0.5 bg-gray-300' />
-						{articles.map((article, articleIndex) => (
+						{articles.map(({ title, date, description, _id }, articleIndex) => (
 							<div key={articleIndex} className={`relative pl-6 sm:pl-12 pr-2 sm:pr-6 ${articleIndex !== articles.length - 1 ? 'mb-8' : ''}`}>
 								{/* Marker */}
 								<span className='absolute left-0 top-3 w-3 h-3 rounded-full border-2 border-gray-50 bg-blue-500' style={{ zIndex: 1 }} />
 								{/* Date Header */}
-								<Header>{article.title}</Header> <button onClick={() => article._id && handleDelete(article._id)}>Delette</button>
-								<div className='text-sm text-gray-500 mb-2 font-bold'>{article.date}</div>
+								<Header>{title}</Header>{' '}
+								<button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => _id && handleDelete(_id)}>
+									Delete
+								</button>
+								<div className='text-sm text-gray-500 mb-2 font-bold'>{date}</div>
 								{/* Description */}
-								<p className='text-gray-700 text-sm'>{article.description}</p>
+								<p className='text-gray-700 text-sm'>{description}</p>
 							</div>
 						))}
 					</div>
