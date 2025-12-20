@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
-import { RepoList } from '../../types/repoList.types';
+import { RepoList } from '../../../types/repoList.types';
 const token = process.env.GITHUB_TOKEN;
 
 export async function GET(request: Request) {
@@ -13,6 +13,7 @@ export async function GET(request: Request) {
 				Authorization: token,
 			},
 		});
+
 		const repos: RepoList = response.data.map((repo: RepoList) => ({
 			id: repo.id,
 			node_id: repo.node_id,
@@ -32,6 +33,7 @@ export async function GET(request: Request) {
 			language: repo.language,
 			TLG: {
 				tracking: false,
+				daysActiveCommitts: [], // I need to create the list of day when commits where made.
 			},
 		}));
 
