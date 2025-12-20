@@ -17,5 +17,6 @@ export type RepoList = {
 	language: string;
 	TLG: {
 		tracking: boolean;
+		daysActiveCommitts: string[];
 	};
 };
