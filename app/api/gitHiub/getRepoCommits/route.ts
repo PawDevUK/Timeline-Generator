@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
-import { GitHubCommit } from '../../types/commits.types';
+import { GitHubCommit } from '../../../types/commits.types';
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
