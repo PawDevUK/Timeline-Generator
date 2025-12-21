@@ -5,6 +5,7 @@ import { GitHubCommit } from '../../../types/commits.types';
 const token = process.env.GITHUB_TOKEN;
 
 // Add groupCommits:true/false to get commits grouped or list of commits for a day or all of them.
+// I need to add functionality to check if groupCommits:true and only user && repo then create the object with grouped commits by days.
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
@@ -13,6 +14,7 @@ export async function GET(request: Request) {
 	const year = searchParams.get('year');
 	const month = searchParams.get('month');
 	const day = searchParams.get('day');
+	const groupCommits = searchParams.get('groupCommits');
 
 	if (!user) {
 		return NextResponse.json({ error: 'No user selected.' }, { status: 400 });
