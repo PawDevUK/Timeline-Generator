@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbConnect } from '../../db/db';
-import { Article } from '../../db/models/article.model';
-import { AddArticle } from '../../db/articles.db';
 
-// POST - Generate article from GitHub commits and save to DB
+// POST - Generate article from GitHub commits (does not save to DB)
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
@@ -44,26 +41,14 @@ export async function POST(request: NextRequest) {
 		}
 
 		const summaryData = await chatGPTResponse.json();
-		const { title, description, date } = summaryData.article;
 
-		// Step 3: Save to database
-		await dbConnect();
-		const result = await AddArticle(Article, {
-			title: title,
-			date: date,
-			description: description,
-		});
-
-		if (!result.success) {
-			return NextResponse.json({ error: result.error }, { status: 500 });
-		}
-
+		// Return the generated article (not saved to DB)
 		return NextResponse.json(
 			{
-				message: 'Article generated and saved successfully',
-				article: result.data,
+				message: 'Article generated successfully',
+				article: summaryData.article,
 			},
-			{ status: 201 }
+			{ status: 200 }
 		);
 	} catch (error) {
 		console.error('Error in POST /api/articles/generate:', error);
