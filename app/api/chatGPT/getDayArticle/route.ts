@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { systemPrompt, getUserPrompt } from './prompts';
+import { systemPrompt, getUserPrompt } from '../prompts';
 import { format, compareAsc } from 'date-fns';
 
 const openai = new OpenAI({ apiKey: process.env.CHATGPT_API || '' });

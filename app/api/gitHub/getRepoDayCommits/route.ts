@@ -14,7 +14,6 @@ export async function GET(request: Request) {
 	const year = searchParams.get('year');
 	const month = searchParams.get('month');
 	const day = searchParams.get('day');
-	const groupCommits = searchParams.get('groupCommits');
 
 	if (!user) {
 		return NextResponse.json({ error: 'No user selected.' }, { status: 400 });
@@ -23,34 +22,22 @@ export async function GET(request: Request) {
 		return NextResponse.json({ error: 'No repo selected.' }, { status: 400 });
 	}
 
-	const getCommits = async () => {
-		const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
-		if (token) headers.Authorization = `Bearer ${token}`;
-		let response = { data: [] };
-		let commits = [];
+	const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
+	if (token) headers.Authorization = `Bearer ${token}`;
 
-		if (!year && !month && !year) {
-			response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits`, {
-				headers,
-			});
-		}
+	const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits?since=${year}-${month}-${day}T00:00:00Z&until=${year}-${month}-${day}T23:59:59Z`, {
+		headers,
+	});
 
-		response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits?since=${year}-${month}-${day}T00:00:00Z&until=${year}-${month}-${day}T23:59:59Z`, {
-			headers,
-		});
-
-		commits = response.data.map((com: GitHubCommit) => ({
-			title: repo,
-			author: com.commit?.author?.name,
-			date: com.commit?.author.date,
-			description: com.commit?.message,
-		}));
-
-		return commits;
-	};
+	const dayCommits = response.data.map((com: GitHubCommit) => ({
+		title: repo,
+		author: com.commit?.author?.name,
+		date: com.commit?.author.date,
+		description: com.commit?.message,
+	}));
 
 	try {
-		return NextResponse.json(getCommits());
+		return NextResponse.json(dayCommits);
 	} catch (error: unknown) {
 		if (axios.isAxiosError(error) && error.response) {
 			const status = error.response.status || 500;
