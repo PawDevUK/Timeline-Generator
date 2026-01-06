@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { dbConnect } from './db';
-import { User } from './models/user.model';
+import { dbConnect } from '../db';
+import { User } from '../models/user.model';
 
 await dbConnect();
 
