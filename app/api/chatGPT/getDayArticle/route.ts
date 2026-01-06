@@ -59,21 +59,10 @@ function tryParseJSON(c: string): unknown | null {
 	}
 }
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
 	try {
-		const { searchParams } = new URL(request.url);
-		const user = searchParams.get('user');
-		const repo = searchParams.get('repo');
-		const tone = searchParams.get('tone') || 'professional';
-		const length = searchParams.get('length') || 'short';
-
-		const dayStr = searchParams.get('day');
-		const monthStr = searchParams.get('month');
-		const yearStr = searchParams.get('year');
-
-		const day = dayStr ? parseInt(dayStr, 10) : null;
-		const month = monthStr ? parseInt(monthStr, 10) : null;
-		const year = yearStr ? parseInt(yearStr, 10) : null;
+		const body = await request.json();
+		const { user, repo, tone = 'professional', length = 'short', year, month, day } = body;
 
 		const params = { user, repo, tone, length, year, month, day };
 
@@ -109,7 +98,7 @@ export async function GET(request: Request) {
 		// Build bullets
 		const bullets = allCommits.map((c, i) => `${i + 1}. [${c.repo}] ${c.message} (${c.author || 'unknown'} - ${new Date(c.date).toLocaleTimeString()})`);
 
-		const titleHint = searchParams.get('title') || repo || '';
+		const titleHint = body.title || repo || '';
 
 		const completion = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
@@ -143,7 +132,7 @@ export async function GET(request: Request) {
 
 		return NextResponse.json({ article });
 	} catch (error: unknown) {
-		console.error('Error in GET /api/chatGPT:', error);
+		console.error('Error in POST /api/chatGPT/getDayArticle:', error);
 		const message = error instanceof Error ? error.message : 'Unknown error';
 		const stack = error instanceof Error ? error.stack : undefined;
 		return NextResponse.json({ error: message, details: stack }, { status: 500 });
