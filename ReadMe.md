@@ -130,8 +130,10 @@ TLG is built as a **Next.js App Router** application with:
 
 ### In Progress / Planned
 
+- [ ] Repository object need to be created with id, name, date started, number of commits, days active. This object will be created and saved to db for the repository tracked by user. Repository object can't be nested inside user object. It should be referenced by user and fetched by aditional logic.
+- [ ] Fix creation of day article. There should be only one way of getting commits eather by passing them as parameter of by fetching them inside the main function generateDayArticle.
 - [ ] Fix endpoints structure and swap the get into post.
-      - 
+      -
 - [ ] Fetching dates of active days so the summary can be created based on this dates.
 - [ ] Add error handling and logging.
 - [ ] Password hashing with bcrypt.
