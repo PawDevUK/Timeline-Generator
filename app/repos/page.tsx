@@ -1,18 +1,48 @@
-// import repos from '../articles/repoList';
 'use client';
 import { fetchRepoList } from '../lib/api/getReposList';
 import { useEffect, useState } from 'react';
 import { RepoList } from '../types/repoList.types';
 import RepoCard from '../Components/RepoCard';
+import { addRepository, getAllRepositories, clearAllRepositories } from '../utils/indexedDB';
 
-export default function Home() {
+export default function Repos() {
 	const [repos, setRepos] = useState<RepoList[]>([]);
 	const [user, setUser] = useState('PawDevUk');
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
 
+	// useEffect(() => {
+	// 	setRepos()
+	// }, []);
+
+	// Fetch repos from GitHub and store in IndexedDB
 	useEffect(() => {
 		const fetchData = async () => {
-			const repoList = await fetchRepoList(user);
-			setRepos(repoList);
+			setLoading(true);
+			setError('');
+			try {
+				const repoList = await fetchRepoList(user);
+				setRepos(repoList);
+
+				// Clear old repos and store new ones in IndexedDB
+				await clearAllRepositories();
+				for (const repo of repoList) {
+					if (repo.name && repo.url) {
+						await addRepository({
+							name: repo.name,
+							description: repo.description,
+							url: repo.url,
+							language: repo.language,
+							stars: repo.stars || 0,
+						});
+					}
+				}
+			} catch (err) {
+				setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
+				console.error('Error fetching repos:', err);
+			} finally {
+				setLoading(false);
+			}
 		};
 		fetchData();
 	}, [user]);
@@ -32,17 +62,19 @@ export default function Home() {
 			<div className='flex flex-col  gap-6'>
 				<div className='w-full text-center md:text-left md:pl-[100px]'>
 					<h3 className='text-2xl font-bold text-gray-900 mb-2 text-center'>List of Repositories.</h3>
+					{loading && <p className='text-sm text-gray-500'>Loading repositories...</p>}
+					{error && <p className='text-sm text-red-500'>{error}</p>}
 				</div>
 				<div className='flex justify-center pt-2'>
 					<div className='bg-white rounded-lg shadow p-4 sm:w-[50vw]'>
 						<div className='flex flex-col gap-4'>
-							{repos.map((repo: RepoList) => (
-								<RepoCard key={repo.id} repo={repo} addTracking={addTracking}></RepoCard>
-							))}
+							{repos.length > 0 ? (
+								repos.map((repo: RepoList) => <RepoCard key={repo.id} repo={repo} addTracking={addTracking}></RepoCard>)
+							) : (
+								<p className='text-gray-500 text-center'>No repositories found</p>
+							)}
 						</div>
-						<p className='text-xs text-gray-400 mt-4'>
-							{/* Missing Git repository? <span className='text-blue-500 underline cursor-pointer'>Adjust GitHub App Permissions →</span> */}
-						</p>
+						<p className='text-xs text-gray-400 mt-4 text-center'>Total repositories: {repos.length}</p>
 					</div>
 				</div>
 			</div>

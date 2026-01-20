@@ -1,21 +1,16 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { systemPrompt, getUserPrompt } from './prompts';
-import { format, compareAsc } from 'date-fns';
+import { format } from 'date-fns';
 
 const openai = new OpenAI({ apiKey: process.env.CHATGPT_API || '' });
 
-async function fetchJson(url: string) {
-	const res = await fetch(url);
-	if (!res.ok) {
-		throw new Error(`Failed to fetch ${url}: ${res.statusText}`);
-	}
-	return res.json();
-}
-
-function getDate(year: number, month: number, day: number) {
-	return format(new Date(year, month, day), 'MM/dd/yyyy');
-}
+type CommitInput = {
+	repo?: string;
+	author?: string | null;
+	date?: string;
+	message?: string;
+};
 
 function extractJsonFromCodeFence(text: string) {
 	const fenceRegex = /```(?:json)?\s*([\s\S]*?)```/i;
@@ -59,57 +54,44 @@ function tryParseJSON(c: string): unknown | null {
 	}
 }
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
 	try {
-		const { searchParams } = new URL(request.url);
-		const user = searchParams.get('user');
-		const repo = searchParams.get('repo');
-		const tone = searchParams.get('tone') || 'professional';
-		const length = searchParams.get('length') || 'short';
+		const body = await request.json().catch(() => null);
+		const commits = (body?.commits ?? []) as CommitInput[];
+		const titleHint = (body?.titleHint as string) || (body?.repo as string) || '';
+		const tone = (body?.tone as string) || 'professional';
+		const length = (body?.length as string) || 'short';
+		const dateInput = (body?.date as string) || null;
 
-		const dayStr = searchParams.get('day');
-		const monthStr = searchParams.get('month');
-		const yearStr = searchParams.get('year');
-
-		const day = dayStr ? parseInt(dayStr, 10) : null;
-		const month = monthStr ? parseInt(monthStr, 10) : null;
-		const year = yearStr ? parseInt(yearStr, 10) : null;
-
-		const params = { user, repo, tone, length, year, month, day };
-
-		for (const [name, value] of Object.entries(params)) {
-			if (!value) {
-				return NextResponse.json({ error: `Missing ${name} parameter` }, { status: 400 });
-			}
+		if (!Array.isArray(commits) || commits.length === 0) {
+			return NextResponse.json({ error: 'Missing or empty commits array' }, { status: 400 });
 		}
 
-		const origin = new URL(request.url).origin;
+		// Normalize commits
+		const normalized = commits
+			.filter((c) => c && (c.message || c.repo || c.author || c.date))
+			.map((c) => ({
+				repo: c.repo || titleHint || 'repo',
+				author: c.author ?? null,
+				date: c.date || '',
+				message: c.message || '',
+			}));
 
-		// Use the local getRepoCommits endpoint and filter by the requested date
-		const allCommits: Array<{ repo: string; author: string | null; date: string; message: string }> = [];
-		const commits = await fetchJson(`${origin}/api/getRepoCommits?user=${user}&repo=${repo}&year=${year}&month=${month}&day=${day}`);
-
-		function getDate(year: number, month: number, day: number) {
-			return format(new Date(year, month - 1, day), 'MM/dd/yyyy');
+		if (normalized.length === 0) {
+			return NextResponse.json({ error: 'No usable commits provided' }, { status: 400 });
 		}
 
-		const date = getDate(year!, month!, day!);
+		const date =
+			dateInput ||
+			(() => {
+				const d = normalized[0]?.date ? new Date(normalized[0].date) : new Date();
+				return isNaN(d.getTime()) ? '' : format(d, 'MM/dd/yyyy');
+			})();
 
-		if (Array.isArray(commits)) {
-			for (const c of commits) {
-				if (!c?.date) continue;
-				allCommits.push({ repo: c.title || repo, author: c.author || null, date: c.date, message: c.description || '' });
-			}
-		}
-
-		if (allCommits.length === 0) {
-			return NextResponse.json({ summary: 'No commits found for selected date.' });
-		}
-
-		// Build bullets
-		const bullets = allCommits.map((c, i) => `${i + 1}. [${c.repo}] ${c.message} (${c.author || 'unknown'} - ${new Date(c.date).toLocaleTimeString()})`);
-
-		const titleHint = searchParams.get('title') || repo || '';
+		const bullets = normalized.map((c, i) => {
+			const timeStr = c.date ? new Date(c.date).toLocaleTimeString() : '';
+			return `${i + 1}. [${c.repo}] ${c.message} (${c.author || 'unknown'}${timeStr ? ` - ${timeStr}` : ''})`;
+		});
 
 		const completion = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
@@ -122,20 +104,18 @@ export async function GET(request: Request) {
 		});
 
 		const content = completion.choices?.[0]?.message?.content ?? '';
-
 		const parsed = tryParseJSON(content);
+
 		if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-			// fallback: construct a minimal article using aggregated commits
-			const combinedDesc = allCommits.map((c) => `- [${c.repo}] ${c.message} (${c.author || 'unknown'})`).join('\n');
+			const combinedDesc = normalized.map((c) => `- [${c.repo}] ${c.message} (${c.author || 'unknown'})`).join('\n');
 			const fallbackArticle = {
 				title: titleHint,
 				date: date,
 				description: `Unable to parse AI response; fallback summary generated from commits:\n${combinedDesc}`,
 			};
-			return NextResponse.json({ commits: allCommits, article: fallbackArticle, rawAI: content });
+			return NextResponse.json({ commits: normalized, article: fallbackArticle, rawAI: content });
 		}
 
-		// Basic validation / normalization
 		const article = parsed as { title?: string; date?: string; description?: string };
 		if (!article.title) article.title = titleHint;
 		if (!article.date) article.date = date;
@@ -143,7 +123,7 @@ export async function GET(request: Request) {
 
 		return NextResponse.json({ article });
 	} catch (error: unknown) {
-		console.error('Error in GET /api/chatGPT:', error);
+		console.error('Error in POST /api/chatGPT:', error);
 		const message = error instanceof Error ? error.message : 'Unknown error';
 		const stack = error instanceof Error ? error.stack : undefined;
 		return NextResponse.json({ error: message, details: stack }, { status: 500 });

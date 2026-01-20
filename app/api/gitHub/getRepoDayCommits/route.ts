@@ -6,6 +6,9 @@ export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
 	const user = searchParams.get('user');
 	const repo = searchParams.get('repo');
+	const year = searchParams.get('year');
+	const month = searchParams.get('month');
+	const day = searchParams.get('day');
 
 	if (!user) {
 		return NextResponse.json({ error: 'No user selected.' }, { status: 400 });
@@ -18,35 +21,10 @@ export async function GET(request: Request) {
 		const token = process.env.GITHUB_TOKEN;
 		const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
 		if (token) headers.Authorization = `Bearer ${token}`;
-
-		// Fetch all commits using pagination
-		let allCommits: GitHubCommit[] = [];
-		let page = 1;
-		let hasMore = true;
-
-		while (hasMore) {
-			const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits`, {
-				headers,
-				params: {
-					per_page: 100, // Maximum allowed per page
-					page: page,
-				},
-			});
-
-			if (response.data.length === 0) {
-				hasMore = false;
-			} else {
-				allCommits = allCommits.concat(response.data);
-				page++;
-
-				// If we got less than 100, we've reached the end
-				if (response.data.length < 100) {
-					hasMore = false;
-				}
-			}
-		}
-
-		const commits = allCommits.map((com: GitHubCommit) => ({
+		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits?since=${year}-${month}-${day}T00:00:00Z&until=${year}-${month}-${day}T23:59:59Z`, {
+			headers,
+		});
+		const commits = response.data.map((com: GitHubCommit) => ({
 			title: repo,
 			author: com.commit?.author?.name,
 			date: com.commit?.author.date,
