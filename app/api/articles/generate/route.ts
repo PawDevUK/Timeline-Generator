@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbConnect } from '../../db/db';
-import { Article } from '../../db/models/article.model';
-import { AddArticle } from '../../db/articles.db';
 
+<<<<<<< HEAD
 // POST - Generate article from GitHub commits and save to DB
+=======
+// POST - Generate article from GitHub commits (does not save to DB)
+>>>>>>> f7f4fe0dd441d105fe2050d1dafeb8748eb691f2
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
@@ -11,7 +12,11 @@ export async function POST(request: NextRequest) {
 
 		// Validate required fields
 		if (!user || !repo || !year || !month || !day) {
+<<<<<<< HEAD
 			return NextResponse.json({ error: 'Missing required fields: user, repo, since, until' }, { status: 400 });
+=======
+			return NextResponse.json({ error: 'Missing required fields: user, repo, year, month, day' }, { status: 400 });
+>>>>>>> f7f4fe0dd441d105fe2050d1dafeb8748eb691f2
 		}
 
 		// Step 1: Fetch commits from GitHub
@@ -28,6 +33,7 @@ export async function POST(request: NextRequest) {
 		}
 
 		// Step 2: Generate summary using ChatGPT
+<<<<<<< HEAD
 		const chatGPTUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/chatGPT`;
 		const chatGPTResponse = await fetch(chatGPTUrl, {
 			method: 'POST',
@@ -38,6 +44,16 @@ export async function POST(request: NextRequest) {
 				commits: commitsData,
 			}),
 		});
+=======
+		const chatGPTUrl = new URL(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/chatGPT`);
+		chatGPTUrl.searchParams.append('user', user);
+		chatGPTUrl.searchParams.append('repo', repo);
+		chatGPTUrl.searchParams.append('year', year);
+		chatGPTUrl.searchParams.append('month', month);
+		chatGPTUrl.searchParams.append('day', day);
+
+		const chatGPTResponse = await fetch(chatGPTUrl.toString());
+>>>>>>> f7f4fe0dd441d105fe2050d1dafeb8748eb691f2
 
 		if (!chatGPTResponse.ok) {
 			const errorText = await chatGPTResponse.text();
@@ -46,6 +62,7 @@ export async function POST(request: NextRequest) {
 		}
 
 		const summaryData = await chatGPTResponse.json();
+<<<<<<< HEAD
 		const { title, description, date } = summaryData.article;
 
 		// Step 3: Save to database
@@ -66,6 +83,16 @@ export async function POST(request: NextRequest) {
 				article: result.data,
 			},
 			{ status: 201 }
+=======
+
+		// Return the generated article (not saved to DB)
+		return NextResponse.json(
+			{
+				message: 'Article generated successfully',
+				article: summaryData.article,
+			},
+			{ status: 200 }
+>>>>>>> f7f4fe0dd441d105fe2050d1dafeb8748eb691f2
 		);
 	} catch (error) {
 		console.error('Error in POST /api/articles/generate:', error);

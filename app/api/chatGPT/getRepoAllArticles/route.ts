@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+<<<<<<< HEAD:app/api/chatGPT/route.ts
 import { systemPrompt, getUserPrompt } from './prompts';
 import { format } from 'date-fns';
 
@@ -11,6 +12,24 @@ type CommitInput = {
 	date?: string;
 	message?: string;
 };
+=======
+import { systemPrompt, getUserPrompt } from '../prompts';
+import { format, compareAsc } from 'date-fns';
+
+const openai = new OpenAI({ apiKey: process.env.CHATGPT_API || '' });
+
+async function fetchJson(url: string) {
+	const res = await fetch(url);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch ${url}: ${res.statusText}`);
+	}
+	return res.json();
+}
+
+// function getDate(year: number, month: number, day: number) {
+// 	return format(new Date(year, month, day), 'MM/dd/yyyy');
+// }
+>>>>>>> f7f4fe0dd441d105fe2050d1dafeb8748eb691f2:app/api/chatGPT/getRepoAllArticles/route.ts
 
 function extractJsonFromCodeFence(text: string) {
 	const fenceRegex = /```(?:json)?\s*([\s\S]*?)```/i;
