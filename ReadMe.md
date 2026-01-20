@@ -130,6 +130,8 @@ TLG is built as a **Next.js App Router** application with:
 
 ### In Progress / Planned
 
+- [ ] Fix endpoints structure and swap the get into post.
+      - 
 - [ ] Fetching dates of active days so the summary can be created based on this dates.
 - [ ] Add error handling and logging.
 - [ ] Password hashing with bcrypt.
