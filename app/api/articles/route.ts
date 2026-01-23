@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbConnect } from '../db/db';
 import { Article } from '../db/models/article.model';
-import { AddArticle, GetAllArticles } from '../db/articles.db';
+import { AddArticle, Get_DB_AllArticles } from '../db/articles.db';
 
 // GET - Get all articles
 export async function GET() {
 	try {
 		await dbConnect();
-		const result = await GetAllArticles(Article);
+		const result = await Get_DB_AllArticles(Article);
 
 		if (!result.success) {
 			return NextResponse.json({ error: result.error }, { status: 500 });

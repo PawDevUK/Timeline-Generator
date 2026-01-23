@@ -13,7 +13,7 @@ export async function AddArticle(Article: typeof mongoose.Model, article: Omit<A
 }
 
 //  Get all articles
-export async function GetAllArticles(Article: typeof mongoose.Model) {
+export async function Get_DB_AllArticles(Article: typeof mongoose.Model) {
 	try {
 		const articles = await Article.find().sort({ createdAt: -1 });
 		return { success: true, data: articles };
