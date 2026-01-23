@@ -172,25 +172,26 @@ export async function generateDayArticle(commits: Commit[], repo: string, date: 
 			description: article.description,
 			createdAt: new Date(),
 		};
-	} catch (openaiError) {
-		if (openaiError instanceof Error) {
-			console.error('OpenAI API error:', openaiError.message);
-			if (openaiError.message.includes('rate limit')) {
-				throw new Error('OpenAI API rate limit exceeded');
-			} else if (openaiError.message.includes('authentication')) {
-				throw new Error('OpenAI API authentication failed');
-			} else if (openaiError.message.includes('model')) {
-				throw new Error('OpenAI model not available');
+	} catch (error) {
+		if (error instanceof Error) {
+			if (error.message.includes('rate limit') || error.message.includes('authentication') || error.message.includes('model')) {
+				console.error('OpenAI API error:', error.message);
+				if (error.message.includes('rate limit')) {
+					throw new Error('OpenAI API rate limit exceeded');
+				} else if (error.message.includes('authentication')) {
+					throw new Error('OpenAI API authentication failed');
+				} else if (error.message.includes('model')) {
+					throw new Error('OpenAI model not available');
+				} else {
+					throw new Error(`OpenAI API error: ${error.message}`);
+				}
 			} else {
-				throw new Error(`OpenAI API error: ${openaiError.message}`);
+				console.error('Unexpected error in generateDayArticle:', error);
+				throw new Error(`Unexpected error generating article: ${error.message}`);
 			}
 		} else {
-			console.error('Unknown OpenAI error:', openaiError);
-			throw new Error('Unknown error from OpenAI API');
+			console.error('Unknown error in generateDayArticle:', error);
+			throw new Error('Unknown error generating article');
 		}
-	} catch (error) {
-		console.error('Unexpected error in generateDayArticle:', error);
-		const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-		throw new Error(`Unexpected error generating article: ${errorMessage}`);
 	}
 }
