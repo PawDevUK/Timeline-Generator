@@ -1,13 +1,9 @@
 import { Schema, Document } from 'mongoose';
+import { ArticleType } from '../../types/article.type';
 
-export interface ArticleType extends Document {
-	title: string;
-	date: string;
-	description: string;
-	createdAt: Date;
-}
+export interface ArticleDocument extends ArticleType, Document {}
 
-export const ArticleSchema: Schema<ArticleType> = new Schema({
+export const ArticleSchema: Schema<ArticleDocument> = new Schema({
 	title: { type: String, required: true, unique: false },
 	date: { type: String, required: true },
 	description: { type: String, required: true },
