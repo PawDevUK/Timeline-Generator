@@ -1,5 +1,4 @@
 'use client';
-import { fetchRepoList } from '../lib/api/getReposList';
 import { useEffect, useState } from 'react';
 import { RepoList } from '../types/repoList.types';
 import RepoCard from '../Components/RepoCard';
@@ -7,36 +6,18 @@ import { addRepository, getAllRepositories, clearAllRepositories } from '../util
 
 export default function Repos() {
 	const [repos, setRepos] = useState<RepoList[]>([]);
-	const [user, setUser] = useState('PawDevUk');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
-	// useEffect(() => {
-	// 	setRepos()
-	// }, []);
-
-	// Fetch repos from GitHub and store in IndexedDB
+	// Fetch repos from MongoDB
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchRepos = async () => {
 			setLoading(true);
 			setError('');
 			try {
-				const repoList = await fetchRepoList(user);
+				const response = await fetch('api/repositories');
+				const repoList = await response.json();
 				setRepos(repoList);
-
-				// Clear old repos and store new ones in IndexedDB
-				await clearAllRepositories();
-				for (const repo of repoList) {
-					if (repo.name && repo.url) {
-						await addRepository({
-							name: repo.name,
-							description: repo.description,
-							url: repo.url,
-							language: repo.language,
-							stars: repo.stars || 0,
-						});
-					}
-				}
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
 				console.error('Error fetching repos:', err);
@@ -44,8 +25,9 @@ export default function Repos() {
 				setLoading(false);
 			}
 		};
-		fetchData();
-	}, [user]);
+
+		fetchRepos();
+	}, []);
 
 	// useEffect(() => {
 	// 	console.log(repos);
@@ -53,7 +35,7 @@ export default function Repos() {
 
 	const addTracking = (repo: RepoList) => {
 		setRepos((prevRepos) =>
-			prevRepos.map((stored_repo) => (stored_repo.id === repo.id ? { ...stored_repo, TLG: { ...stored_repo.TLG, tracking: !stored_repo.TLG.tracking } } : stored_repo))
+			prevRepos.map((stored_repo) => (stored_repo.id === repo.id ? { ...stored_repo, TLG: { ...stored_repo.TLG, tracking: !stored_repo.TLG.tracking } } : stored_repo)),
 		);
 	};
 

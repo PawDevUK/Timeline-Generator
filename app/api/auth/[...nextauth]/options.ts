@@ -1,8 +1,8 @@
 import type { NextAuthOptions } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { dbConnect } from '@/app/api/db/db';
-import { User } from '@/app/api/db/models/user.model';
+import { dbConnect } from '@/lib/db/db';
+import { User } from '@/lib/db/models/user.model';
 
 export const options: NextAuthOptions = {
 	providers: [

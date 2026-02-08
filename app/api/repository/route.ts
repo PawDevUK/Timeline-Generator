@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createRepository } from './createRepo';
-import { GetAllRepositories } from '@/app/api/db/repository.db';
-import { dbConnect } from '../../../api/db/db';
+import { createRepository } from '../../../lib/CreateRepo/createRepo';
+import { GetAllRepositories } from '@/lib/db/repository.db';
+import { dbConnect } from '@/lib/db/db';
 
 export const maxDuration = 300; // 5 minutes timeout
 

@@ -1,5 +1,5 @@
-import { User } from '@/app/api/db/models/user.model';
-import { dbConnect } from '@/app/api/db/db';
+import { User } from '@/lib/db/models/user.model';
+import { dbConnect } from '@/lib/db/db';
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
