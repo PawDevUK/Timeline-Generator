@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbConnect } from '../db/db';
-import { Article } from '../db/models/article.model';
-import { AddArticle, Get_DB_AllArticles } from '../db/articles.db';
+import { dbConnect } from '../../db/db';
+import { Article } from '../../db/models/article.model';
+import { AddArticle, Get_DB_AllArticles } from '../../db/articles.db';
 
 // GET - Get all articles
 export async function GET() {
