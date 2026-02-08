@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { RepositoryDocument } from './schema/repository.schema';
 import { RepositoryType } from '../types/repository.type';
+import { Repository } from './models/repository.model';
 
 // Add repository
 export async function AddRepository(Repository: typeof mongoose.Model, repository: Omit<RepositoryType, 'createdAt'>) {
@@ -28,7 +29,7 @@ export async function GetRepository(Repository: typeof mongoose.Model, repositor
 }
 
 // Get all repositories
-export async function GetAllRepositories(Repository: typeof mongoose.Model) {
+export async function GetAllRepositories() {
 	try {
 		const repositories = await Repository.find().sort({ createdAt: -1 });
 		return { success: true, data: repositories as RepositoryDocument[] };
