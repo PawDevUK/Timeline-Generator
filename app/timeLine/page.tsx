@@ -1,6 +1,7 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import Header from '../components/common/Header';
+import { combineTimeLine } from '@/app/utils/combineTimeLine';
 
 type Article = {
 	_id?: string;
@@ -25,8 +26,11 @@ const TimelineList = () => {
 		fetch('/api/repositories')
 			.then((res) => res.json())
 			.then((data) => {
-				// Flatten all articles from all repositories
-				const allArticles = data.repositories?.flatMap((repo: Repository) => repo.articles || []) || [];
+				console.log('Fetched data:', data);
+				console.log('Repositories:', data.repositories);
+				// Pass repositories directly to combineTimeLine (NOT articles)
+				const allArticles = combineTimeLine(data.repositories || []);
+				console.log('Combined articles:', allArticles);
 				setArticles(allArticles);
 			})
 			.catch((err) => {
@@ -63,7 +67,7 @@ const TimelineList = () => {
 		fetch('/api/repositories')
 			.then((res) => res.json())
 			.then((data) => {
-				const allArticles = data.repositories?.flatMap((repo: Repository) => repo.articles || []) || [];
+				const allArticles = combineTimeLine(data.repositories || []);
 				setArticles(allArticles);
 			});
 	};
