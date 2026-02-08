@@ -106,7 +106,7 @@ export default function RootLayout({
 	return (
 		<SessionProvider>
 			<html lang='en'>
-				<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}>
+				<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`} suppressHydrationWarning>
 					<div className='flex min-h-screen'>
 						{/* Sidebar for desktop */}
 						<aside className='hidden md:flex flex-col w-64 bg-white border-r border-gray-200 p-4'>
