@@ -1,6 +1,6 @@
 # Time Line Generator (TLG)
 
-**Time Line Generator** is a full-stack web application that tracks changes in selected GitHub repositories and generates human-friendly daily summaries of work. TLG collects git commits and file changes, summarizes them using OpenAI's ChatGPT API, and stores the results in a MongoDB database. The app features user authentication, a web interface for managing repositories and viewing timelines, and API endpoints for automation.
+**Time Line Generator** is a full-stack Next.js application that tracks GitHub repositories and automatically generates AI-powered daily summaries of development work. TLG fetches commits from GitHub, uses OpenAI's ChatGPT API to create human-readable articles, and stores everything in MongoDB. The app features NextAuth authentication, an interactive dashboard for repository management, and a timeline view for browsing generated articles.
 
 ## Features
 
@@ -108,40 +108,65 @@ TLG is built as a **Next.js App Router** application with:
 
 ## Project Structure
 
-- `app/`: Next.js App Router pages and API routes.
-  - `api/`: API endpoints (auth, chatGPT, commits, db).
-  - `login/`: Login page.
-  - `dashboard/`: Protected dashboard.
-- `timelineClient.ts`: CLI utility for timeline generation.
-- `app/api/db/`: Database connection and models.
-- `app/api/auth/`: NextAuth configuration.
+```
+/TLG/
+├── app/                              # Next.js App Router
+│   ├── api/                          # API routes (server-side)
+│   │   ├── auth/                     # Authentication endpoints
+│   │   ├── gitHub/                   # GitHub API integrations
+│   │   ├── repository/               # Single repository operations
+│   │   └── repositories/             # Multi-repository operations
+│   │       └── articles/             # Article CRUD endpoints
+│   ├── components/                   # Shared UI components
+│   ├── dashboard/                    # Dashboard pages
+│   ├── login/                        # Login pages
+│   ├── repos/                        # Repository listing page
+│   ├── timeLine/                     # Timeline view page
+│   └── utils/                        # Client-side utilities
+│
+├── lib/                              # Server-side logic
+│   ├── createRepo/                   # Repository creation logic
+│   ├── chatGPT/                      # OpenAI integration
+│   └── db/                           # Database layer
+│       ├── models/                   # Mongoose models
+│       └── schema/                   # Mongoose schemas
+│
+├── types/                            # TypeScript type definitions
+│   ├── article.type.ts
+│   ├── repository.type.ts
+│   └── user.type.ts
+│
+└── public/                           # Static assets
+```
 
 ## ToDo (Next Steps)
 
-### Completed
+### Completed ✅
 
-- [x] User authentication with NextAuth (GitHub OAuth and credentials).
-- [x] MongoDB integration with Mongoose (User model).
-- [x] API for fetching GitHub commits with date filtering.
-- [x] ChatGPT integration for summary generation.
-- [x] Session management and protected routes.
-- [x] Custom login/register routes.
-- [x] Timeline data management (merge, sort, dedupe).
+- [x] User authentication with NextAuth (GitHub OAuth and credentials)
+- [x] MongoDB integration with Mongoose
+- [x] API for fetching GitHub commits with date filtering
+- [x] ChatGPT integration for summary generation
+- [x] Session management and protected routes
+- [x] Timeline data management (merge, sort, dedupe)
+- [x] Repository object with tracking functionality
+- [x] Repository management UI (add/remove repos)
+- [x] Timeline display component with combined articles
+- [x] Automated daily summary generation
+- [x] Next.js App Router structure following best practices
+- [x] Proper file structure (lib/, types/, app/)
 
-### In Progress / Planned
+### In Progress / Planned 🚧
 
-- [ ] Repository object need to be created with id, name, date started, number of commits, days active. This object will be created and saved to db for the repository tracked by user. Repository object can't be nested inside user object. It should be referenced by user and fetched by aditional logic.
-- [ ] Fix creation of day article. There should be only one way of getting commits eather by passing them as parameter of by fetching them inside the main function generateDayArticle.
-- [ ] Fix endpoints structure and swap the get into post.
-      -
-- [ ] Fetching dates of active days so the summary can be created based on this dates.
-- [ ] Add error handling and logging.
-- [ ] Password hashing with bcrypt.
-- [ ] Email verification for registration.
-- [x] Add repository management UI (add/remove repos).
-- [x] Implement timeline display component.
-- [x] Automate daily summary generation (cron jobs).
-- [x] Deploy the app to vercel.
+- [ ] Add checker for processed repo in DB (add if missing)
+- [ ] Create functionality to update saved processed repo
+- [ ] Fix creation of day article (single source for commits)
+- [ ] Add error handling and logging
+- [ ] Password hashing with bcrypt
+- [ ] Email verification for registration
+- [ ] Add repository list sorting (by last_update, created, alphabetical)
+- [ ] Add recover password functionality
+- [ ] Implement caching for generated articles
 
 ## Troubleshooting
 
@@ -154,32 +179,65 @@ TLG is built as a **Next.js App Router** application with:
 
 ## Example API Usage
 
-**Fetch Commits**:
+**Generate Repository with Articles**:
 
-```
-GET /api/getRepoCommits?repo=PawDevUK/TLG&since=2025-12-01&until=2025-12-07
-```
+```bash
+POST /api/repositories
+Content-Type: application/json
 
-**Generate Summary**:
-
-```
-POST /api/chatGPT
 {
-  "commits": ["Fixed navbar routing", "Added metrics endpoint"],
-  "repo": "PawDevUK/TLG"
+  "user": "pawdevUK",
+  "repo": "TLG"
 }
+```
+
+**Get All Repositories**:
+
+```bash
+GET /api/repositories
 ```
 
 Response:
 
 ```json
 {
-  "title": "Daily Update",
-  "date": "2025-12-07",
-  "summary": "Today, navbar routing was fixed and a metrics endpoint was added.",
-  "bullets": [
-    "Fixed navbar mobile routing issue",
-    "Added metrics endpoint at api/metrics.js"
+  "repositories": [
+    {
+      "_id": "...",
+      "name": "TLG",
+      "user": "pawdevUK",
+      "articles": [
+        {
+          "title": "TLG - Authentication Implementation",
+          "date": "2025-11-20",
+          "description": "Implemented NextAuth with GitHub OAuth and credentials provider...",
+          "createdAt": "2025-11-21T10:00:00.000Z"
+        }
+      ],
+      "createdAt": "2025-11-21T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+**Get All Articles (Timeline)**:
+
+```bash
+GET /api/repositories/articles
+```
+
+Response:
+
+```json
+{
+  "articles": [
+    {
+      "_id": "...",
+      "title": "TLG - Authentication Implementation",
+      "date": "2025-11-20",
+      "description": "Implemented NextAuth...",
+      "createdAt": "2025-11-21T10:00:00.000Z"
+    }
   ]
 }
 ```
@@ -187,118 +245,12 @@ Response:
 ## Contributing
 
 - Fork the repo and create a feature branch.
-- Follow TypeScript best practices.
+- Follow TypeScript and Next.js best practices.
+- Keep server logic in `/lib`, API routes in `/app/api`.
+- Centralize types in `/types`.
 - Test API routes and UI components.
 - Update this README for any new features.
 
 ## License
 
 MIT License.
-
-1. Run the Next.js development server (if you're running the web app):
-
-```bash
-npm run dev
-```
-
-1. Run the TypeScript utilities directly (no build) using `tsx` (installed as a dev dependency):
-
-```bash
-# run the timeline client script
-npx tsx timelineClient.ts
-# or use the npm script
-npm run run:timeline
-```
-
-1. Or build the TypeScript sources and run the output:
-
-```bash
-npm run build
-node dist/timelineClient.js
-```
-
-### Quick Links
-
-- Want to understand the project? → Read [SUMMARY.md](docs/SUMMARY.md)
-- Ready to get started? → Follow [RUNNING_AS_NEXTJS.md](RUNNING_AS_NEXTJS.md)
-- Need to set up? → Use [SETUP.md](SETUP.md)
-- Ready to build? → Follow [IMPLEMENTATION_IDEAS.md](docs/IMPLEMENTATION_IDEAS.md)
-- Check progress? → See [WORK_REPORT.md](docs/WORK_REPORT.md)
-- Alternative: GitHub Actions? → See [RUNNING_WITH_GITHUB_ACTIONS.md](RUNNING_WITH_GITHUB_ACTIONS.md)
-
-## ToDo (next steps)
-
-### Front-end
-
-- [ ] Add repo list sorting (by last_update, created, alphabetical)
-- [ ] Build Time Line component to render articles
-- [ ] Connect frontend to API for article generation and display
-- [ ] Add recover password
-
-### Backend & Data
-
-- [x] Article data shape defined (`article.type.ts`)
-- [x] Utility scripts for fetching commits (`timelineClient.ts`, `githubFetcher.ts`)
-- [x] OpenAI API integration for article generation (`app/api/chatGPT/route.ts`)
-- [ ] Wire article generation into API routes and database
-- [ ] Set up MongoDB connection and deployable backend.
-- [ ] Finish auth. Create the authorisation for login and register.
-- [ ] Connect DB and save article.
-- [ ] Create logic to run it everyday.
-
-### Integration & Automation
-
-- [ ] Automate daily/weekly timeline generation (cron or webhook)
-- [ ] Add error handling and logging for API calls
-- [ ] Add caching for generated articles
-
-### Planning & Decisions
-
-- [x] Project name: **Time Line Generator**
-- [x] Stack: **Next.js** + MongoDB + OpenAI
-
----
-
----
-
-## Key files
-
-- `timelineClient.ts` — CLI/utility for fetching commits and generating summaries
-- `githubFetcher.ts` — GitHub API integration for commit and file stats
-- `article.type.ts` — TypeScript definitions for timeline articles
-- `app/api/chatGPT/route.ts` — API route for generating articles using OpenAI
-- `SETUP.md`, `RUNNING_AS_NEXTJS.md` — Setup and deployment instructions
-
----
-
-## Troubleshooting
-
-- **OpenAI API key issues**: Keys must be created at <https://platform.openai.com/account/api-keys> and stored in `.env.local`. Keys are only shown once—copy and save immediately.
-- **API route 404**: Use `/api/chatGPT` (not `/chatGPT`). File must be at `app/api/chatGPT/route.ts`.
-- **401 Unauthorized**: Double-check your API key, restart dev server after changes, and never hardcode keys in source files.
-- **No summary in response**: Update prompts and schema to require a summary field.
-
-## Example API usage
-
-Request:
-
-```
-GET http://localhost:3000/api/chatGPT
-```
-
-Response:
-
-```
-{
- "title": "Daily Update",
- "date": "2025-12-02",
- "summary": "Today, the navbar routing was fixed for mobile, a metrics endpoint was added, and CI build pipeline was optimized for faster deployments.",
- "bullets": [
-  "Fix navbar mobile routing issue",
-  "Add metrics endpoint at api/metrics.js",
-  "CI build pipeline optimised; ~30% faster"
- ]
-}
-```
-
----
