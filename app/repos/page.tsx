@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { RepoList } from '../../types/repoList.types';
-import RepoCard from '../Components/RepoCard';
+import { RepoList } from '@/types/repoList.types';
+import RepoCard from '@/app/components/RepoCard';
 
 export default function Repos() {
 	const [repos, setRepos] = useState<RepoList[]>([]);
