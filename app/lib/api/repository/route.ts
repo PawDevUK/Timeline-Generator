@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRepository } from './createRepo';
 import { GetAllRepositories } from '@/app/api/db/repository.db';
-import { dbConnect } from '../db/db';
+import { dbConnect } from '../../../api/db/db';
 
 export const maxDuration = 300; // 5 minutes timeout
 
 export async function POST(request: NextRequest) {
 	try {
-		// Parse and validate request body
 		let body;
 		try {
 			body = await request.json();
@@ -18,7 +17,6 @@ export async function POST(request: NextRequest) {
 
 		const { user, repo } = body;
 
-		// Validate required fields
 		if (!user || typeof user !== 'string' || user.trim() === '') {
 			console.error('Invalid or missing user field:', user);
 			return NextResponse.json({ error: 'Missing or invalid required field: user (must be non-empty string)' }, { status: 400 });
@@ -34,19 +32,17 @@ export async function POST(request: NextRequest) {
 
 		console.log(`Generating articles for user: ${trimmedUser}, repo: ${trimmedRepo}`);
 
-		// Start the process without awaiting
 		createRepository(trimmedUser, trimmedRepo)
 			.then((result) => console.log(`Completed: ${result.data.articles.length} articles`))
 			.catch((err) => console.error('Background generation failed:', err));
 
-		// Return immediately
 		return NextResponse.json(
 			{
 				message: 'Article generation started',
 				status: 'processing',
 			},
 			{ status: 202 },
-		); // 202 Accepted
+		);
 	} catch (error) {
 		console.error('Unexpected error in POST /api/articles/generate:', error);
 		const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -54,6 +50,7 @@ export async function POST(request: NextRequest) {
 	}
 }
 
+// Gets all repositories from Data Base.
 export async function GET() {
 	await dbConnect();
 	try {

@@ -12,10 +12,10 @@
 //  - Save the all object to DB. Object should be accessible via id
 
 import axios from 'axios';
-import { Repository } from '../db/models/repository.model';
-import { AddRepository } from '../db/repository.db';
-import { dbConnect } from '../db/db';
-import { generateDayArticle } from '../../lib/chatGPT/generateDayArticle';
+import { Repository } from '../../../api/db/models/repository.model';
+import { AddRepository } from '../../../api/db/repository.db';
+import { dbConnect } from '../../../api/db/db';
+import { generateDayArticle } from '../../chatGPT/generateDayArticle';
 
 const token = process.env.GITHUB_TOKEN;
 

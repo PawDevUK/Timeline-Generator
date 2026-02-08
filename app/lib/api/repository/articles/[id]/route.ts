@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbConnect } from '../../../db/db';
-import { Article } from '../../../db/models/article.model';
-import { GetArticle, EditArticle, DeleteArticle } from '../../../db/articles.db';
+import { dbConnect } from '../../../../../api/db/db';
+import { Article } from '../../../../../api/db/models/article.model';
+import { GetArticle, EditArticle, DeleteArticle } from '../../../../../api/db/articles.db';
 
 // GET - Get single article by ID
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> | { id: string } }) {
