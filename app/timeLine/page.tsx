@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
-import Header from '../Components/common/Header';
+import Header from '../components/common/Header';
 
 type Article = {
 	_id?: string;
@@ -9,20 +9,30 @@ type Article = {
 	description: string;
 };
 
+type Repository = {
+	_id?: string;
+	name: string;
+	user: string;
+	articles: Article[];
+	createdAt: string;
+};
+
 const TimelineList = () => {
-	function fetchArticles() {
-		fetch('/api/articles')
-			.then((res) => res.json())
-			.then((data) => setArticles(data.articles));
-	}
 	const [articles, setArticles] = useState<Article[]>([]);
-
-	// In useEffect for initial load
-	useEffect(() => {
-		fetchArticles();
-	}, []);
-
 	const scrollRef = useRef(null);
+
+	useEffect(() => {
+		fetch('/api/repositories')
+			.then((res) => res.json())
+			.then((data) => {
+				// Flatten all articles from all repositories
+				const allArticles = data.repositories?.flatMap((repo: Repository) => repo.articles || []) || [];
+				setArticles(allArticles);
+			})
+			.catch((err) => {
+				console.error('Error fetching articles:', err);
+			});
+	}, []);
 
 	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
 		const slider = scrollRef.current as HTMLDivElement | null;
@@ -47,16 +57,15 @@ const TimelineList = () => {
 		document.addEventListener('mouseup', handleMouseUp);
 	};
 
-	// In event handler for delete
 	const handleDelete = async (id: string) => {
-		await fetch(`/api/articles/${id}`, { method: 'DELETE' });
+		await fetch(`/api/repositories/articles/${id}`, { method: 'DELETE' });
 		// Refresh articles
-		fetchArticles();
-	};
-
-	// In event handler for generate
-	const handleGenerate = async () => {
-		await fetch('/api/articles/generate?user=PawDevUK&repo=TLG&year=2025&month=12&day=12');
+		fetch('/api/repositories')
+			.then((res) => res.json())
+			.then((data) => {
+				const allArticles = data.repositories?.flatMap((repo: Repository) => repo.articles || []) || [];
+				setArticles(allArticles);
+			});
 	};
 
 	return (
@@ -70,18 +79,18 @@ const TimelineList = () => {
 					<div className='relative'>
 						{/* Timeline vertical line */}
 						<div className='absolute left-2 top-0 h-full w-0.5 bg-gray-300' />
-						{articles.map(({ title, date, description, _id }, articleIndex) => (
-							<div key={articleIndex} className={`relative pl-6 sm:pl-12 pr-2 sm:pr-6 ${articleIndex !== articles.length - 1 ? 'mb-8' : ''}`}>
+						{articles.map((article, articleIndex) => (
+							<div key={article._id || articleIndex} className={`relative pl-6 sm:pl-12 pr-2 sm:pr-6 ${articleIndex !== articles.length - 1 ? 'mb-8' : ''}`}>
 								{/* Marker */}
 								<span className='absolute left-0 top-3 w-3 h-3 rounded-full border-2 border-gray-50 bg-blue-500' style={{ zIndex: 1 }} />
 								{/* Date Header */}
-								<Header>{title}</Header>{' '}
-								<button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => _id && handleDelete(_id)}>
+								<Header>{article.title}</Header>
+								<button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => article._id && handleDelete(article._id)}>
 									Delete
 								</button>
-								<div className='text-sm text-gray-500 mb-2 font-bold'>{date}</div>
+								<div className='text-sm text-gray-500 mb-2 font-bold'>{article.date}</div>
 								{/* Description */}
-								<p className='text-gray-700 text-sm'>{description}</p>
+								<p className='text-gray-700 text-sm'>{article.description}</p>
 							</div>
 						))}
 					</div>

@@ -18,5 +18,11 @@ export type RepoList = {
 	TLG: {
 		tracking: boolean;
 		daysActiveCommitts: string[];
+		articles: {
+			title: string;
+			date: string;
+			description: string;
+			createdAt: Date;
+		}[];
 	};
 };

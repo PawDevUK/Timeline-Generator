@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createRepository } from '../../../lib/CreateRepo/createRepo';
+import { createRepository } from '@/lib/createRepo/createRepo';
 import { GetAllRepositories } from '@/lib/db/repository.db';
 import { dbConnect } from '@/lib/db/db';
 
@@ -58,7 +58,7 @@ export async function GET() {
 		if (!result.success) {
 			return NextResponse.json({ error: result.error }, { status: 500 });
 		}
-		return NextResponse.json({ articles: result.data }, { status: 200 });
+		return NextResponse.json({ repositories: result.data }, { status: 200 });
 	} catch (error) {
 		console.error('Error in GET /api/articles:', error);
 		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

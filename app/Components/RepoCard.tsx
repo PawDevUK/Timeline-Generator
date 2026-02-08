@@ -1,4 +1,4 @@
-import { RepoList } from '../types/repoList.types';
+import { RepoList } from '@/types/repoList.types';
 import { formatDistanceToNow } from 'date-fns';
 import Button from './Button';
 

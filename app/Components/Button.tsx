@@ -1,4 +1,4 @@
-import { RepoList } from '../types/repoList.types';
+import { RepoList } from '@/types/repoList.types';
 import styled from 'styled-components';
 
 const StyledButton = styled.a<{ tracking?: boolean }>`

@@ -1,8 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { RepoList } from '../types/repoList.types';
+import { RepoList } from '../../types/repoList.types';
 import RepoCard from '../Components/RepoCard';
-import { addRepository, getAllRepositories, clearAllRepositories } from '../utils/indexedDB';
 
 export default function Repos() {
 	const [repos, setRepos] = useState<RepoList[]>([]);
