@@ -1,4 +1,4 @@
-import { ArticleSchema, ArticleType } from '../schema/article.schema';
 import mongoose, { Model } from 'mongoose';
+import { ArticleSchema, ArticleDocument } from '../schema/article.schema';
 
-export const Article: Model<ArticleType> = mongoose.models.Article || mongoose.model<ArticleType>('Article', ArticleSchema);
+export const Article: Model<ArticleDocument> = mongoose.models.Article || mongoose.model<ArticleDocument>('Article', ArticleSchema);
