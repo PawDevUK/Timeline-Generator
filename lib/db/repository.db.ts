@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import { RepositoryDocument } from './schema/repository.schema';
-import { RepositoryType } from '../types/repository.type';
+import { RepoList } from '../../types/repoList.types';
 import { Repository } from './models/repository.model';
 
 // Add repository
-export async function AddRepository(Repository: typeof mongoose.Model, repository: Omit<RepositoryType, 'createdAt'>) {
+export async function AddRepository(Repository: typeof mongoose.Model, repository: Omit<RepoList, 'createdAt'>) {
 	try {
 		const newRepository = await Repository.create(repository);
 		return { success: true, data: newRepository };
