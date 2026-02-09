@@ -9,3 +9,8 @@ export const ArticleSchema: Schema<ArticleDocument> = new Schema({
 	description: { type: String, required: true },
 	createdAt: { type: Date, default: Date.now },
 });
+
+// Capitalize the first letter of the title before saving to the database
+ArticleSchema.path('title').set(function (value: string) {
+	return value.charAt(0).toUpperCase() + value.slice(1);
+});
