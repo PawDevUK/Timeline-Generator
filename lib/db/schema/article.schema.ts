@@ -1,5 +1,5 @@
 import { Schema, Document } from 'mongoose';
-import { ArticleType } from '../../types/article.type';
+import { ArticleType } from '@/types/article.type';
 
 export interface ArticleDocument extends ArticleType, Document {}
 
