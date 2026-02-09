@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
 		console.log(`Generating articles for user: ${trimmedUser}, repo: ${trimmedRepo}`);
 
 		createRepository(trimmedUser, trimmedRepo)
-			.then((result) => console.log(`Completed: ${result.data.articles.length} articles`))
+			.then((result) => console.log(`Completed: ${result.data.TLG.articles.length} articles`))
 			.catch((err) => console.error('Background generation failed:', err));
 
 		return NextResponse.json(
