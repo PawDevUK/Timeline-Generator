@@ -1,12 +1,12 @@
-import { RepoList } from '@/types/repoList.types';
+import { Repository } from '@/types/repository.types';
 import { formatDistanceToNow } from 'date-fns';
 import Button from './Button';
 
-function getLastUpdated(repo: RepoList) {
+function getLastUpdated(repo: Repository) {
 	return `Updated ${formatDistanceToNow(new Date(repo.updated_at))} ago`;
 }
 
-export default function RepoCard({ repo, addTracking }: { repo: RepoList; addTracking: (repo: RepoList) => void }) {
+export default function RepoCard({ repo, addTracking }: { repo: Repository; addTracking: (repo: Repository) => void }) {
 	return (
 		<div key={repo.id} className='flex items-center justify-between border-b border-gray-200 pb-4 last:border-b-0 '>
 			<div className='flex items-center gap-4'>

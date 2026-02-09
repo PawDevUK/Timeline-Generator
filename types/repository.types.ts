@@ -1,4 +1,4 @@
-export type RepoList = {
+export type Repository = {
 	id: number;
 	node_id: string;
 	name: string;

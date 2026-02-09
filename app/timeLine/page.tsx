@@ -2,20 +2,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Header from '../components/common/Header';
 import { combineTimeLine } from '@/app/utils/combineTimeLine';
+import { Repository } from '@/types/repository.types';
 
 type Article = {
 	_id?: string;
 	title: string;
 	date: string;
 	description: string;
-};
-
-type Repository = {
-	_id?: string;
-	name: string;
-	user: string;
-	articles: Article[];
-	createdAt: string;
 };
 
 const TimelineList = () => {
@@ -26,11 +19,7 @@ const TimelineList = () => {
 		fetch('/api/repositories')
 			.then((res) => res.json())
 			.then((data) => {
-				console.log('Fetched data:', data);
-				console.log('Repositories:', data.repositories);
-				// Pass repositories directly to combineTimeLine (NOT articles)
 				const allArticles = combineTimeLine(data.repositories || []);
-				console.log('Combined articles:', allArticles);
 				setArticles(allArticles);
 			})
 			.catch((err) => {

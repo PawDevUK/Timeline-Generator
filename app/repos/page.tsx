@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { RepoList } from '@/types/repoList.types';
+import { Repository } from '@/types/repository.types';
 import RepoCard from '@/app/components/RepoCard';
 
 export default function Repos() {
-	const [repos, setRepos] = useState<RepoList[]>([]);
+	const [repos, setRepos] = useState<Repository[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
@@ -32,7 +32,7 @@ export default function Repos() {
 	// 	console.log(repos);
 	// }, [repos]);
 
-	const addTracking = (repo: RepoList) => {
+	const addTracking = (repo: Repository) => {
 		setRepos((prevRepos) =>
 			prevRepos.map((stored_repo) => (stored_repo.id === repo.id ? { ...stored_repo, TLG: { ...stored_repo.TLG, tracking: !stored_repo.TLG.tracking } } : stored_repo)),
 		);
@@ -50,7 +50,7 @@ export default function Repos() {
 					<div className='bg-white rounded-lg shadow p-4 sm:w-[50vw]'>
 						<div className='flex flex-col gap-4'>
 							{repos.length > 0 ? (
-								repos.map((repo: RepoList) => <RepoCard key={repo.id} repo={repo} addTracking={addTracking}></RepoCard>)
+								repos.map((repo: Repository) => <RepoCard key={repo.id} repo={repo} addTracking={addTracking}></RepoCard>)
 							) : (
 								<p className='text-gray-500 text-center'>No repositories found</p>
 							)}

@@ -1,4 +1,4 @@
-import { RepoList } from '@/types/repoList.types';
+import { Repository } from '@/types/repository.types';
 import styled from 'styled-components';
 
 const StyledButton = styled.a<{ tracking?: boolean }>`
@@ -18,7 +18,7 @@ const StyledButton = styled.a<{ tracking?: boolean }>`
 	}
 `;
 
-export default function Button({ repo, addTracking }: { repo: RepoList; addTracking: (repo: RepoList) => void }) {
+export default function Button({ repo, addTracking }: { repo: Repository; addTracking: (repo: Repository) => void }) {
 	return (
 		<StyledButton tracking={repo.TLG?.tracking} onClick={() => addTracking(repo)}>
 			{repo.TLG?.tracking ? 'Tracking' : 'Track'}

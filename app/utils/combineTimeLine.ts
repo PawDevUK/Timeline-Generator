@@ -1,4 +1,4 @@
-import { RepoList } from '@/types/repoList.types';
+import { Repository } from '@/types/repository.types';
 
 type Article = {
 	_id?: string;
@@ -15,19 +15,24 @@ type Article = {
  * @param repositories - Array of repositories containing articles
  * @returns Array of articles sorted by date (newest first)
  */
-export function combineTimeLine(repositories: RepoList[]): Article[] {
+export function combineTimeLine(repositories: Repository[]): Article[] {
 	if (!repositories || repositories.length === 0) {
 		return [];
 	}
 
 	// Flatten all articles from all repositories
-	const allArticles: Article[] = repositories.flatMap((repo) =>
-		(repo.TLG?.articles || []).map((article) => ({
+	// Handle both old structure (articles directly on repo) and new structure (TLG.articles)
+	const allArticles: Article[] = repositories.flatMap((repo: Repository) => {
+		// Try new structure first (TLG.articles), fallback to old structure (articles)
+		const articles = repo.TLG?.articles || [];
+		const user = repo.owner?.login || '';
+
+		return articles.map((article: Article) => ({
 			...article,
 			repositoryName: repo.name,
-			repositoryUser: repo.owner?.login || '',
-		})),
-	);
+			repositoryUser: user,
+		}));
+	});
 
 	// Sort by date (newest first)
 	return allArticles.sort((a, b) => {

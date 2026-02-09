@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
-import { RepoList } from '../../../../types/repoList.types';
+import { Repository } from '../../../../types/repository.types';
 const token = process.env.GITHUB_TOKEN;
 
 export async function GET(request: Request) {
@@ -14,7 +14,7 @@ export async function GET(request: Request) {
 			},
 		});
 
-		const repos: RepoList = response.data.map((repo: RepoList) => ({
+		const repos: Repository = response.data.map((repo: Repository) => ({
 			id: repo.id,
 			node_id: repo.node_id,
 			name: repo.name,

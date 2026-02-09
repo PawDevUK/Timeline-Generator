@@ -7,7 +7,7 @@
 **Current Structure**:
 
 ```typescript
-RepoList {
+Repository {
   _id?: string
   id: number
   node_id: string
@@ -69,9 +69,9 @@ RepoList {
 ```typescript
 import { Schema, Document } from 'mongoose';
 import { ArticleSchema } from './article.schema';
-import { RepoList } from '../../../types/repoList.types';
+import { Repository } from '../../../types/repository.types';
 
-export interface RepositoryDocument extends RepoList, Document {}
+export interface RepositoryDocument extends Repository, Document {}
 
 export const RepositorySchema: Schema<RepositoryDocument> = new Schema({
  id: { type: Number },
@@ -99,10 +99,10 @@ export const RepositorySchema: Schema<RepositoryDocument> = new Schema({
  }
 ## Step 2: Update Repository Type
 
-**File**: `types/repoList.types.ts`
+**File**: `types/repository.types.ts`
 
 ```typescript
-export type RepoList = {
+export type Repository = {
  _id?: string;
  id: number;
  node_id: string;
@@ -534,11 +534,11 @@ Run with: `npx tsx scripts/migrateRepositories.ts`
 
 ## Implementation Checklist
 
-- [ ] Step 1: Update `lib/db/schema/repository.schema.ts` with RepoList structure and TLG nested object
-- [ ] Step 2: Update `types/repoList.types.ts` with sync fields in TLG object
+- [ ] Step 1: Update `lib/db/schema/repository.schema.ts` with Repository structure and TLG nested object
+- [ ] Step 2: Update `types/repository.types.ts` with sync fields in TLG object
 - [ ] Step 3: Create `lib/repository/syncRepository.ts` function
 - [ ] Step 4: Create `app/api/repositories/sync/route.ts` endpoint
-- [ ] Step 5: Update `lib/createRepo/createRepo.ts` to use RepoList structure and set initial sync data
+- [ ] Step 5: Update `lib/createRepo/createRepo.ts` to use Repository structure and set initial sync data
 - [ ] Step 6: (Optional) Add sync button to UI
 - [ ] Step 7: (Optional) Create cron job for automated sync
 - [ ] Step 8: (Optional) Run migration script for existing repositories

@@ -1,8 +1,8 @@
 import { Schema, Document } from 'mongoose';
 import { ArticleSchema } from './article.schema';
-import { RepoList } from '@/types/repoList.types';
+import { Repository } from '@/types/repository.types';
 
-export interface RepositoryDocument extends RepoList, Document {}
+export interface RepositoryDocument extends Repository, Document {}
 
 export const RepositorySchema: Schema<RepositoryDocument> = new Schema({
 	id: { type: Number },
