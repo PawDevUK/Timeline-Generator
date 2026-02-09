@@ -87,9 +87,27 @@ export async function createRepository(user: string, repo: string) {
 
 		// Create repository object
 		const repositoryData = {
+			id: 0,
+			node_id: '',
 			name: repo,
-			user,
-			articles,
+			full_name: `${user}/${repo}`,
+			private: false,
+			owner: {
+				login: user,
+				id: 0,
+			},
+			html_url: `https://github.com/${user}/${repo}`,
+			url: `https://api.github.com/repos/${user}/${repo}`,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString(),
+			pushed_at: new Date().toISOString(),
+			date: new Date().toISOString().slice(0, 10),
+			language: '',
+			TLG: {
+				tracking: true,
+				daysActiveCommitts: Object.keys(groups),
+				articles,
+			},
 		};
 
 		// Save to DB
