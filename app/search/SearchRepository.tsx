@@ -41,7 +41,7 @@ export default function SearchRepository() {
 
 	return (
 		<div className='bg-white rounded-lg shadow-md p-6 w-1/4 flex-none'>
-			<h2 className='text-2xl font-bold mb-4'>Generate Article from Commits</h2>
+			<h2 className='text-2xl font-bold mb-4'>Search Repositories</h2>
 
 			<form onSubmit={handleGenerateArticle} className='space-y-4'>
 				{/* User Input */}
