@@ -139,6 +139,25 @@ TLG is built as a **Next.js App Router** application with:
 └── public/                           # Static assets
 ```
 
+# App content and layout
+
+## Dashboard content page - need to be renamed to search repositories or some better name
+
+- Repositories:
+  - Number of user repositories.
+  - Last active repository.
+  - Last active day.
+- Search section with results bellow serch. -- need to be on the left and stats card on the right with the search results bellow.
+
+## Tracked repositories page
+
+- Number of user tracked repositories
+- Tracked repositories number of commits.
+- Tracked repositories number of active days.
+- Tracked repositories last update.
+
+## Combine TimeLine page
+
 ## ToDo (Next Steps)
 
 ### Completed ✅
