@@ -3,7 +3,7 @@
 //      - It needs to fetch all commits header from the selected repository
 //      - It needs create articles from commits
 //      - It needs save the articles to DB as the repostiory object with info mentioned above.
-// This module is a back end module
+// This module is a back-end module
 // Steps:
 //  - Create object
 //  - Fetch all commits from day one and save them to object.

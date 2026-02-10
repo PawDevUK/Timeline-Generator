@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createRepository } from '@/lib/createRepo/createRepo';
+import { createRepository } from '@/lib/createRepository/createRepo';
 import { GetAllRepositories } from '@/lib/db/repository.db';
 import { dbConnect } from '@/lib/db/db';
 
