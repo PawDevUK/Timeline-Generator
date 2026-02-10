@@ -2,7 +2,7 @@
 
 @layer components {
   .card-panel {
-    @apply rounded-lg shadow-md p-6;
+    @apply rounded-lg shadow-md p-6 bg-white;
   }
 }
 
