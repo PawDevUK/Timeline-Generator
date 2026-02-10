@@ -64,8 +64,8 @@ const TimelineList = () => {
 
 	return (
 		<PageBaseLayout>
-			<section className='bg-gray-50 py-6 md:py-10'>
-				<div className='max-w-2xl mx-auto'>
+			<section className='bg-gray-50 card-panel md:py-10'>
+				<div className=' mx-auto px-2'>
 					<div
 						ref={scrollRef}
 						onMouseDown={handleMouseDown}
@@ -77,7 +77,7 @@ const TimelineList = () => {
 							{articles.map((article, articleIndex) => (
 								<div key={article._id || articleIndex} className={`relative pl-6 sm:pl-12 pr-2 sm:pr-6 ${articleIndex !== articles.length - 1 ? 'mb-8' : ''}`}>
 									{/* Marker */}
-									<span className='absolute left-0 top-3 w-3 h-3 rounded-full border-2 border-gray-50 bg-blue-500' style={{ zIndex: 1 }} />
+									<span className='absolute left-[3px] top-3 w-3 h-3 rounded-full border-2 border-gray-50 bg-blue-500' style={{ zIndex: 1 }} />
 									{/* Date Header */}
 									<Header>{article.title}</Header>
 									<button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => article._id && handleDelete(article._id)}>
