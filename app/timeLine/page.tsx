@@ -64,7 +64,7 @@ const TimelineList = () => {
 
 	return (
 		<PageBaseLayout>
-			<section className='bg-gray-50 card-panel md:py-10'>
+			<section className=' card-panel md:py-10'>
 				<div className=' mx-auto px-2'>
 					<div
 						ref={scrollRef}

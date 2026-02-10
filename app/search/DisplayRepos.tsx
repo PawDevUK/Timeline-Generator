@@ -13,14 +13,14 @@ interface DisplayReposProps {
 export default function DisplayRepos({ results }: DisplayReposProps) {
 	if (!results) {
 		return (
-			<div className='bg-white card-panel mt-6 w-full flex-none'>
+			<div className=' card-panel mt-6 w-full flex-none'>
 				<p className='text-gray-500'>Select a repository to view details</p>
 			</div>
 		);
 	}
 
 	return (
-		<div className='bg-white card-panel mt-6 w-full flex-none'>
+		<div className=' card-panel mt-6 w-full flex-none'>
 			<h3 className='text-xl font-semibold mb-4'>Search Results</h3>
 
 			{results.length > 0 && (

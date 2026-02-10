@@ -17,7 +17,7 @@ export default function SearchRepository({ onSearch, loading, error, success }: 
 	};
 
 	return (
-		<div className='bg-white card-panel w-1/4 flex-none'>
+		<div className=' card-panel w-1/4 flex-none'>
 			<h2 className='text-2xl font-bold mb-4'>Search Repositories</h2>
 
 			<form onSubmit={handleSubmit} className='space-y-4'>
