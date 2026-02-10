@@ -158,6 +158,9 @@ TLG is built as a **Next.js App Router** application with:
 
 ### In Progress / Planned 🚧
 
+- [ ] Add updateing TLG repository's articles. Instead of generating all repo obj app need to check which day is missing and generate article only for missing days.
+- [ ] Add handling for non-existing repository
+- [ ] Add handling for requesting duplicate repository with timeline
 - [ ] Add checker for processed repo in DB (add if missing)
 - [ ] Create functionality to update saved processed repo
 - [ ] Fix creation of day article (single source for commits)
