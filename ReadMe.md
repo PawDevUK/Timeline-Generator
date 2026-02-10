@@ -174,10 +174,12 @@ TLG is built as a **Next.js App Router** application with:
 - [x] Automated daily summary generation
 - [x] Next.js App Router structure following best practices
 - [x] Proper file structure (lib/, types/, app/)
+- [x] Add seach engine which will fetch list of repo and then display it in the component below the search.
 
 ### In Progress / Planned 🚧
 
-- [ ] Add seach engine which will fetch list of repo and then display it in the component below the search.
+- [ ] Add the tracking to displied repositories. Each of displied repositories need to have track button and onClick needs to trigger the repository articles creation and added to DB.
+- [ ] Add list of tracked repositories from DB to Repositories component.
 - [ ] Add update TLG repository's articles. Instead of generating new repo obj with uptodate articles, app needs to check which day is missing and then generate only articles for missing days.
 - [ ] Add handling for non-existing repository
 - [ ] Add handling for requesting duplicate repository with timeline
