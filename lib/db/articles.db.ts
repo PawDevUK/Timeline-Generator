@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ArticleType } from '../types/article.type';
+import { ArticleType } from '@/types/article.type';
 
 //  Add article
 export async function AddArticle(Article: typeof mongoose.Model, article: Omit<ArticleType, 'createdAt' | '_id'>) {
