@@ -20,5 +20,5 @@ export default function Home() {
 		redirect('/login');
 	}
 
-	return <div>Dashboard</div>;
+	return <div>Search</div>;
 }
