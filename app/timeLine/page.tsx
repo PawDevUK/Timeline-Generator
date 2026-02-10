@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
-import Header from '../components/common/Header';
+import Header from '@/app/components/common/Header';
 import { combineTimeLine } from '@/app/utils/combineTimeLine';
 import { Repository } from '@/types/repository.types';
 

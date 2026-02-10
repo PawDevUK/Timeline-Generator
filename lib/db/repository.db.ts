@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { RepositoryDocument } from './schema/repository.schema';
-import { Repository as RepositoryType } from '../../types/repository.types';
+import { Repository as RepositoryType } from '@/types/repository.types';
 import { Repository } from './models/repository.model';
 
 // Add repository

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { userTypes } from '../types/user.type';
+import { userTypes } from '@/types/user.type';
 
 type MongooseCache = {
 	conn: typeof mongoose | null;

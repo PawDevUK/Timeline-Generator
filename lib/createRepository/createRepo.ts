@@ -15,7 +15,7 @@ import axios from 'axios';
 import { Repository } from '@/lib/db/models/repository.model';
 import { AddRepository } from '@/lib/db/repository.db';
 import { dbConnect } from '@/lib/db/db';
-import { generateDayArticle } from '../chatGPT/generateDayArticle';
+import { generateDayArticle } from '@/lib/chatGPT/generateDayArticle';
 
 const token = process.env.GITHUB_TOKEN;
 

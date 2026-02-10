@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
-import { GitHubCommit } from '../../../../types/commits.types';
+import { GitHubCommit } from '@/types/commits.types';
 
 const token = process.env.GITHUB_TOKEN;
 
