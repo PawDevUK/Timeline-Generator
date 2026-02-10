@@ -1,41 +1,26 @@
 import React, { useState } from 'react';
 
-export default function SearchRepository() {
+interface SearchRepositoryProps {
+	onSearch: (user: string, repo: string) => void;
+	loading: boolean;
+	error: string;
+	success: string;
+}
+
+export default function SearchRepository({ onSearch, loading, error, success }: SearchRepositoryProps) {
 	const [user, setUser] = useState('');
 	const [repo, setRepo] = useState('');
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState('');
-	const [success, setSuccess] = useState('');
 
-	const handleGenerateArticle = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setLoading(true);
-		setError('');
-		setSuccess('');
-
-		try {
-			const response = await fetch(`/api/articles/generate?user=${user}&repo=${repo}`);
-
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.error || 'Failed to generate article');
-			}
-			const data = await response.json();
-			setSuccess(`Article generated successfully: ${data.article.title}`);
-			setUser('');
-			setRepo('');
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'An error occurred');
-		} finally {
-			setLoading(false);
-		}
+		onSearch(user, repo);
 	};
 
 	return (
 		<div className='bg-white card-panel w-1/4 flex-none'>
 			<h2 className='text-2xl font-bold mb-4'>Search Repositories</h2>
 
-			<form onSubmit={handleGenerateArticle} className='space-y-4'>
+			<form onSubmit={handleSubmit} className='space-y-4'>
 				{/* User Input */}
 				<div>
 					<label className='block text-sm font-medium text-gray-700 mb-1'>GitHub Username</label>
@@ -57,7 +42,6 @@ export default function SearchRepository() {
 						value={repo}
 						onChange={(e) => setRepo(e.target.value)}
 						placeholder='e.g., TLG'
-						required
 						className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
 					/>
 				</div>
@@ -73,7 +57,7 @@ export default function SearchRepository() {
 					type='submit'
 					disabled={loading}
 					className='w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed transition'>
-					{loading ? 'Generating...' : 'Generate Article'}
+					{loading ? 'Searching...' : 'Search Repositories'}
 				</button>
 			</form>
 		</div>
