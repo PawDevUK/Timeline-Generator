@@ -6,12 +6,12 @@ import PageBaseLayout from '@/app/components/PageBaseLayout';
 
 export default function Repos() {
 	const [repos, setRepos] = useState<Repository[]>([]);
-	const [loading, setLoading] = useState(false);
+	// const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
 	useEffect(() => {
 		const fetchRepos = async () => {
-			setLoading(true);
+			// setLoading(true);
 			setError('');
 			try {
 				const response = await fetch('api/repositories');
@@ -21,7 +21,7 @@ export default function Repos() {
 				setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
 				console.error('Error fetching repos:', err);
 			} finally {
-				setLoading(false);
+				// setLoading(false);
 			}
 		};
 
@@ -44,7 +44,6 @@ export default function Repos() {
 				<div className=''>
 					<div className='w-full card-panel text-center md:text-left md:pl-[100px]'>
 						<h3 className='text-2xl font-bold text-gray-900 mb-2 text-center'>List of Tracked Repositories</h3>
-						{loading && <p className='text-sm text-gray-500'>Loading repositories...</p>}
 						{error && <p className='text-sm text-red-500'>{error}</p>}
 					</div>
 					<div className='flex justify-center  mt-6 card-panel'>
