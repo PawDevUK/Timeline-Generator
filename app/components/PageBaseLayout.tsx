@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function PageBaseLayout({ children }: { children: React.ReactNode }) {
-	return <div className='p-10 m-10'>{children}</div>;
+	return <div className='px-10 py-12'>{children}</div>;
 }
