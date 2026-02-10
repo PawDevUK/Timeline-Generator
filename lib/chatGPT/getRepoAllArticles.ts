@@ -23,6 +23,13 @@ interface GitHubCommit {
 	};
 }
 
+// {
+// 							title: trimmedRepo,
+// 							author: resp.data.commit?.author?.name,
+// 							date: resp.data.commit?.author?.date,
+// 							description: com.commit?.message,
+// 						}
+
 export async function getRepoAllArticles(user: string, repo: string) {
 	// Input validation
 	if (!user || typeof user !== 'string' || user.trim() === '') {
@@ -126,8 +133,9 @@ export async function getRepoAllArticles(user: string, repo: string) {
 				.map((com: GitHubCommit) => {
 					if (!com || !com.commit) {
 						console.warn('Invalid commit data structure:', com);
-						return null;
+						return {};
 					}
+
 					const dateStr: string | undefined = com.commit?.author?.date || com.commit?.committer?.date;
 					return {
 						title: trimmedRepo,
