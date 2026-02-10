@@ -3,9 +3,6 @@ import React, { useState } from 'react';
 export default function SearchRepository() {
 	const [user, setUser] = useState('');
 	const [repo, setRepo] = useState('');
-	const [year, setYear] = useState(new Date().getFullYear().toString());
-	const [month, setMonth] = useState((new Date().getMonth() + 1).toString());
-	const [day, setDay] = useState(new Date().getDate().toString());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState('');
@@ -17,21 +14,16 @@ export default function SearchRepository() {
 		setSuccess('');
 
 		try {
-			const response = await fetch(`/api/articles/generate?user=${user}&repo=${repo}&year=${year}&month=${month}&day=${day}`);
+			const response = await fetch(`/api/articles/generate?user=${user}&repo=${repo}`);
 
 			if (!response.ok) {
 				const errorData = await response.json();
 				throw new Error(errorData.error || 'Failed to generate article');
 			}
-
 			const data = await response.json();
 			setSuccess(`Article generated successfully: ${data.article.title}`);
-			// Reset form
 			setUser('');
 			setRepo('');
-			setYear(new Date().getFullYear().toString());
-			setMonth((new Date().getMonth() + 1).toString());
-			setDay(new Date().getDate().toString());
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'An error occurred');
 		} finally {
