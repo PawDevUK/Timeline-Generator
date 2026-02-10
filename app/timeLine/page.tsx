@@ -69,7 +69,7 @@ const TimelineList = () => {
 					<div
 						ref={scrollRef}
 						onMouseDown={handleMouseDown}
-						className='ml-0 sm:ml-2 pl-1 max-h-[500px] overflow-y-auto overflow-x-hidden cursor-grab scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200'
+						className='ml-0 sm:ml-2 pl-1 max-h-[80vh] overflow-y-auto overflow-x-hidden cursor-grab scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200'
 						style={{ WebkitOverflowScrolling: 'touch' }}>
 						<div className='relative'>
 							{/* Timeline vertical line */}
