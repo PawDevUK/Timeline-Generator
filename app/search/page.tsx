@@ -2,12 +2,12 @@
 import SearchRepository from '@/app/search/SearchRepository';
 import DisplayArticle from '@/app/search/DisplayArticle';
 import RepoStatusPanel from './RepoStatusPanel';
-import PageBaseLayout from '../pagesBaseLayout/PageBaseLayout';
+import PageBaseLayout from '@/app/components/PageBaseLayout';
 
 export default function Page() {
 	return (
 		<PageBaseLayout>
-			<div className='mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-3'>
+			<div className='mx-auto flex w-full max-w-7xl items-center justify-between gap-6'>
 				<SearchRepository />
 				<RepoStatusPanel />
 			</div>
