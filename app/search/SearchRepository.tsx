@@ -40,7 +40,7 @@ export default function SearchRepository() {
 	};
 
 	return (
-		<div className='bg-white rounded-lg shadow-md p-6'>
+		<div className='bg-white rounded-lg shadow-md p-6 w-1/4 flex-none'>
 			<h2 className='text-2xl font-bold mb-4'>Generate Article from Commits</h2>
 
 			<form onSubmit={handleGenerateArticle} className='space-y-4'>
@@ -59,7 +59,7 @@ export default function SearchRepository() {
 
 				{/* Repo Input */}
 				<div>
-					<label className='block text-sm font-medium text-gray-700 mb-1'>Repository Name</label>
+					<label className='block text-sm font-medium text-gray-700 mb-1'>Repository Name ( Optional ) </label>
 					<input
 						type='text'
 						value={repo}
@@ -68,43 +68,6 @@ export default function SearchRepository() {
 						required
 						className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
 					/>
-				</div>
-
-				{/* Date Inputs */}
-				<div className='grid grid-cols-3 gap-3'>
-					<div>
-						<label className='block text-sm font-medium text-gray-700 mb-1'>Year</label>
-						<input
-							type='number'
-							value={year}
-							onChange={(e) => setYear(e.target.value)}
-							min='2000'
-							max={new Date().getFullYear()}
-							className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-						/>
-					</div>
-					<div>
-						<label className='block text-sm font-medium text-gray-700 mb-1'>Month</label>
-						<input
-							type='number'
-							value={month}
-							onChange={(e) => setMonth(e.target.value)}
-							min='1'
-							max='12'
-							className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-						/>
-					</div>
-					<div>
-						<label className='block text-sm font-medium text-gray-700 mb-1'>Day</label>
-						<input
-							type='number'
-							value={day}
-							onChange={(e) => setDay(e.target.value)}
-							min='1'
-							max='31'
-							className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-						/>
-					</div>
 				</div>
 
 				{/* Error Message */}
