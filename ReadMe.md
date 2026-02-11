@@ -18,9 +18,15 @@
 ### Frontend
 
 - **Next.js 16.0.7** - React framework with App Router
+<<<<<<< HEAD
 - **React 19.2.0** - UI library
 - **TypeScript 5** - Type-safe development
 - **Tailwind CSS 4** - Utility-first styling
+=======
+- **React 19.2.0** - JS library
+- **TypeScript 5** - Type-safe development
+- **Tailwind CSS 4** - UI Utility-first styling
+>>>>>>> 8404dfc (Refactor: Update ReadMe.md to enhance project description, features, and setup instructions)
 - **Styled Components 6.1.19** - CSS-in-JS styling
 
 ### Backend & API
