@@ -1,30 +1,69 @@
 # Time Line Generator (TLG)
 
-**Time Line Generator** is a full-stack Next.js application that tracks GitHub repositories and automatically generates AI-powered daily summaries of development work. TLG fetches commits from GitHub, uses OpenAI's ChatGPT API to create human-readable articles, and stores everything in MongoDB. The app features NextAuth authentication, an interactive dashboard for repository management, and a timeline view for browsing generated articles.
+**Time Line Generator (TLG)** is a full-stack Next.js application that automatically tracks GitHub repositories and generates AI-powered daily summaries of development activity. Built with TypeScript, TLG fetches commit history from GitHub, analyzes development patterns, and uses OpenAI's ChatGPT API to create human-readable articles that document your coding journey. The application features secure authentication, repository management, and an interactive timeline interface for browsing your development history.
 
 ## Features
 
-- **Automated Git Tracking**: Fetches commits and file changes from GitHub repositories with date filtering.
-- **AI-Powered Summaries**: Generates readable summary articles using OpenAI's ChatGPT API.
-- **User Authentication**: Supports login via GitHub OAuth or custom credentials (username/password).
-- **Web Interface**: Interactive dashboard for repository management, timeline display, and user settings.
-- **REST API**: Endpoints for fetching commits, generating summaries, and user management.
-- **Database Integration**: MongoDB with Mongoose for storing users, repositories, and timeline articles.
+- **🔄 Automated Repository Tracking**: Automatically fetches and monitors GitHub repository commits with intelligent date filtering and pagination
+- **🤖 AI-Powered Summaries**: Generates professional, human-readable summary articles using OpenAI's GPT API with customizable tone and length
+- **🔐 Secure Authentication**: Multi-provider authentication via NextAuth.js supporting GitHub OAuth and credentials-based login
+- **📊 Interactive Dashboard**: Modern web interface for searching repositories, managing tracked repos, and visualizing development timelines
+- **🛠️ RESTful API**: Comprehensive API endpoints for commits, repository management, article CRUD operations, and user management
+- **💾 Database Integration**: MongoDB with Mongoose ODM for persistent storage of users, repositories, and generated timeline articles
+- **📅 Activity Tracking**: Tracks active commit days and generates detailed statistics for each repository
+- **🎨 Modern UI**: Built with React 19, Tailwind CSS 4, and responsive design patterns
+
+## Technology Stack
+
+### Frontend
+
+- **Next.js 16.0.7** - React framework with App Router
+- **React 19.2.0** - UI library
+- **TypeScript 5** - Type-safe development
+- **Tailwind CSS 4** - Utility-first styling
+- **Styled Components 6.1.19** - CSS-in-JS styling
+
+### Backend & API
+
+- **Next.js API Routes** - Serverless API endpoints
+- **NextAuth 4.24.13** - Authentication library
+- **Mongoose 9.0.0** - MongoDB ODM
+- **OpenAI 6.9.1** - ChatGPT API integration
+- **Axios 1.13.2** - HTTP client
+
+### Database & Storage
+
+- **MongoDB Atlas** - Cloud database
+- **Mongoose Schemas** - Data modeling
+
+### Development Tools
+
+- **ESLint 9** - Code linting
+- **PostCSS** - CSS processing
+- **date-fns 4.1.0** - Date utilities
+- **jsonwebtoken 9.0.2** - JWT handling
 
 ## Timeline Generation Flow
 
-1. **Authenticate User**: Users log in via NextAuth (GitHub or credentials).
-2. **Select Repository**: Choose a GitHub repository to analyze.
-3. **Fetch Commits**: Use GitHub API to retrieve commits within a specified date range.
-4. **Summarize Changes**: Aggregate commit messages and generate a concise summary using ChatGPT.
-5. **Store and Display**: Save the article in MongoDB and display in the timeline UI.
+1. **🔐 Authenticate User**: Users log in securely via NextAuth (GitHub OAuth or credentials)
+2. **🔍 Search & Select Repository**: Browse and select GitHub repositories to track
+3. **📥 Fetch Commit History**: Retrieve all commits from repository inception or specific date ranges via GitHub API
+4. **🗓️ Group by Date**: Organize commits by activity days
+5. **🤖 AI Summarization**: Generate human-readable summaries for each day's work using ChatGPT
+6. **💾 Store Articles**: Save generated articles to MongoDB with repository metadata
+7. **📊 Display Timeline**: View chronological development history in the interactive UI
 
 ## Authentication
 
-- Integrated with NextAuth.js for secure authentication.
-- Supports GitHub OAuth and custom credentials provider.
-- User registration and login via API routes.
-- Session management with JWT strategy.
+- **NextAuth.js Integration**: Secure, industry-standard authentication
+- **Multiple Providers**:
+  - GitHub OAuth (recommended for seamless GitHub integration)
+  - Credentials Provider (username/password)
+- **Session Management**: JWT-based sessions with 30-day expiration
+- **Protected Routes**: Automatic redirect to login for unauthorized access
+- **User Registration**: API endpoints for new user creation
+
+⚠️ **Security Note**: Current implementation stores passwords in plain text. For production, implement bcrypt hashing (see [Security Improvements](#security-improvements)).
 
 ## OpenAI Integration
 
@@ -52,24 +91,61 @@ TLG is built as a **Next.js App Router** application with:
 
 2. **Configure Environment Variables**:
 
-   Copy `.env.example` to `.env.local` and fill in the required values:
+   Create a `.env.local` file in the root directory:
 
    ```env
-   CHATGPT_API=sk-proj-...
-   NEXTAUTH_SECRET=your-nextauth-secret
+   # OpenAI Configuration (Required)
+   CHATGPT_API=sk-proj-your-openai-api-key
+
+   # NextAuth Configuration (Required)
+   NEXTAUTH_SECRET=your-random-secret-string-min-32-chars
    NEXTAUTH_URL=http://localhost:3000
-   GITHUB_CLIENT_ID=your-github-client-id
-   GITHUB_CLIENT_SECRET=your-github-client-secret
-   MONGO_DB_TLG=mongodb+srv://...
-   GITHUB_TOKEN=ghp_...  # Optional, for higher rate limits
+
+   # GitHub OAuth (Required for OAuth login)
+   GITHUB_CLIENT_ID=your-github-oauth-client-id
+   GITHUB_CLIENT_SECRET=your-github-oauth-client-secret
+
+   # MongoDB (Required)
+   MONGO_DB_TLG=mongodb+srv://username:password@cluster.mongodb.net/tlg?retryWrites=true&w=majority
+
+   # GitHub API Token (Optional but recommended)
+   GITHUB_TOKEN=ghp_your-personal-access-token
+
+   # JWT Secret (for credentials login)
+   JWT_SECRET=your-jwt-secret-string
    ```
 
-   - **CHATGPT_API**: OpenAI API key from [OpenAI Platform](https://platform.openai.com/account/api-keys).
-   - **NEXTAUTH_SECRET**: Random string for JWT signing.
-   - **NEXTAUTH_URL**: Full URL of your app (e.g., `http://localhost:3000`).
-   - **GitHub OAuth**: Create an OAuth app at [GitHub Settings](https://github.com/settings/applications/new) for authentication.
-   - **MONGO_DB_TLG**: MongoDB Atlas connection string.
-   - **GITHUB_TOKEN**: Personal access token for GitHub API (optional but recommended).
+   ### Setup Instructions
+
+   **OpenAI API Key**:
+   1. Visit [OpenAI Platform](https://platform.openai.com/account/api-keys)
+   2. Create a new API key
+   3. Copy and paste into `CHATGPT_API`
+
+   **NextAuth Secret**:
+   - Generate with: `openssl rand -base64 32`
+   - Or use any random 32+ character string
+
+   **GitHub OAuth App**:
+   1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
+   2. Click "New OAuth App"
+   3. Set Homepage URL: `http://localhost:3000`
+   4. Set Authorization callback URL: `http://localhost:3000/api/auth/callback/github`
+   5. Copy Client ID and Client Secret
+
+   **MongoDB Atlas**:
+   1. Create account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+   2. Create a cluster
+   3. Set up database user and password
+   4. Get connection string from "Connect" → "Connect your application"
+   5. Replace `<password>` with your database password
+
+   **GitHub Personal Access Token** (optional):
+   1. Go to [GitHub Token Settings](https://github.com/settings/tokens)
+   2. Generate new token (classic)
+   3. Select scopes: `repo` (for private repos) or `public_repo` (for public only)
+   4. Copy token (starts with `ghp_`)
+   5. Increases API rate limit from 60 to 5000 requests/hour
 
 3. **Run the Development Server**:
 
@@ -87,24 +163,155 @@ TLG is built as a **Next.js App Router** application with:
 
 ## API Endpoints
 
-### Authentication
+### Authentication Endpoints
 
-- `POST /api/auth/register`: Register a new user.
-- `POST /api/auth/login`: Login with credentials.
-- `GET /api/auth/session`: Get current session (handled by NextAuth).
+#### Register New User
 
-### GitHub & Summaries
+```http
+POST /api/auth/register
+Content-Type: application/json
 
-- `GET /api/getRepoCommits?repo=owner/repo&since=YYYY-MM-DD&until=YYYY-MM-DD`: Fetch commits from a repository.
-- `POST /api/chatGPT`: Generate a summary article from commit data.
+{
+  "username": "string",
+  "password": "string",
+  "email": "string" (optional)
+}
+```
 
-### Articles (CRUD)
+#### Login with Credentials
 
-- `GET /api/articles`: Get all articles.
-- `POST /api/articles`: Create a new article (requires `title`, `date`, `description`).
-- `GET /api/articles/:id`: Get a specific article by ID.
-- `PUT /api/articles/:id`: Update an article by ID (partial updates supported).
-- `DELETE /api/articles/:id`: Delete an article by ID.
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "username": "string",
+  "password": "string"
+}
+
+Response: { "token": "jwt-token" }
+```
+
+#### Logout
+
+```http
+GET /api/auth/logout
+```
+
+#### Get Current Session
+
+```http
+GET /api/auth/session
+```
+
+### GitHub Integration Endpoints
+
+#### Fetch User Info
+
+```http
+GET /api/gitHub/fetchGitHubUserInfo
+```
+
+#### Get User's Repository List
+
+```http
+GET /api/gitHub/getUserRepoList?user={username}
+```
+
+#### Get Repository Active Days
+
+```http
+GET /api/gitHub/getRepoActiveDays?user={username}&repo={reponame}
+```
+
+#### Get All Repository Commits (Paginated)
+
+```http
+GET /api/gitHub/getRepoAllCommits?user={username}&repo={reponame}&maxPages={number}
+```
+
+#### Get Commits for Specific Day
+
+```http
+GET /api/gitHub/getRepoDayCommits?user={username}&repo={reponame}&date={YYYY-MM-DD}
+```
+
+### Repository Management
+
+#### Create/Track New Repository
+
+```http
+POST /api/repositories
+Content-Type: application/json
+
+{
+  "user": "github-username",
+  "repo": "repository-name"
+}
+
+Response: Creates repository object with generated articles
+Note: May take several minutes for repositories with extensive history
+```
+
+#### Get All Tracked Repositories
+
+```http
+GET /api/repositories
+
+Response: {
+  "repositories": [Repository[]]
+}
+```
+
+### Articles (Timeline) Endpoints
+
+#### Get All Articles
+
+```http
+GET /api/repositories/articles
+
+Response: {
+  "articles": [Article[]]
+}
+```
+
+#### Create New Article
+
+```http
+POST /api/repositories/articles
+Content-Type: application/json
+
+{
+  "title": "string",
+  "date": "YYYY-MM-DD",
+  "description": "string"
+}
+```
+
+#### Get Single Article
+
+```http
+GET /api/repositories/articles/{id}
+```
+
+#### Update Article
+
+```http
+PUT /api/repositories/articles/{id}
+Content-Type: application/json
+
+{
+  "title": "string" (optional),
+  "date": "YYYY-MM-DD" (optional),
+  "description": "string" (optional)
+}
+```
+
+#### Delete Article
+
+```http
+DELETE /api/repositories/articles/{id}
+```
 
 ## Project Structure
 
@@ -179,7 +386,7 @@ TLG is built as a **Next.js App Router** application with:
 ### In Progress / Planned 🚧
 
 - [ ] Add the tracking to displied repositories. Each of displied repositories need to have track button and onClick needs to trigger the repository articles creation and added to DB.
-- [ ] Add list of tracked repositories from DB to Repositories component.
+- [x] Add list of tracked repositories from DB to Repositories component.
 - [ ] Add update TLG repository's articles. Instead of generating new repo obj with uptodate articles, app needs to check which day is missing and then generate only articles for missing days.
 - [ ] Add handling for non-existing repository
 - [ ] Add handling for requesting duplicate repository with timeline
