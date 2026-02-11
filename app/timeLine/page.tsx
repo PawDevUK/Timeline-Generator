@@ -1,8 +1,6 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import Header from '@/app/components/common/Header';
-import { combineTimeLine } from '@/app/utils/combineTimeLine';
-import { Repository } from '@/types/repository.types';
 import PageBaseLayout from '@/app/components/PageBaseLayout';
 
 type Article = {
@@ -17,14 +15,13 @@ const TimelineList = () => {
 	const scrollRef = useRef(null);
 
 	useEffect(() => {
-		fetch('/api/repositories')
+		fetch('/api/timeline')
 			.then((res) => res.json())
 			.then((data) => {
-				const allArticles = combineTimeLine(data.repositories || []);
-				setArticles(allArticles);
+				setArticles(data || []);
 			})
 			.catch((err) => {
-				console.error('Error fetching articles:', err);
+				console.error('Error fetbching articles:', err);
 			});
 	}, []);
 
@@ -57,8 +54,7 @@ const TimelineList = () => {
 		fetch('/api/repositories')
 			.then((res) => res.json())
 			.then((data) => {
-				const allArticles = combineTimeLine(data.repositories || []);
-				setArticles(allArticles);
+				setArticles(data);
 			});
 	};
 
@@ -80,9 +76,9 @@ const TimelineList = () => {
 									<span className='absolute left-[3px] top-3 w-3 h-3 rounded-full border-2 border-gray-50 bg-blue-500' style={{ zIndex: 1 }} />
 									{/* Date Header */}
 									<Header>{article.title}</Header>
-									<button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => article._id && handleDelete(article._id)}>
+									{/* <button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => article._id && handleDelete(article._id)}>
 										Delete
-									</button>
+									</button> */}
 									<div className='text-sm text-gray-500 mb-2 font-bold'>{article.date}</div>
 									{/* Description */}
 									<p className='text-gray-700 text-sm'>{article.description}</p>

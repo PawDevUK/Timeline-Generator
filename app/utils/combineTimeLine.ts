@@ -19,22 +19,10 @@ export function combineTimeLine(repositories: Repository[]): Article[] {
 	if (!repositories || repositories.length === 0) {
 		return [];
 	}
-
-	// Flatten all articles from all repositories
-	// Handle both old structure (articles directly on repo) and new structure (TLG.articles)
 	const allArticles: Article[] = repositories.flatMap((repo: Repository) => {
-		// Try new structure first (TLG.articles), fallback to old structure (articles)
 		const articles = repo.TLG?.articles || [];
-		const user = repo.owner?.login || '';
-
-		return articles.map((article: Article) => ({
-			...article,
-			repositoryName: repo.name,
-			repositoryUser: user,
-		}));
+		return articles;
 	});
-
-	// Sort by date (newest first)
 	return allArticles.sort((a, b) => {
 		const dateA = new Date(a.date).getTime();
 		const dateB = new Date(b.date).getTime();
