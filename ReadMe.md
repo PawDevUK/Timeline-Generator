@@ -413,8 +413,9 @@ DELETE /api/repositories/articles/{id}
 
 ### In Progress / Planned 🚧
 
+- [ ] Fix timeline artticles date format to DD-MM-YYYY
 - [ ] Add sorting search results.
-- [ ] Add the tracking to displied repositories. Each of displied repositories need to have track button and onClick needs to trigger the repository articles creation and added to DB.
+- [ ] Add the tracking to displayed repositories. Each of displayed repositories need to have track button and onClick needs to trigger the repository articles creation and added to DB.
 - [ ] Add update TLG repository's articles. Instead of generating new repo obj with uptodate articles, app needs to check which day is missing and then generate only articles for missing days.
 - [ ] Add handling for non-existing repository
 - [ ] Add handling of requesting duplicate repository with timeline.
