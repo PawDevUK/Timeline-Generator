@@ -263,6 +263,29 @@ Response: {
 }
 ```
 
+### Timeline Endpoint
+
+#### Get Combined Timeline (Recommended)
+
+```http
+GET /api/timeline
+
+Response: {
+  "timeline": [Article[]]
+}
+```
+
+**Description**: Returns a combined, sorted timeline of all articles from all tracked repositories. This endpoint performs server-side processing to extract articles from repositories and sort them by date (newest first). Each article includes repository metadata (`repositoryName`, `repositoryUser`).
+
+**Benefits**:
+
+- ✅ Reduced data transfer (sends only articles, not full repositories)
+- ✅ Server-side processing improves performance
+- ✅ Optimized for timeline UI display
+- ✅ Easier to cache on server
+
+**Use this instead of** fetching all repositories and processing client-side.
+
 ### Articles (Timeline) Endpoints
 
 #### Get All Articles
@@ -321,15 +344,16 @@ DELETE /api/repositories/articles/{id}
 │   ├── api/                          # API routes (server-side)
 │   │   ├── auth/                     # Authentication endpoints
 │   │   ├── gitHub/                   # GitHub API integrations
-│   │   ├── repository/               # Single repository operations
-│   │   └── repositories/             # Multi-repository operations
-│   │       └── articles/             # Article CRUD endpoints
+│   │   ├── repositories/             # Multi-repository operations
+│   │   │   └── articles/             # Article CRUD endpoints
+│   │   └── timeline/                 # Combined timeline endpoint
 │   ├── components/                   # Shared UI components
-│   ├── dashboard/                    # Dashboard pages
 │   ├── login/                        # Login pages
 │   ├── repos/                        # Repository listing page
+│   ├── search/                       # Repository search page
 │   ├── timeLine/                     # Timeline view page
 │   └── utils/                        # Client-side utilities
+│       └── combineTimeLine.ts        # Timeline processing logic
 │
 ├── lib/                              # Server-side logic
 │   ├── createRepo/                   # Repository creation logic
@@ -380,9 +404,11 @@ DELETE /api/repositories/articles/{id}
 - [x] Timeline display component with combined articles
 - [x] Automated daily summary generation
 - [x] Next.js App Router structure following best practices
-- [x] Proper file structure (lib/, types/, app/)
-- [x] Add seach engine which will fetch list of repo and then display it in the component below the search.
-- [x] Add pawdevuk to default search on component mount.
+- [x] Proper rch engine which will fetch list of repo and then display it in the component below the search
+- [x] Add pawdevuk to default search on component mount
+- [x] Add list of tracked repositories from DB to Repositories component
+- [x] Server-side timeline API endpoint (`/api/timeline`) for optimized data fetching
+- [x] Timeline utility functions for filtering and grouping articles by date
 - [x] Add list of tracked repositories from DB to Repositories component.
 
 ### In Progress / Planned 🚧
@@ -438,22 +464,63 @@ Response:
   "repositories": [
     {
       "_id": "...",
-      "name": "TLG",
-      "user": "pawdevUK",
-      "articles": [
-        {
-          "title": "TLG - Authentication Implementation",
-          "date": "2025-11-20",
-          "description": "Implemented NextAuth with GitHub OAuth and credentials provider...",
-          "createdAt": "2025-11-21T10:00:00.000Z"
-        }
-      ],
+      "full_name": "pawdevUK/TLG",
+      "owner": {
+        "login": "pawdevUK",
+        "id": 123456
+      },
+      "TLG": {
+        "tracking": true,
+        "daysActiveCommits": ["2025-11-20", "2025-11-21"],
+        "articles": [
+          {
+            "title": "TLG - Authentication Implementation",
+            "date": "2025-11-20",
+            "description": "Implemented NextAuth with GitHub OAuth and credentials provider...",
+            "createdAt": "2025-11-21T10:00:00.000Z"
+          }
+        ]
+      },
       "createdAt": "2025-11-21T10:00:00.000Z"
     }
   ]
 }
 ```
 
+**Get Combined Timeline (Recommended)**:
+
+```bash
+GET /api/timeline
+```
+
+Response:
+
+```json
+{
+  "timeline": [
+    {
+      "_id": "...",
+      "title": "TLG - Authentication Implementation",
+      "date": "2025-11-20",
+      "description": "Implemented NextAuth with GitHub OAuth and credentials provider...",
+      "createdAt": "2025-11-21T10:00:00.000Z",
+      "repositoryName": "TLG",
+      "repositoryUser": "pawdevUK"
+    },
+    {
+      "_id": "...",
+      "title": "Another Repo - Feature Addition",
+      "date": "2025-11-19",
+      "description": "Added new feature...",
+      "createdAt": "2025-11-20T15:30:00.000Z",
+      "repositoryName": "another-repo",
+      "repositoryUser": "pawdevUK"
+    }
+  ]
+}
+```
+
+**Get All Articles (Alternativ
 **Get All Articles (Timeline)**:
 
 ```bash
