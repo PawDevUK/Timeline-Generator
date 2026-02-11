@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface SearchRepositoryProps {
 	onSearch: (user: string, repo: string) => void;
@@ -15,6 +15,10 @@ export default function SearchRepository({ onSearch, loading, error, success }: 
 		e.preventDefault();
 		onSearch(user, repo);
 	};
+
+	useEffect(() => {
+		onSearch('pawdevuk', '');
+	}, []);
 
 	return (
 		<div className=' card-panel w-1/4 flex-none'>
