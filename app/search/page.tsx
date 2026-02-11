@@ -10,7 +10,7 @@ interface Repository {
 	name: string;
 	full_name: string;
 	html_url: string;
-	description: string | null;
+	description: string | undefined;
 }
 
 export default function Page() {
@@ -26,15 +26,17 @@ export default function Page() {
 		setError('');
 		setSuccess('');
 		setSearchQuery({ user, repo });
-
+		let data: Repository[] = [];
 		try {
-			const response = await fetch(`/api/gitHub/getUserRepoList?user=${user}`);
+			if (user) {
+				const response = await fetch(`/api/gitHub/getUserRepoList?user=${user}&repo=${repo}`);
 
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.error || 'Failed to fetch repositories');
+				if (!response.ok) {
+					const errorData = await response.json();
+					throw new Error(errorData.error || 'Failed to fetch repositories');
+				}
+				data = await response.json();
 			}
-			const data = await response.json();
 			setSearchResults(data);
 			setSuccess(`Found ${data.length} repositories for ${user}`);
 		} catch (err) {
