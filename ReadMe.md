@@ -382,14 +382,16 @@ DELETE /api/repositories/articles/{id}
 - [x] Next.js App Router structure following best practices
 - [x] Proper file structure (lib/, types/, app/)
 - [x] Add seach engine which will fetch list of repo and then display it in the component below the search.
+- [x] Add pawdevuk to default search on component mount.
+- [x] Add list of tracked repositories from DB to Repositories component.
 
 ### In Progress / Planned 🚧
 
+- [ ] Add sorting search results.
 - [ ] Add the tracking to displied repositories. Each of displied repositories need to have track button and onClick needs to trigger the repository articles creation and added to DB.
-- [x] Add list of tracked repositories from DB to Repositories component.
 - [ ] Add update TLG repository's articles. Instead of generating new repo obj with uptodate articles, app needs to check which day is missing and then generate only articles for missing days.
 - [ ] Add handling for non-existing repository
-- [ ] Add handling for requesting duplicate repository with timeline
+- [ ] Add handling of requesting duplicate repository with timeline.
 - [ ] Add checker for processed repo in DB (add if missing).
 - [ ] Create functionality to update saved processed repo
 - [ ] Fix creation of day article (single source for commits)
