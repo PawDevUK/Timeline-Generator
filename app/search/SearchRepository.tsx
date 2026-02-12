@@ -60,7 +60,7 @@ export default function SearchRepository({ onSearch, loading, error, success }: 
 				<button
 					type='submit'
 					disabled={loading}
-					className='w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed transition'>
+					className='w-full bg-main text-white font-bold py-2 px-4 rounded hover:bg-main/90 disabled:bg-main/50 disabled:cursor-not-allowed transition'>
 					{loading ? 'Searching...' : 'Search Repositories'}
 				</button>
 			</form>

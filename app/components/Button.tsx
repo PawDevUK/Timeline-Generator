@@ -9,12 +9,12 @@ const StyledButton = styled.a<{ tracking?: boolean }>`
 	font-size: 0.875rem;
 	cursor: pointer;
 	color: ${({ tracking }) => (tracking ? 'white' : 'rgb(37, 41, 46)')};
-	background-color: ${({ tracking }) => (tracking ? 'rgb(31, 136, 61)' : 'rgb(246, 248, 250)')};
+	background-color: ${({ tracking }) => (tracking ? 'var(--color-main)' : 'rgb(246, 248, 250)')};
 	border: 1px solid rgb(209, 217, 224);
 	transition: background-color 0.2s;
 
 	&:hover {
-		background-color: ${({ tracking }) => (tracking ? 'rgb(31, 136, 61)' : 'rgb(237, 237, 238)')};
+		background-color: ${({ tracking }) => (tracking ? 'color-mix(in srgb, var(--color-main) 80%, transparent)' : 'rgb(237, 237, 238)')};
 	}
 `;
 
