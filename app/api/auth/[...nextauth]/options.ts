@@ -4,7 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { dbConnect } from '@/lib/db/db';
 import { User } from '@/lib/db/models/user.model';
 
-export const options: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
 	providers: [
 		GitHubProvider({
 			clientId: process.env.GITHUB_CLIENT_ID as string,
