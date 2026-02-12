@@ -6,6 +6,14 @@
   }
 }
 
+@theme {
+  --color-main: #00684A;
+}
+
+.main-color {
+  color: #00684A;
+}
+
 body {
   background: #dadada54;
   color: #171717;
