@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 import { systemPrompt, getUserPrompt } from './prompts';
+import { format } from 'date-fns';
 
 const openai = new OpenAI({ apiKey: process.env.CHATGPT_API || '' });
 
@@ -70,7 +71,7 @@ export async function generateDayArticle(commits: Commit[], repo: string, date: 
 	}
 
 	const trimmedRepo = repo.trim();
-	const trimmedDate = date.trim();
+	const trimmedDate = format(new Date(date.trim()), 'dd/MM/yyyy');
 
 	// Check OpenAI API key
 	if (!process.env.CHATGPT_API || process.env.CHATGPT_API.trim() === '') {
