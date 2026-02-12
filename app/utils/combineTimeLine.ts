@@ -1,4 +1,5 @@
 import { Repository } from '@/types/repository.types';
+import { parse } from 'date-fns';
 
 type Article = {
 	_id?: string;
@@ -24,25 +25,26 @@ export function combineTimeLine(repositories: Repository[]): Article[] {
 		return articles;
 	});
 	return allArticles.sort((a, b) => {
-		const dateA = new Date(a.date).getTime();
-		const dateB = new Date(b.date).getTime();
-		return dateB - dateA;
+		// Parse dd/MM/yyyy format using date-fns
+		const dateA = parse(a.date, 'dd/MM/yyyy', new Date());
+		const dateB = parse(b.date, 'dd/MM/yyyy', new Date());
+		return dateB.getTime() - dateA.getTime();
 	});
 }
 
 /**
  * Filters articles by date range
  * @param articles - Array of articles
- * @param startDate - Start date (inclusive)
- * @param endDate - End date (inclusive)
+ * @param startDate - Start date (inclusive) in dd/MM/yyyy format
+ * @param endDate - End date (inclusive) in dd/MM/yyyy format
  * @returns Filtered array of articles
  */
 export function filterArticlesByDateRange(articles: Article[], startDate: string, endDate: string): Article[] {
-	const start = new Date(startDate).getTime();
-	const end = new Date(endDate).getTime();
+	const start = parse(startDate, 'dd/MM/yyyy', new Date()).getTime();
+	const end = parse(endDate, 'dd/MM/yyyy', new Date()).getTime();
 
 	return articles.filter((article) => {
-		const articleDate = new Date(article.date).getTime();
+		const articleDate = parse(article.date, 'dd/MM/yyyy', new Date()).getTime();
 		return articleDate >= start && articleDate <= end;
 	});
 }
