@@ -411,9 +411,11 @@ DELETE /api/repositories/articles/{id}
 - [x] Timeline utility functions for filtering and grouping articles by date
 - [x] Add list of tracked repositories from DB to Repositories component.
 - [x] Fix timeline artticles date format to DD-MM-YYYY
+- [x] Fix creation of day article (single source for commits)
 
 ### In Progress / Planned 🚧
 
+- [ ] Create functionality to update saved processed repo
 - [ ] Improve UI
 - [ ] Add data to stats card next to search.
 - [ ] Add to dispayed repos links so user can open github repo in new tab.
@@ -422,8 +424,6 @@ DELETE /api/repositories/articles/{id}
 - [ ] Add handling for non-existing repository
 - [ ] Add handling of requesting duplicate repository with timeline.
 - [ ] Add checker for processed repo in DB (add if missing).
-- [ ] Create functionality to update saved processed repo
-- [ ] Fix creation of day article (single source for commits)
 - [ ] Add error handling and logging
 - [ ] Password hashing with bcrypt
 - [ ] Email verification for registration
