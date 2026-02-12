@@ -410,13 +410,15 @@ DELETE /api/repositories/articles/{id}
 - [x] Server-side timeline API endpoint (`/api/timeline`) for optimized data fetching
 - [x] Timeline utility functions for filtering and grouping articles by date
 - [x] Add list of tracked repositories from DB to Repositories component.
+- [x] Fix timeline artticles date format to DD-MM-YYYY
 
 ### In Progress / Planned 🚧
 
-- [ ] Fix timeline artticles date format to DD-MM-YYYY
+- [ ] Improve UI
+- [ ] Add data to stats card next to search.
+- [ ] Add to dispayed repos links so user can open github repo in new tab.
 - [ ] Add sorting search results.
 - [ ] Add the tracking to displayed repositories. Each of displayed repositories need to have track button and onClick needs to trigger the repository articles creation and added to DB.
-- [ ] Add update TLG repository's articles. Instead of generating new repo obj with uptodate articles, app needs to check which day is missing and then generate only articles for missing days.
 - [ ] Add handling for non-existing repository
 - [ ] Add handling of requesting duplicate repository with timeline.
 - [ ] Add checker for processed repo in DB (add if missing).
