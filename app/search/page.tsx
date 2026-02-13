@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import SearchRepository from '@/app/search/SearchRepository';
 import DisplayRepos from '@/app/search/DisplayRepos';
-import RepoStatusPanel from './RepoStatusPanel';
 import PageBaseLayout from '@/app/components/PageBaseLayout';
 
 interface Repository {
@@ -51,7 +50,6 @@ export default function Page() {
 		<PageBaseLayout>
 			<div className='mx-auto flex w-full max-w-7xl items-center justify-between gap-6'>
 				<SearchRepository onSearch={handleSearch} loading={loading} error={error} success={success} />
-				<RepoStatusPanel />
 			</div>
 			<DisplayRepos results={searchResults} />
 		</PageBaseLayout>
