@@ -19,6 +19,7 @@ const FeatureCard: FC<{
 );
 
 export default function Home() {
+	const iconSize = 25;
 	return (
 		<PageBaseLayout>
 			<div className='card-panel mb-6'>
@@ -33,32 +34,32 @@ export default function Home() {
 			<div className='md:col-span-7 lg:col-span-8'>
 				<div className='grid sm:grid-cols-2 lg:grid-cols-2 gap-5 lg:gap-6'>
 					<FeatureCard
-						icon={<RefreshCcw size={35} />}
+						icon={<RefreshCcw size={iconSize} />}
 						title='Automated Repository Tracking'
 						description='Automatically fetches and monitors GitHub repository commits with intelligent date filtering and pagination'
 					/>
 					<FeatureCard
-						icon={<BrainCircuit size={35} />}
+						icon={<BrainCircuit size={iconSize} />}
 						title='AI-Powered Summaries'
 						description="Generates professional, human-readable summary articles using OpenAI's GPT API with customizable tone and length"
 					/>
 					<FeatureCard
-						icon={<KeySquare size={35} />}
+						icon={<KeySquare size={iconSize} />}
 						title='Secure Authentication'
 						description='Multi-provider authentication via NextAuth.js supporting GitHub OAuth and credentials-based login'
 					/>
 					<FeatureCard
-						icon={<ChartBar size={35} />}
+						icon={<ChartBar size={iconSize} />}
 						title='Interactive Dashboard'
 						description='Modern web interface for searching repositories, managing tracked repos, and visualizing development timelines'
 					/>
 					<FeatureCard
-						icon={<CloudCog size={35} />}
+						icon={<CloudCog size={iconSize} />}
 						title='RESTful API'
 						description='Comprehensive API endpoints for commits, repository management, article CRUD operations, and user management'
 					/>
 					<FeatureCard
-						icon={<DatabaseBackup size={35} />}
+						icon={<DatabaseBackup size={iconSize} />}
 						title='Database Integration'
 						description='MongoDB with Mongoose ODM for persistent storage of users, repositories, and generated timeline articles'
 					/>
