@@ -48,9 +48,7 @@ export default function Page() {
 
 	return (
 		<PageBaseLayout>
-			<div className='mx-auto flex w-full max-w-7xl items-center justify-between gap-6'>
-				<SearchRepository onSearch={handleSearch} loading={loading} error={error} success={success} />
-			</div>
+			<SearchRepository onSearch={handleSearch} loading={loading} error={error} success={success} />
 			<DisplayRepos results={searchResults} />
 		</PageBaseLayout>
 	);
