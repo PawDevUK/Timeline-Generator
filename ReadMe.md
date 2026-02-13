@@ -6,7 +6,7 @@
 
 - **🔄 Automated Repository Tracking**: Automatically fetches and monitors GitHub repository commits with intelligent date filtering and pagination
 - **🤖 AI-Powered Summaries**: Generates professional, human-readable summary articles using OpenAI's GPT API with customizable tone and length
-- **🔐 Secure Authentication**: Multi-provider authentication via NextAuth.js supporting GitHub OAuth and credentials-based login
+<!-- - **🔐 Secure Authentication**: Multi-provider authentication via NextAuth.js supporting GitHub OAuth and credentials-based login -->
 - **📊 Interactive Dashboard**: Modern web interface for searching repositories, managing tracked repos, and visualizing development timelines
 - **🛠️ RESTful API**: Comprehensive API endpoints for commits, repository management, article CRUD operations, and user management
 - **💾 Database Integration**: MongoDB with Mongoose ODM for persistent storage of users, repositories, and generated timeline articles
@@ -26,7 +26,7 @@
 ### Backend & API
 
 - **Next.js API Routes** - Serverless API endpoints
-- **NextAuth 4.24.13** - Authentication library
+<!-- - **NextAuth 4.24.13** - Authentication library -->
 - **Mongoose 9.0.0** - MongoDB ODM
 - **OpenAI 6.9.1** - ChatGPT API integration
 - **Axios 1.13.2** - HTTP client
@@ -41,19 +41,19 @@
 - **ESLint 9** - Code linting
 - **PostCSS** - CSS processing
 - **date-fns 4.1.0** - Date utilities
-- **jsonwebtoken 9.0.2** - JWT handling
+<!-- - **jsonwebtoken 9.0.2** - JWT handling -->
 
 ## Timeline Generation Flow
 
-1. **🔐 Authenticate User**: Users log in securely via NextAuth (GitHub OAuth or credentials)
-2. **🔍 Search & Select Repository**: Browse and select GitHub repositories to track
-3. **📥 Fetch Commit History**: Retrieve all commits from repository inception or specific date ranges via GitHub API
-4. **🗓️ Group by Date**: Organize commits by activity days
-5. **🤖 AI Summarization**: Generate human-readable summaries for each day's work using ChatGPT
-6. **💾 Store Articles**: Save generated articles to MongoDB with repository metadata
-7. **📊 Display Timeline**: View chronological development history in the interactive UI
+<!-- 1. **🔐 Authenticate User**: Users log in securely via NextAuth (GitHub OAuth or credentials) -->
+1. **🔍 Search & Select Repository**: Browse and select GitHub repositories to track
+2. **📥 Fetch Commit History**: Retrieve all commits from repository inception or specific date ranges via GitHub API
+3. **🗓️ Group by Date**: Organize commits by activity days
+4. **🤖 AI Summarization**: Generate human-readable summaries for each day's work using ChatGPT
+5. **💾 Store Articles**: Save generated articles to MongoDB with repository metadata
+6. **📊 Display Timeline**: View chronological development history in the interactive UI
 
-## Authentication
+<!-- ## Authentication
 
 - **NextAuth.js Integration**: Secure, industry-standard authentication
 - **Multiple Providers**:
@@ -61,9 +61,9 @@
   - Credentials Provider (username/password)
 - **Session Management**: JWT-based sessions with 30-day expiration
 - **Protected Routes**: Automatic redirect to login for unauthorized access
-- **User Registration**: API endpoints for new user creation
+- **User Registration**: API endpoints for new user creation -->
 
-⚠️ **Security Note**: Current implementation stores passwords in plain text. For production, implement bcrypt hashing (see [Security Improvements](#security-improvements)).
+<!-- ⚠️ **Security Note**: Authentication is currently disabled. When implementing authentication, ensure proper password hashing with bcrypt and secure session management. -->
 
 ## OpenAI Integration
 
@@ -76,9 +76,9 @@
 TLG is built as a **Next.js App Router** application with:
 
 - **Frontend**: React components with Tailwind CSS for UI.
-- **Backend**: API routes for commits, summaries, and auth.
+- **Backend**: API routes for commits, summaries, and repository management.
 - **Database**: MongoDB Atlas for data persistence.
-- **Authentication**: NextAuth.js with GitHub and credentials providers.
+<!-- - **Authentication**: NextAuth.js with GitHub and credentials providers. -->
 - **Deployment**: Ready for Vercel or similar platforms.
 
 ## Quick Start (Local Development)
@@ -97,22 +97,24 @@ TLG is built as a **Next.js App Router** application with:
    # OpenAI Configuration (Required)
    CHATGPT_API=sk-proj-your-openai-api-key
 
-   # NextAuth Configuration (Required)
-   NEXTAUTH_SECRET=your-random-secret-string-min-32-chars
-   NEXTAUTH_URL=http://localhost:3000
-
-   # GitHub OAuth (Required for OAuth login)
-   GITHUB_CLIENT_ID=your-github-oauth-client-id
-   GITHUB_CLIENT_SECRET=your-github-oauth-client-secret
-
    # MongoDB (Required)
    MONGO_DB_TLG=mongodb+srv://username:password@cluster.mongodb.net/tlg?retryWrites=true&w=majority
 
    # GitHub API Token (Optional but recommended)
    GITHUB_TOKEN=ghp_your-personal-access-token
 
-   # JWT Secret (for credentials login)
+   <!-- Authentication currently disabled
+   # NextAuth Configuration
+   NEXTAUTH_SECRET=your-random-secret-string-min-32-chars
+   NEXTAUTH_URL=http://localhost:3000
+
+   # GitHub OAuth
+   GITHUB_CLIENT_ID=your-github-oauth-client-id
+   GITHUB_CLIENT_SECRET=your-github-oauth-client-secret
+
+   # JWT Secret
    JWT_SECRET=your-jwt-secret-string
+   -->
    ```
 
    ### Setup Instructions
@@ -121,17 +123,6 @@ TLG is built as a **Next.js App Router** application with:
    1. Visit [OpenAI Platform](https://platform.openai.com/account/api-keys)
    2. Create a new API key
    3. Copy and paste into `CHATGPT_API`
-
-   **NextAuth Secret**:
-   - Generate with: `openssl rand -base64 32`
-   - Or use any random 32+ character string
-
-   **GitHub OAuth App**:
-   1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
-   2. Click "New OAuth App"
-   3. Set Homepage URL: `http://localhost:3000`
-   4. Set Authorization callback URL: `http://localhost:3000/api/auth/callback/github`
-   5. Copy Client ID and Client Secret
 
    **MongoDB Atlas**:
    1. Create account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
@@ -153,17 +144,18 @@ TLG is built as a **Next.js App Router** application with:
    npm run dev
    ```
 
-   Visit `http://localhost:3000` to access the app. You'll be redirected to login if not authenticated.
+   Visit `http://localhost:3000` to access the app.
 
-4. **Register and Login**:
+<!-- 4. **Register and Login** (Currently Disabled):
 
    - Use the `/login` page to sign up or log in.
    - For credentials: Register via API or form, then log in.
    - For GitHub: Click the GitHub button to authenticate.
+-->
 
 ## API Endpoints
 
-### Authentication Endpoints
+<!-- ### Authentication Endpoints (Currently Disabled)
 
 #### Register New User
 
@@ -203,6 +195,7 @@ GET /api/auth/logout
 ```http
 GET /api/auth/session
 ```
+-->
 
 ### GitHub Integration Endpoints
 
@@ -342,7 +335,7 @@ DELETE /api/repositories/articles/{id}
 /TLG/
 ├── app/                              # Next.js App Router
 │   ├── api/                          # API routes (server-side)
-│   │   ├── auth/                     # Authentication endpoints
+│   │   <!-- ├── auth/                     # Authentication endpoints (disabled) -->
 │   │   ├── gitHub/                   # GitHub API integrations
 │   │   ├── repositories/             # Multi-repository operations
 │   │   │   └── articles/             # Article CRUD endpoints
@@ -401,11 +394,11 @@ DELETE /api/repositories/articles/{id}
 
 ### Completed ✅
 
-- [x] User authentication with NextAuth (GitHub OAuth and credentials)
+<!-- - [x] User authentication with NextAuth (GitHub OAuth and credentials) -->
 - [x] MongoDB integration with Mongoose
 - [x] API for fetching GitHub commits with date filtering
 - [x] ChatGPT integration for summary generation
-- [x] Session management and protected routes
+<!-- - [x] Session management and protected routes -->
 - [x] Timeline data management (merge, sort, dedupe)
 - [x] Repository object with tracking functionality
 - [x] Repository management UI (add/remove repos)
@@ -428,8 +421,9 @@ DELETE /api/repositories/articles/{id}
 
 #### High Priority
 
-- [ ] Secure api endpoints with tokens.
+- [ ] **Implement authentication system** (NextAuth.js with GitHub OAuth)
 - [ ] **Password hashing with bcrypt** for secure authentication (SECURITY CRITICAL)
+- [ ] Secure API endpoints with authentication tokens
 - [ ] Add update functionality for existing tracked repositories (incremental article generation)
 - [ ] Add handling for non-existing repository errors
 - [ ] Add handling of requesting duplicate repository with timeline
@@ -459,12 +453,13 @@ DELETE /api/repositories/articles/{id}
 
 ## Troubleshooting
 
-- **Session Undefined**: Ensure `NEXTAUTH_URL` is set correctly and restart the server. Check if user is signed in.
+<!-- - **Session Undefined**: Ensure `NEXTAUTH_URL` is set correctly and restart the server. Check if user is signed in. -->
 - **OpenAI API Errors**: Verify `CHATGPT_API` key is valid and has credits. Check prompts in `prompts.ts`.
 - **GitHub API Rate Limits**: Use `GITHUB_TOKEN` for higher limits. Handle 403 errors.
 - **MongoDB Connection**: Ensure `MONGO_DB_TLG` is correct and network access is allowed.
-- **NextAuth Issues**: Check `authOptions` in `options.ts` for provider config. Use `NEXTAUTH_SECRET` for security.
-- **401 Unauthorized**: Restart dev server after env changes. Never commit API keys.
+<!-- - **NextAuth Issues**: Check `authOptions` in `options.ts` for provider config. Use `NEXTAUTH_SECRET` for security. -->
+<!-- - **401 Unauthorized**: Restart dev server after env changes. -->
+- **API Keys**: Never commit API keys to version control. Restart dev server after env changes.
 - **Date Format Issues**: All dates now use DD/MM/YYYY format. Ensure date-fns parsing is consistent.
 - **Tailwind CSS v4 Build Errors**: External `@import` statements must be added via `<link>` tags in layout.tsx, not in CSS.
 
