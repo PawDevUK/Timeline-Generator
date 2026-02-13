@@ -1,5 +1,5 @@
 'use client';
-
+// import MenuLogin from '@/app/login/menuLogin.tsx';
 import { SessionProvider } from 'next-auth/react';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -62,14 +62,7 @@ function SidebarContent() {
 					</li>
 				</ul>
 			</nav>
-			<div className='mt-auto flex items-center gap-2 pt-8'>
-				<img
-					// src=''
-					alt='Profile'
-					className='h-8 w-8 rounded-full'
-				/>
-				<span className='text-sm font-medium text-gray-700'>Pawel Siwek</span>
-			</div>
+			<div className='mt-auto flex items-center gap-2 pt-8'>{/* <MenuLogin></MenuLogin> */}</div>
 		</>
 	);
 }
