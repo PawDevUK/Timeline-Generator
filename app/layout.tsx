@@ -2,6 +2,7 @@
 // import MenuLogin from '@/app/login/menuLogin.tsx';
 import { SessionProvider } from 'next-auth/react';
 import { Geist, Geist_Mono } from 'next/font/google';
+import Link from 'next/link';
 import './globals.css';
 import { useState } from 'react';
 
@@ -19,9 +20,11 @@ function SidebarContent() {
 	return (
 		<>
 			<div className='flex items-center mb-8'>
-				{/* <img src='https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600' alt='Logo' className='h-8 w-auto' /> */}
-				<span className='ml-2 font-bold text-lg main-color'>Time Line Generator</span>
+				<Link href='/'>
+					<span className='ml-2 font-bold text-lg main-color'>Time Line Generator</span>
+				</Link>
 			</div>
+
 			<nav className='flex-1'>
 				<ul className='space-y-2'>
 					<li>
