@@ -370,24 +370,32 @@ DELETE /api/repositories/articles/{id}
 └── public/                           # Static assets
 ```
 
-# App content and layout
+# App Content and Layout
 
-## Dashboard content page - need to be renamed to search repositories or some better name
+## Dashboard / Search Repositories Page
 
-- Repositories:
-  - Number of user repositories.
-  - Last active repository.
-  - Last active day.
-- Search section with results bellow serch. -- need to be on the left and stats card on the right with the search results bellow.
+- **Repositories Statistics Card**:
+  - Number of user repositories
+  - Last active repository
+  - Last active day
+- **Search Section**: Left side with results below search
+- **Stats Card**: Right side aligned with search section
+- **Search Results**: Display below search section with repository cards
 
-## Tracked repositories page
+## Tracked Repositories Page
 
 - Number of user tracked repositories
-- Tracked repositories number of commits.
-- Tracked repositories number of active days.
-- Tracked repositories last update.
+- Tracked repositories number of commits
+- Tracked repositories number of active days
+- Tracked repositories last update date
+- Repository cards with tracking status
 
-## Combine TimeLine page
+## Combined Timeline Page
+
+- Chronological display of all articles from tracked repositories
+- Date-based grouping (DD/MM/YYYY format)
+- Repository metadata for each article
+- Sorted by date (newest first)
 
 ## ToDo (Next Steps)
 
@@ -404,12 +412,11 @@ DELETE /api/repositories/articles/{id}
 - [x] Timeline display component with combined articles
 - [x] Automated daily summary generation
 - [x] Next.js App Router structure following best practices
-- [x] Proper rch engine which will fetch list of repo and then display it in the component below the search
+- [x] Proper search engine which will fetch list of repo and then display it in the component below the search
 - [x] Add pawdevuk to default search on component mount
 - [x] Add list of tracked repositories from DB to Repositories component
 - [x] Server-side timeline API endpoint (`/api/timeline`) for optimized data fetching
 - [x] Timeline utility functions for filtering and grouping articles by date
-- [x] Add list of tracked repositories from DB to Repositories component
 - [x] Fix timeline articles date format to DD/MM/YYYY
 - [x] Fix combineTimeLine sorting to handle DD/MM/YYYY format correctly
 - [x] Fix authOptions export naming consistency
@@ -419,23 +426,36 @@ DELETE /api/repositories/articles/{id}
 
 ### In Progress / Planned 🚧
 
+#### High Priority
+
+- [ ] Secure api endpoints with tokens.
+- [ ] **Password hashing with bcrypt** for secure authentication (SECURITY CRITICAL)
 - [ ] Add update functionality for existing tracked repositories (incremental article generation)
-- [ ] Improve UI design and user experience
-- [ ] Add statistics card next to search (repo count, last active, etc.)
-- [ ] Add GitHub links to displayed repositories
-- [ ] Add sorting options for search results (by name, date, language)
-- [ ] Add tracking button to displayed repositories with DB integration
 - [ ] Add handling for non-existing repository errors
 - [ ] Add handling of requesting duplicate repository with timeline
 - [ ] Add checker for processed repo in DB (prevent duplicates)
 - [ ] Add comprehensive error handling and logging
-- [ ] Password hashing with bcrypt for secure authentication
-- [ ] Email verification for user registration
+
+#### UI/UX Improvements
+
+- [ ] Improve UI design and user experience
+- [ ] Add statistics card next to search (repo count, last active, etc.)
+- [ ] Add statistics card in tracked repos (repo count, last active, etc.)
+- [ ] Add GitHub links to displayed repositories
+- [ ] Add sorting options for search results (by name, date, language)
+- [ ] Add tracking button to displayed repositories with DB integration
 - [ ] Add repository list sorting (by last_update, created, alphabetical)
+
+#### Feature Enhancements
+
+- [ ] Email verification for user registration
 - [ ] Add password recovery functionality
 - [ ] Implement caching for generated articles (Redis/memory)
 - [ ] Add pagination for large repository lists
 - [ ] Implement rate limiting for API endpoints
+- [ ] Add export functionality (PDF, Markdown) for timelines
+- [ ] Add search/filter functionality within timeline
+- [ ] Add commit statistics visualizations (charts, graphs)
 
 ## Troubleshooting
 
@@ -482,17 +502,17 @@ Response:
       },
       "TLG": {
         "tracking": true,
-        "daysActiveCommits": ["2025-11-20", "2025-11-21"],
+        "daysActiveCommits": ["10/02/2026", "11/02/2026"],
         "articles": [
           {
             "title": "TLG - Authentication Implementation",
-            "date": "2025-11-20",
+            "date": "10/02/2026",
             "description": "Implemented NextAuth with GitHub OAuth and credentials provider...",
-            "createdAt": "2025-11-21T10:00:00.000Z"
+            "createdAt": "2026-02-11T10:00:00.000Z"
           }
         ]
       },
-      "createdAt": "2025-11-21T10:00:00.000Z"
+      "createdAt": "2026-02-11T10:00:00.000Z"
     }
   ]
 }
@@ -512,18 +532,18 @@ Response:
     {
       "_id": "...",
       "title": "TLG - Authentication Implementation",
-      "date": "2025-11-20",
+      "date": "10/02/2026",
       "description": "Implemented NextAuth with GitHub OAuth and credentials provider...",
-      "createdAt": "2025-11-21T10:00:00.000Z",
+      "createdAt": "2026-02-11T10:00:00.000Z",
       "repositoryName": "TLG",
       "repositoryUser": "pawdevUK"
     },
     {
       "_id": "...",
       "title": "Another Repo - Feature Addition",
-      "date": "2025-11-19",
+      "date": "09/02/2026",
       "description": "Added new feature...",
-      "createdAt": "2025-11-20T15:30:00.000Z",
+      "createdAt": "2026-02-10T15:30:00.000Z",
       "repositoryName": "another-repo",
       "repositoryUser": "pawdevUK"
     }
@@ -531,7 +551,6 @@ Response:
 }
 ```
 
-**Get All Articles (Alternativ
 **Get All Articles (Timeline)**:
 
 ```bash
@@ -546,9 +565,9 @@ Response:
     {
       "_id": "...",
       "title": "TLG - Authentication Implementation",
-      "date": "2025-11-20",
+      "date": "10/02/2026",
       "description": "Implemented NextAuth...",
-      "createdAt": "2025-11-21T10:00:00.000Z"
+      "createdAt": "2026-02-11T10:00:00.000Z"
     }
   ]
 }
