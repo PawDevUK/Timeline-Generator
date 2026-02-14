@@ -17,12 +17,14 @@ export type Repository = {
 	language: string;
 	TLG: {
 		tracking: boolean;
-		daysActiveCommits: string[];
+		daysActiveCommits: number;
 		articles: {
 			title: string;
 			date: string;
 			description: string;
 			createdAt: Date;
 		}[];
+		lastSyncedAt?: Date;
+		lastArticleDate?: string;
 	};
 };
