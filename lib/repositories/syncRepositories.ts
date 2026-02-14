@@ -86,10 +86,23 @@ export async function syncRepository(baseUrl: string) {
 				return acc;
 			}, {});
 
+			const existingArticleDates = new Set(
+				(repository.TLG?.articles ?? [])
+					.map((article) => article.date)
+					.filter((d): d is string => Boolean(d))
+					.map((d) => parseArticleDate(d))
+					.filter((d): d is Date => Boolean(d))
+					.map((d) => d.toISOString().slice(0, 10)),
+			);
+
 			// 5. Generate articles for new dates only
 			const newArticles = [];
 
 			for (const [date, dayCommits] of Object.entries(groupedCommits)) {
+				if (existingArticleDates.has(date)) {
+					console.log(`Skipping ${date} for ${user}/${repoName} - article already exists`);
+					continue;
+				}
 				console.log(`Generating article for ${date} with ${dayCommits.length} commits`);
 				const article = await generateDayArticle(dayCommits, repoName, date);
 				newArticles.push(article);
