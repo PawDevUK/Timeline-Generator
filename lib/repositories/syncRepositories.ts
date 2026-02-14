@@ -3,6 +3,7 @@
 import { dbConnect } from '../db/db';
 import { generateDayArticle } from '../chatGPT/generateDayArticle';
 import { GetAllRepositories } from '@/lib/db/repository.db';
+import { isValid, parse } from 'date-fns';
 
 // const token = process.env.GITHUB_TOKEN;
 
@@ -13,7 +14,22 @@ type Commit = {
 	description?: string;
 };
 
-export async function syncRepository() {
+const parseArticleDate = (value: string): Date | null => {
+	if (!value) return null;
+
+	if (value.includes('T')) {
+		const iso = new Date(value);
+		if (isValid(iso)) return iso;
+	}
+
+	const parsed = parse(value, 'dd/MM/yyyy', new Date());
+	if (isValid(parsed)) return parsed;
+
+	const fallback = new Date(value);
+	return isValid(fallback) ? fallback : null;
+};
+
+export async function syncRepository(baseUrl: string) {
 	await dbConnect();
 
 	try {
@@ -28,11 +44,15 @@ export async function syncRepository() {
 			const repoName = repository.name;
 
 			// 1) Get latest article date from repository.TLG.articles[]
-			const articleDates = (repository.TLG?.articles ?? []).map((article) => article.date).filter((d): d is string => Boolean(d) && !Number.isNaN(Date.parse(d)));
+			const articleDates = (repository.TLG?.articles ?? [])
+				.map((article) => article.date)
+				.filter((d): d is string => Boolean(d))
+				.map((d) => parseArticleDate(d))
+				.filter((d): d is Date => Boolean(d));
 
-			const latestArticleDate = articleDates.length > 0 ? articleDates.reduce((max, d) => (Date.parse(d) > Date.parse(max) ? d : max)) : repository.created_at; // fallback when no articles exist
+			const latestArticleDate = articleDates.length > 0 ? new Date(Math.max(...articleDates.map((d) => d.getTime()))) : new Date(repository.created_at); // fallback when no articles exist
 
-			const since = latestArticleDate.includes('T') ? latestArticleDate : `${latestArticleDate}T00:00:00.000Z`;
+			const since = latestArticleDate.toISOString();
 
 			// i need to follow this url pattern. I need to use const since and create new const now which will scope commits between dates.
 			// This is the format I need to follow. "since=${year}-${month}-${day}T00:00:00Z&until=${year}-${month}-${day}T23:59:59Z"
@@ -43,7 +63,10 @@ export async function syncRepository() {
 				tillNow: new Date().toISOString(),
 			});
 
-			const res = await fetch(`/api/gitHub/getRepoDayCommits?${params.toString()}`, {
+			const url = new URL('/api/gitHub/getRepoDayCommits', baseUrl);
+			url.search = params.toString();
+
+			const res = await fetch(url.toString(), {
 				method: 'GET',
 				headers: { Accept: 'application/json' },
 			});
