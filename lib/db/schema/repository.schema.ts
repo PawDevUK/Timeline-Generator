@@ -23,7 +23,9 @@ export const RepositorySchema: Schema<RepositoryDocument> = new Schema({
 	language: { type: String },
 	TLG: {
 		tracking: { type: Boolean, default: false },
-		daysActiveCommits: [{ type: String }],
+		daysActiveCommits: { type: Number, default: 0 },
 		articles: [ArticleSchema],
+		lastSyncedAt: { type: Date },
+		lastArticleDate: { type: String },
 	},
 });
