@@ -17,7 +17,7 @@ export type Repository = {
 	language: string;
 	TLG: {
 		tracking: boolean;
-		daysActiveCommitts: string[];
+		daysActiveCommits: string[];
 		articles: {
 			title: string;
 			date: string;

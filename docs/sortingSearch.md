@@ -64,7 +64,7 @@ interface Repository {
   stargazers_count?: number;
   TLG: {
     tracking: boolean;
-    daysActiveCommitts: string[];
+    daysActiveCommits: string[];
   };
 }
 ```

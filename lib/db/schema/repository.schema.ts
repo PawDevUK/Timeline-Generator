@@ -23,7 +23,7 @@ export const RepositorySchema: Schema<RepositoryDocument> = new Schema({
 	language: { type: String },
 	TLG: {
 		tracking: { type: Boolean, default: false },
-		daysActiveCommitts: [{ type: String }],
+		daysActiveCommits: [{ type: String }],
 		articles: [ArticleSchema],
 	},
 });

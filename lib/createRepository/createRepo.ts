@@ -105,7 +105,7 @@ export async function createRepository(user: string, repo: string) {
 			language: '',
 			TLG: {
 				tracking: true,
-				daysActiveCommitts: Object.keys(groups),
+				daysActiveCommits: Object.keys(groups),
 				articles,
 			},
 		};

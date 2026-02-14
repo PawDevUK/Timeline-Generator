@@ -27,7 +27,7 @@ Repository {
   language: string
   TLG: {
     tracking: boolean
-    daysActiveCommitts: string[]
+    daysActiveCommits: string[]
     articles: Article[]  // Nested articles
   }
 }
@@ -92,7 +92,7 @@ export const RepositorySchema: Schema<RepositoryDocument> = new Schema({
  language: { type: String },
  TLG: {
   tracking: { type: Boolean, default: false },
-  daysActiveCommitts: [{ type: String }],
+  daysActiveCommits: [{ type: String }],
   articles: [ArticleSchema],
   lastSyncedAt: { type: Date },
   lastArticleDate: { type: String }
@@ -122,7 +122,7 @@ export type Repository = {
  language: string;
  TLG: {
   tracking: boolean;
-  daysActiveCommitts: string[];
+  daysActiveCommits: string[];
   articles: {
    title: string;
    date: string;
@@ -268,7 +268,7 @@ export async function syncRepository(user: string, repoName: string) {
   if (!repository.TLG) {
    repository.TLG = {
     tracking: true,
-    daysActiveCommitts: [],
+    daysActiveCommits: [],
     articles: []
    };
   }
@@ -276,7 +276,7 @@ export async function syncRepository(user: string, repoName: string) {
   repository.TLG.articles.push(...newArticles);
   repository.TLG.lastSyncedAt = new Date();
   repository.TLG.lastArticleDate = latestDate;
-  repository.TLG.daysActiveCommitts = [...new Set([...repository.TLG.daysActiveCommitts, ...Object.keys(groups)])];
+  repository.TLG.daysActiveCommits = [...new Set([...repository.TLG.daysActiveCommits, ...Object.keys(groups)])];
   console.log(`Successfully added ${newArticles.length} new articles`);
 
   return {
@@ -368,7 +368,7 @@ if (result.success && result.data) {
  if (!result.data.TLG) {
   result.data.TLG = {
    tracking: true,
-   daysActiveCommitts: Object.keys(groups),
+   daysActiveCommits: Object.keys(groups),
    articles: articles
   };
  }
@@ -505,7 +505,7 @@ async function migrateRepositories() {
   if (!repo.TLG) {
    repo.TLG = {
     tracking: true,
-    daysActiveCommitts: [],
+    daysActiveCommits: [],
     articles: []
    };
   }
