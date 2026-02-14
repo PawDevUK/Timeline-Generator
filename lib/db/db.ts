@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import dns from 'node:dns';
 import { userTypes } from '@/types/user.type';
 
 type MongooseCache = {
@@ -26,6 +27,10 @@ export async function dbConnect() {
 			.then((mongoose) => {
 				console.log('MongoDB connected successfully');
 				return mongoose;
+			})
+			.catch((error) => {
+				cached.promise = null;
+				throw error;
 			});
 	}
 	cached.conn = await cached.promise;
