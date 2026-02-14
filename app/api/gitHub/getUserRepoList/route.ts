@@ -41,7 +41,7 @@ export async function GET(request: Request) {
 				language: response.data.language,
 				TLG: {
 					tracking: false,
-					daysActiveCommits: [],
+					daysActiveCommits: 0,
 					articles: [],
 				},
 			};
@@ -75,7 +75,7 @@ export async function GET(request: Request) {
 			language: repo.language,
 			TLG: {
 				tracking: false,
-				daysActiveCommits: [], // I need to create the list of day when commits where made.
+				daysActiveCommits: 0,
 				articles: [],
 			},
 		}));
