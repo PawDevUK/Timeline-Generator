@@ -6,7 +6,8 @@ export const maxDuration = 300;
 // POST /api/repositories/sync
 export async function POST(request: NextRequest) {
 	try {
-		const result = await syncRepository();
+		const baseUrl = new URL(request.url).origin;
+		const result = await syncRepository(baseUrl);
 
 		if (!result.success) {
 			return NextResponse.json({ error: result.error }, { status: 500 });
