@@ -7,31 +7,40 @@ const token = process.env.GITHUB_TOKEN;
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
 	const user = searchParams.get('user');
-	const repo = searchParams.get('repo');
-	const year = searchParams.get('year');
-	const month = searchParams.get('month');
-	const day = searchParams.get('day');
+	const repoName = searchParams.get('repoName');
+	const since = searchParams.get('since');
+	const tillNow = searchParams.get('tillNow');
 
 	if (!user) {
 		return NextResponse.json({ error: 'No user selected.' }, { status: 400 });
 	}
-	if (!repo) {
-		return NextResponse.json({ error: 'No repo selected.' }, { status: 400 });
+	if (!repoName) {
+		return NextResponse.json({ error: 'No repoName selected.' }, { status: 400 });
 	}
-	if (!year || !month || !day) {
-		return NextResponse.json({ error: 'Year, month, and day are required.' }, { status: 400 });
+	if (!since || !tillNow) {
+		return NextResponse.json({ error: 'since and tillNow are required.' }, { status: 400 });
 	}
 
 	try {
 		const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
 		if (token) headers.Authorization = `Bearer ${token}`;
 
-		const response = await axios.get(`https://api.github.com/repos/${user}/${repo}/commits?since=${year}-${month}-${day}T00:00:00Z&until=${year}-${month}-${day}T23:59:59Z`, {
+		const sinceDate = new Date(since);
+		const tillNowDate = new Date(tillNow);
+
+		if (Number.isNaN(sinceDate.getTime()) || Number.isNaN(tillNowDate.getTime())) {
+			return NextResponse.json({ error: 'Invalid date format. Use ISO date strings for since and tillNow.' }, { status: 400 });
+		}
+
+		const sinceUtc = `${sinceDate.getUTCFullYear()}-${String(sinceDate.getUTCMonth() + 1).padStart(2, '0')}-${String(sinceDate.getUTCDate()).padStart(2, '0')}T00:00:00Z`;
+		const tillNowUtc = `${tillNowDate.getUTCFullYear()}-${String(tillNowDate.getUTCMonth() + 1).padStart(2, '0')}-${String(tillNowDate.getUTCDate()).padStart(2, '0')}T23:59:59Z`;
+
+		const response = await axios.get(`https://api.github.com/repos/${user}/${repoName}/commits?since=${sinceUtc}&until=${tillNowUtc}`, {
 			headers,
 		});
 
 		const dayCommits = response.data.map((com: GitHubCommit) => ({
-			title: repo,
+			title: repoName,
 			author: com.commit?.author?.name,
 			date: com.commit?.author?.date,
 			description: com.commit?.message,
@@ -45,7 +54,7 @@ export async function GET(request: Request) {
 				message?: string;
 			}
 			const message = (error.response.data as GitHubErrorResponse)?.message || error.message || 'GitHub API error';
-			console.error(`Error fetching commits for ${user}/${repo}:`, status, message);
+			console.error(`Error fetching commits for ${user}/${repoName}:`, status, message);
 			return NextResponse.json({ error: message }, { status });
 		}
 		console.error('Unexpected error in getRepoDayCommits:', (error as Error).message ?? error);
