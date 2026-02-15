@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRepository } from '@/lib/repositories/createRepo';
 import { GetAllRepositories } from '@/lib/db/repository.db';
+import checkApiKey from '@/app/utils/checkApiKey';
 import { dbConnect } from '@/lib/db/db';
+const TLG_API_KEY = process.env.TLG_API_KEY;
 
 export const maxDuration = 300; // 5 minutes timeout
 
 export async function POST(request: NextRequest) {
+	if (!checkApiKey(request, TLG_API_KEY)) {
+		return NextResponse.json({ error: 'Unauthorized: Invalid API key' }, { status: 401 });
+	}
+
 	try {
 		let body;
 		try {
