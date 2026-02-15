@@ -390,6 +390,29 @@ DELETE /api/repositories/articles/{id}
 - Repository metadata for each article
 - Sorted by date (newest first)
 
+## Security & Safety
+
+### Current Protections
+
+- Sensitive endpoints (such as repository creation) are protected with an API key. The API key must be sent in the `x-api-key` header for authorized access.
+- Environment variables are used for all secrets (API keys, DB credentials). No secrets are committed to version control.
+- Error messages returned to clients are generic; detailed errors are logged server-side.
+- MongoDB Atlas is used for database storage, and connection strings are kept in environment variables.
+
+### Recommended Next Steps
+
+- **Rate Limiting:** Add middleware to limit requests per IP or API key, especially on sensitive endpoints, to prevent abuse and brute-force attacks.
+- **Input Validation & Sanitization:** Ensure all API endpoints validate and sanitize incoming data to prevent injection and malformed data.
+- **CORS Policy:** Explicitly set allowed origins in your API responses to prevent unauthorized cross-origin requests.
+- **Dependency Audit:** Regularly run `npm audit` or `yarn audit` to check for vulnerabilities in dependencies and update as needed.
+- **HTTPS Enforcement:** If deploying, ensure your server only accepts HTTPS traffic.
+- **Remove/Disable Unused Endpoints:** Review your API routes and disable or remove any that are not needed.
+- **Database Security:** Use least-privilege DB users and parameterized queries everywhere.
+
+For more details, see `securityAndSafety.md`.
+
+---
+
 ## ToDo (Next Steps)
 
 ### Completed ✅
