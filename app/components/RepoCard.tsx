@@ -19,7 +19,7 @@ export default function RepoCard({ repo, addTracking }: { repo: Repository; addT
 				</div>
 			</div>
 
-			<Button addTracking={addTracking} repo={repo}></Button>
+			{/* <Button addTracking={addTracking} repo={repo}></Button> */}
 		</div>
 	);
 }
