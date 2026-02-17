@@ -29,7 +29,7 @@ const parseArticleDate = (value: string): Date | null => {
 	return isValid(fallback) ? fallback : null;
 };
 
-export async function syncRepository(baseUrl: string) {
+export async function syncRepository(baseUrl: string, cutoff?: string) {
 	await dbConnect();
 
 	try {
@@ -54,13 +54,15 @@ export async function syncRepository(baseUrl: string) {
 
 			const since = latestArticleDate.toISOString();
 
-			// i need to follow this url pattern. I need to use const since and create new const now which will scope commits between dates.
+			// I need to follow this url pattern. I need to use const since and create new const until which will scope commits between dates.
 			// This is the format I need to follow. "since=${year}-${month}-${day}T00:00:00Z&until=${year}-${month}-${day}T23:59:59Z"
+
+			// Use cutoff if provided, otherwise use now
 			const params = new URLSearchParams({
 				user,
 				repoName,
 				since,
-				tillNow: new Date().toISOString(),
+				until: cutoff || new Date().toISOString(),
 			});
 
 			const url = new URL('/api/gitHub/getRepoDayCommits', baseUrl);
