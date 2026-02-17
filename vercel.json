@@ -4,6 +4,10 @@
 		{
 			"path": "/api/repositories/sync",
 			"schedule": "55 23 * * *"
+		},
+		{
+			"path": "/api/repositories/sync",
+			"schedule": "40 09 * * *"
 		}
 	]
 }
