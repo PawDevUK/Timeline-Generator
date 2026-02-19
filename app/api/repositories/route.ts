@@ -9,7 +9,7 @@ export const maxDuration = 300; // 5 minutes timeout
 
 export async function POST(request: NextRequest) {
 	if (!checkApiKey(request, TLG_API_KEY)) {
-		return NextResponse.json({ error: 'Unauthorized: Invalid API key' }, { status: 401 });
+		return NextResponse.json({ error: 'Unauthorized: Invalid TLG_API_KEY API key' }, { status: 401 });
 	}
 
 	try {
