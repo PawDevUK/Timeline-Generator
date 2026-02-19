@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 	const user = searchParams.get('user');
 	const repoName = searchParams.get('repoName');
 	const since = searchParams.get('since');
-	const tillNow = searchParams.get('tillNow');
+	const until = searchParams.get('until');
 
 	if (!user) {
 		return NextResponse.json({ error: 'No user selected.' }, { status: 400 });
@@ -17,8 +17,8 @@ export async function GET(request: Request) {
 	if (!repoName) {
 		return NextResponse.json({ error: 'No repoName selected.' }, { status: 400 });
 	}
-	if (!since || !tillNow) {
-		return NextResponse.json({ error: 'since and tillNow are required.' }, { status: 400 });
+	if (!since || !until) {
+		return NextResponse.json({ error: 'since and until are required.' }, { status: 400 });
 	}
 
 	try {
@@ -26,10 +26,10 @@ export async function GET(request: Request) {
 		if (token) headers.Authorization = `Bearer ${token}`;
 
 		const sinceDate = new Date(since);
-		const tillNowDate = new Date(tillNow);
+		const tillNowDate = new Date(until);
 
 		if (Number.isNaN(sinceDate.getTime()) || Number.isNaN(tillNowDate.getTime())) {
-			return NextResponse.json({ error: 'Invalid date format. Use ISO date strings for since and tillNow.' }, { status: 400 });
+			return NextResponse.json({ error: 'Invalid date format. Use ISO date strings for since and until.' }, { status: 400 });
 		}
 
 		const sinceUtc = `${sinceDate.getUTCFullYear()}-${String(sinceDate.getUTCMonth() + 1).padStart(2, '0')}-${String(sinceDate.getUTCDate()).padStart(2, '0')}T00:00:00Z`;
