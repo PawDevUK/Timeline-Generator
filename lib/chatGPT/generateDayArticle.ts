@@ -126,7 +126,7 @@ export async function generateDayArticle(commits: Commit[], repo: string, date: 
 		console.log(`Calling OpenAI API for ${trimmedDate} with ${bullets.length} bullet points`);
 
 		const completion = await openai.chat.completions.create({
-			model: 'gpt-40-mini',
+			model: 'gpt-4o-mini',
 			messages: [
 				{ role: 'system', content: systemPrompt },
 				{ role: 'user', content: getUserPrompt(titleHint, trimmedDate, tone, length, bullets) },
