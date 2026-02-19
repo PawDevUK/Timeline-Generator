@@ -444,7 +444,8 @@ For more details, see `securityAndSafety.md`.
 
 #### High Priority
 
-- [ ] **Implement authentication system** (NextAuth.js with GitHub OAuth)
+- [x] Reverse order of commits sent to OpenAI for article generation. At the moment openAi reads most recent ones, creates paragraph about let say updating Button component then reads further commits and creates another paragraph about creating Button component what is clearly in wrong order.
+- [x] **Implement authentication system** (NextAuth.js with GitHub OAuth)
 - [ ] **Password hashing with bcrypt** for secure authentication (SECURITY CRITICAL)
 - [ ] Secure API endpoints with authentication tokens
 - [ ] Add update functionality for existing tracked repositories (incremental article generation)

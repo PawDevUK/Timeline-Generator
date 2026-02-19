@@ -129,7 +129,7 @@ export async function getRepoAllArticles(user: string, repo: string) {
 			return { success: true, articles: [] };
 		}
 
-		// Map to commits
+		// Map to commits and reverse order (oldest first)
 		let commits: Commit[];
 		try {
 			commits = allData
@@ -138,7 +138,6 @@ export async function getRepoAllArticles(user: string, repo: string) {
 						console.warn('Invalid commit data structure:', com);
 						return {};
 					}
-
 					const dateStr: string | undefined = com.commit?.author?.date || com.commit?.committer?.date;
 					return {
 						title: trimmedRepo,
@@ -148,12 +147,17 @@ export async function getRepoAllArticles(user: string, repo: string) {
 					};
 				})
 				.filter((c): c is Commit => c !== null);
+			// Sort commits from oldest to newest
+			commits.sort((a, b) => {
+				if (!a.date || !b.date) return 0;
+				return new Date(a.date).getTime() - new Date(b.date).getTime();
+			});
 		} catch (mapError) {
 			console.error('Error mapping commit data:', mapError);
 			return { success: false, error: 'Failed to process commit data' };
 		}
 
-		console.log(`Mapped ${commits.length} valid commits`);
+		console.log(`Mapped ${commits.length} valid commits (sorted oldest to newest)`);
 
 		// Group commits by date
 		const groups: Record<string, Commit[]> = {};

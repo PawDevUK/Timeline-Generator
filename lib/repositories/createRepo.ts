@@ -59,7 +59,7 @@ export async function createRepository(user: string, repo: string) {
 			if (pageData.length < perPage) break;
 		}
 
-		const commits: Commit[] = allData.map((com: GitHubCommitApi) => {
+		let commits: Commit[] = allData.map((com: GitHubCommitApi) => {
 			const dateStr: string | undefined = com.commit?.author?.date || com.commit?.committer?.date;
 			return {
 				title: repo,
@@ -68,6 +68,13 @@ export async function createRepository(user: string, repo: string) {
 				description: com.commit?.message,
 			};
 		});
+		// Sort commits from oldest to newest
+		commits = commits
+			.filter((c) => c.date)
+			.sort((a, b) => {
+				if (!a.date || !b.date) return 0;
+				return new Date(a.date).getTime() - new Date(b.date).getTime();
+			});
 
 		// Group commits by date
 		const groups: Record<string, Commit[]> = {};
@@ -81,7 +88,12 @@ export async function createRepository(user: string, repo: string) {
 		// Generate articles for each day
 		const articles = [];
 		for (const [date, dayCommits] of Object.entries(groups)) {
-			const article = await generateDayArticle(dayCommits, repo, date);
+			// Ensure dayCommits are also sorted oldest to newest
+			const sortedDayCommits = dayCommits.sort((a, b) => {
+				if (!a.date || !b.date) return 0;
+				return new Date(a.date).getTime() - new Date(b.date).getTime();
+			});
+			const article = await generateDayArticle(sortedDayCommits, repo, date);
 			articles.push(article);
 		}
 
