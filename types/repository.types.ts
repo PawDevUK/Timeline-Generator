@@ -22,9 +22,9 @@ export type Repository = {
 			title: string;
 			date: string;
 			description: string;
-			createdAt: Date;
+			createdAt: Date | string;
 		}[];
-		lastSyncedAt?: Date;
+		lastSyncedAt?: Date | string;
 		syncing: boolean;
 		lastArticleDate?: string;
 	};
