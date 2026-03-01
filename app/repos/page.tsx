@@ -50,7 +50,7 @@ export default function Repos() {
 						<div className='bg-white rounded-lg w-full'>
 							<div className='flex flex-col gap-4'>
 								{repos.length > 0 ? (
-									repos.map((repo: Repository) => <RepoCard key={repo.id} repo={repo} addTracking={addTracking}></RepoCard>)
+									repos.map((repo: Repository, i) => <RepoCard key={i} repo={repo} addTracking={addTracking}></RepoCard>)
 								) : (
 									<p className='text-gray-500 text-center'>No repositories found</p>
 								)}
