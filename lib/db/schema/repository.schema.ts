@@ -26,6 +26,7 @@ export const RepositorySchema: Schema<RepositoryDocument> = new Schema({
 		daysActiveCommits: { type: Number, default: 0 },
 		articles: [ArticleSchema],
 		lastSyncedAt: { type: Date },
+		syncing: { type: Boolean },
 		lastArticleDate: { type: String },
 	},
 });

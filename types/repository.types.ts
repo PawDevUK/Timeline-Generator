@@ -25,6 +25,7 @@ export type Repository = {
 			createdAt: Date;
 		}[];
 		lastSyncedAt?: Date;
+		syncing: boolean;
 		lastArticleDate?: string;
 	};
 };
