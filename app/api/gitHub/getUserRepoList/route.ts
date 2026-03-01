@@ -43,6 +43,7 @@ export async function GET(request: Request) {
 					tracking: false,
 					daysActiveCommits: 0,
 					articles: [],
+					syncing: false,
 				},
 			};
 
@@ -77,6 +78,7 @@ export async function GET(request: Request) {
 				tracking: false,
 				daysActiveCommits: 0,
 				articles: [],
+				syncing: false,
 			},
 		}));
 
