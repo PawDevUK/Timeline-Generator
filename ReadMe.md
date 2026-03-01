@@ -439,14 +439,16 @@ For more details, see `securityAndSafety.md`.
 - [x] Add custom color theme (MongoDB green #00684A) to Tailwind CSS v4
 - [x] Integrate Google Fonts (Roboto, Roboto Mono, Victor Mono, M PLUS Rounded 1c)
 - [x] Use date-fns for consistent date formatting and parsing
+- [x] Fix race condition causing duplicate articles for the same date when multiple concurrent processes check for missing articles, simultaneously start generation, and save duplicates before the first completes.
+  Solution 1 ( Wrong approach ) ~~Can be simply by running check and if there is no article for the day new object with only date and id is added to database and when articles is generated, added to this object with use of id.~~
+  Solution 2 ( implemented ) added syncing:true on the start of the process so the next process sees that there is already article generation taking place and skipping.
+- [x] Reverse order of commits sent to OpenAI for article generation. At the moment openAi reads most recent ones, creates paragraph about let say updating Button component then reads further commits and creates another paragraph about creating Button component what is clearly in wrong order.
 
 ### In Progress / Planned 🚧
 
 #### High Priority
 
-- [x] Reverse order of commits sent to OpenAI for article generation. At the moment openAi reads most recent ones, creates paragraph about let say updating Button component then reads further commits and creates another paragraph about creating Button component what is clearly in wrong order.
-- [ ] Fix multiple articles for same date caused by launching check for day and if no article, creation new but mean time process can be repeated multiple times and before the first one finishes creation of the article there can be started multiple processes and added multiple articles.
-  Solution can be simply by running check and if there is no article for the day new object with only date and id is added to database and when articles is generated, added to this object with use of id.
+- [ ] Test changes to remove bug which was caused by race condition what was leading to duplicates.
 - [ ] Add loin and additional functionality to delete article.
 - [x] **Implement authentication system** (NextAuth.js with GitHub OAuth)
 - [ ] **Password hashing with bcrypt** for secure authentication (SECURITY CRITICAL)
