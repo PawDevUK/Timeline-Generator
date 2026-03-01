@@ -4,6 +4,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { dbConnect } from '@/lib/db/db';
 import { User } from '@/lib/db/models/user.model';
 
+const OWNERS = process.env.OWNER_USERNAMES || '';
+
 export const authOptions: NextAuthOptions = {
 	providers: [
 		GitHubProvider({
@@ -51,5 +53,24 @@ export const authOptions: NextAuthOptions = {
 		strategy: 'jwt',
 		maxAge: 30 * 24 * 60 * 60,
 		updateAge: 24 * 60 * 60,
+	},
+	callbacks: {
+		async session({ session, token }) {
+			// Add isOwner flag
+			if (token.login) {
+				session.user.isOwner = OWNERS.includes(token.login as string);
+			} else if (token.name) {
+				// For credentials, check name (username)
+				session.user.isOwner = OWNERS.includes(token.name as string);
+			}
+			return session;
+		},
+		async jwt({ token, account, profile }) {
+			// Store login for GitHub
+			if (account?.provider === 'github' && profile) {
+				token.login = (profile as any).login;
+			}
+			return token;
+		},
 	},
 };
