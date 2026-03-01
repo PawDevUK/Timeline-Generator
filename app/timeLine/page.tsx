@@ -1,5 +1,6 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import Header from '@/app/components/common/Header';
 import PageBaseLayout from '@/app/components/PageBaseLayout';
 
@@ -12,6 +13,7 @@ type Article = {
 
 const TimelineList = () => {
 	const [articles, setArticles] = useState<Article[]>([]);
+	const { data: session } = useSession();
 	const scrollRef = useRef(null);
 
 	useEffect(() => {
@@ -76,9 +78,13 @@ const TimelineList = () => {
 									<span className='absolute left-[3px] top-3 w-3 h-3 rounded-full border-2 border-gray-50 bg-blue-500' style={{ zIndex: 1 }} />
 									{/* Date Header */}
 									<Header>{article.title}</Header>
-									<button onClick={() => article._id && handleDelete(article._id)} className='ml-4'>
-										Delete
-									</button>
+									{session && session?.user.isOwner && (
+										<button
+											onClick={() => article._id && handleDelete(article._id)}
+											className='ml-4 text-white bg-red-500 hover:bg-red-600 px-2 py-1 rounded text-sm transition-colors'>
+											Delete
+										</button>
+									)}
 									{/* <button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => article._id && handleDelete(article._id)}>
 										Delete
 									</button> */}
