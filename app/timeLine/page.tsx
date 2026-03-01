@@ -76,6 +76,9 @@ const TimelineList = () => {
 									<span className='absolute left-[3px] top-3 w-3 h-3 rounded-full border-2 border-gray-50 bg-blue-500' style={{ zIndex: 1 }} />
 									{/* Date Header */}
 									<Header>{article.title}</Header>
+									<button onClick={() => article._id && handleDelete(article._id)} className='ml-4'>
+										Delete
+									</button>
 									{/* <button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => article._id && handleDelete(article._id)}>
 										Delete
 									</button> */}
