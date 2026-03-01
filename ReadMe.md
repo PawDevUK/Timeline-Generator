@@ -445,6 +445,9 @@ For more details, see `securityAndSafety.md`.
 #### High Priority
 
 - [x] Reverse order of commits sent to OpenAI for article generation. At the moment openAi reads most recent ones, creates paragraph about let say updating Button component then reads further commits and creates another paragraph about creating Button component what is clearly in wrong order.
+- [ ] Fix multiple articles for same date caused by launching check for day and if no article, creation new but mean time process can be repeated multiple times and before the first one finishes creation of the article there can be started multiple processes and added multiple articles.
+  Solution can be simply by running check and if there is no article for the day new object with only date and id is added to database and when articles is generated, added to this object with use of id.
+- [ ] Add loin and additional functionality to delete article.
 - [x] **Implement authentication system** (NextAuth.js with GitHub OAuth)
 - [ ] **Password hashing with bcrypt** for secure authentication (SECURITY CRITICAL)
 - [ ] Secure API endpoints with authentication tokens
