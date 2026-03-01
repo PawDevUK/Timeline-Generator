@@ -51,7 +51,7 @@ const TimelineList = () => {
 	const handleDelete = async (id: string) => {
 		await fetch(`/api/repositories/articles/${id}`, { method: 'DELETE' });
 		// Refresh articles
-		fetch('/api/repositories')
+		fetch('/api/timeline')
 			.then((res) => res.json())
 			.then((data) => {
 				setArticles(data);
