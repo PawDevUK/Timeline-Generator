@@ -1,5 +1,5 @@
 'use client';
-// import MenuLogin from '@/app/login/menuLogin.tsx';
+import MenuLogin from '@/app/login/menuLogin';
 import { SessionProvider } from 'next-auth/react';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Link from 'next/link';
@@ -65,7 +65,9 @@ function SidebarContent() {
 					</li>
 				</ul>
 			</nav>
-			<div className='mt-auto flex items-center gap-2 pt-8'>{/* <MenuLogin></MenuLogin> */}</div>
+			<div className='mt-auto flex items-center gap-2 pt-8'>
+				<MenuLogin></MenuLogin>
+			</div>
 		</>
 	);
 }
