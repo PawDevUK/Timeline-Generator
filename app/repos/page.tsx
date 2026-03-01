@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { Repository } from '@/types/repository.types';
 import RepoCard from '@/app/components/RepoCard';
 import PageBaseLayout from '@/app/components/PageBaseLayout';
+import { defaultRepositories } from '@/lib/store/defaultTrackedRepos';
 
 export default function Repos() {
-	const [repos, setRepos] = useState<Repository[]>([]);
+	const [repos, setRepos] = useState<Repository[]>(defaultRepositories);
 	// const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
