@@ -6,7 +6,7 @@ type Article = {
 	title: string;
 	date: string;
 	description: string;
-	createdAt?: Date;
+	createdAt?: Date | string;
 	repositoryName?: string;
 	repositoryUser?: string;
 };
