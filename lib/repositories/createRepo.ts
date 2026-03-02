@@ -119,6 +119,7 @@ export async function createRepository(user: string, repo: string) {
 				tracking: true,
 				daysActiveCommits: Object.keys(groups).length,
 				articles,
+				syncing: false,
 			},
 		};
 
