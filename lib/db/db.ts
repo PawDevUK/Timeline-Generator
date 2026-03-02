@@ -13,7 +13,14 @@ export async function dbConnect() {
 	const MONGO_DB_TLG = process.env.MONGO_DB_TLG || '';
 
 	if (!MONGO_DB_TLG) {
-		throw new Error('Please define the MONGO_DB_TLG environment variable in .env.local');
+		const errorMsg = 'MONGO_DB_TLG environment variable is not defined. Please configure it in Vercel project settings.';
+		console.error(errorMsg);
+		if (process.env.NODE_ENV === 'production') {
+			// In production, don't throw immediately - log and continue
+			console.warn('Database connection not available, some features may not work');
+			return null;
+		}
+		throw new Error(errorMsg);
 	}
 
 	if (cached.conn) {
@@ -30,6 +37,7 @@ export async function dbConnect() {
 			})
 			.catch((error) => {
 				cached.promise = null;
+				console.error('Failed to connect to MongoDB:', error instanceof Error ? error.message : error);
 				throw error;
 			});
 	}
