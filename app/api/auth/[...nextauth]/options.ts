@@ -6,6 +6,14 @@ import { User } from '@/lib/db/models/user.model';
 
 const OWNERS = process.env.OWNER_USERNAMES || '';
 
+// Validate required environment variables
+const requiredEnvVars = ['GITHUB_CLIENT_ID', 'GITHUB_CLIENT_SECRET', 'NEXTAUTH_SECRET'];
+const missingEnvVars = requiredEnvVars.filter(v => !process.env[v]);
+
+if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'production') {
+	console.warn(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+}
+
 export const authOptions: NextAuthOptions = {
 	providers: [
 		GitHubProvider({
