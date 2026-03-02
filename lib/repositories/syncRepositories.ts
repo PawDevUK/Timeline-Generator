@@ -41,7 +41,7 @@ export async function syncRepository(baseUrl: string, cutoff?: string) {
 
 		for (const repository of repositoriesResult.data) {
 			if (repository.TLG.syncing) {
-				return;
+				return { success: true, message: 'Sync already in progress' };
 			}
 			const user = repository.owner.login;
 			const repoName = repository.name;
