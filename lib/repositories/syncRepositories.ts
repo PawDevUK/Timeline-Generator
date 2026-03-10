@@ -40,11 +40,15 @@ export async function syncRepository(baseUrl: string, cutoff?: string) {
 		}
 
 		for (const repository of repositoriesResult.data) {
-			if (repository.TLG.syncing) {
-				return { success: true, message: 'Sync already in progress' };
+			if (!repository.TLG?.tracking || repository.TLG.syncing) {
+				continue; // Skip repositories that are not tracking or already syncing
 			}
 			const user = repository.owner.login;
 			const repoName = repository.name;
+
+			// Set syncing to true at the start
+			repository.TLG.syncing = true;
+			await repository.save();
 
 			// 1) Get latest article date from repository.TLG.articles[]
 			const articleDates = (repository.TLG?.articles ?? [])
@@ -108,9 +112,6 @@ export async function syncRepository(baseUrl: string, cutoff?: string) {
 					console.log(`Skipping ${date} for ${user}/${repoName} - article already exists`);
 					continue;
 				}
-
-				repository.TLG.syncing = true;
-				await repository.save();
 
 				console.log(`Generating article for ${date} with ${dayCommits.length} commits`);
 				const article = await generateDayArticle(dayCommits, repoName, date);
