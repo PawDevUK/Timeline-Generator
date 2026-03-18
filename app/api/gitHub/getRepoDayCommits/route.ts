@@ -35,11 +35,24 @@ export async function GET(request: Request) {
 		const sinceUtc = `${sinceDate.getUTCFullYear()}-${String(sinceDate.getUTCMonth() + 1).padStart(2, '0')}-${String(sinceDate.getUTCDate()).padStart(2, '0')}T00:00:00Z`;
 		const tillNowUtc = `${tillNowDate.getUTCFullYear()}-${String(tillNowDate.getUTCMonth() + 1).padStart(2, '0')}-${String(tillNowDate.getUTCDate()).padStart(2, '0')}T23:59:59Z`;
 
-		const response = await axios.get(`https://api.github.com/repos/${user}/${repoName}/commits?since=${sinceUtc}&until=${tillNowUtc}`, {
-			headers,
-		});
+		const allCommits: GitHubCommit[] = [];
+		const perPage = 100;
+		const maxPages = 20; // safety cap (up to 2000 commits per sync window)
 
-		const dayCommits = response.data.map((com: GitHubCommit) => ({
+		for (let page = 1; page <= maxPages; page++) {
+			const response = await axios.get(`https://api.github.com/repos/${user}/${repoName}/commits?since=${sinceUtc}&until=${tillNowUtc}&per_page=${perPage}&page=${page}`, {
+				headers,
+			});
+
+			const pageData = Array.isArray(response.data) ? (response.data as GitHubCommit[]) : [];
+			if (pageData.length === 0) break;
+
+			allCommits.push(...pageData);
+
+			if (pageData.length < perPage) break;
+		}
+
+		const dayCommits = allCommits.map((com: GitHubCommit) => ({
 			title: repoName,
 			author: com.commit?.author?.name,
 			date: com.commit?.author?.date,
