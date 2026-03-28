@@ -2,7 +2,7 @@ import axios from 'axios';
 import { generateDayArticle } from './generateDayArticle';
 
 // Add handling non existin repo.
-// Add handling requesting to get duplicate reposittory with time line.
+// Add handling requesting to get duplicate reposittory with Timeline.
 
 const token = process.env.GITHUB_TOKEN;
 

@@ -72,7 +72,7 @@ export const defaultRepositories = [
 					title: 'Portfolio-React - Updates and Refactors',
 					date: '11/02/2026',
 					description:
-						"Throughout the day, various changes were made to the Portfolio-React project. The image for the TLG card was replaced, enhancing visual appeal. The articles data structure was refactored to consolidate updates into descriptions, improving readability and maintainability. The TimelineSection component was simplified by displaying a single description instead of multiple updates. Articles are now fetched from an API and the state in the TimelineSection component is updated accordingly. The delete link behavior in the TableRow component was refactored to prevent default actions before executing the delete function. Additionally, the TopIntro component was refactored to use a styled div instead of a P component for better layout control. A new project, Time Line Generator, was added along with its associated image assets, expanding the project's scope and content.",
+						"Throughout the day, various changes were made to the Portfolio-React project. The image for the TLG card was replaced, enhancing visual appeal. The articles data structure was refactored to consolidate updates into descriptions, improving readability and maintainability. The TimelineSection component was simplified by displaying a single description instead of multiple updates. Articles are now fetched from an API and the state in the TimelineSection component is updated accordingly. The delete link behavior in the TableRow component was refactored to prevent default actions before executing the delete function. Additionally, the TopIntro component was refactored to use a styled div instead of a P component for better layout control. A new project, Timeline Generator, was added along with its associated image assets, expanding the project's scope and content.",
 					createdAt: '2026-02-12T11:38:32.016Z',
 					_id: '698dbcc172cebcc8a58cb0fc',
 				},
@@ -152,7 +152,7 @@ export const defaultRepositories = [
 					title: 'Portfolio-React - Updates and Fixes',
 					date: '06/11/2025',
 					description:
-						"Today's commits on the Portfolio-React repository included various updates and fixes. The time line was updated, large font issues were fixed, and the to-do list was updated multiple times. Tools were added to the stack, and the particles circler hover effect was reduced. Changes were made to improve the quality and reduce the size of the final download, including converting PNG to JPEG for a significant size reduction. Legacy peer dependencies were fixed for Vercel deployment. Logic enhancements were made for handling downloads, adding margins to elements for correct page layout, and ignoring download buttons during downloads. Async functionality was added, and classes were adjusted for correct margins to ensure the page and downloaded PDF layout correctness. The 'useCorse' was removed, and a DownloadCV component was created along with a button to download the CV on the main CV page. Details inferred for some commits due to limited information provided.",
+						"Today's commits on the Portfolio-React repository included various updates and fixes. The Timeline was updated, large font issues were fixed, and the to-do list was updated multiple times. Tools were added to the stack, and the particles circler hover effect was reduced. Changes were made to improve the quality and reduce the size of the final download, including converting PNG to JPEG for a significant size reduction. Legacy peer dependencies were fixed for Vercel deployment. Logic enhancements were made for handling downloads, adding margins to elements for correct page layout, and ignoring download buttons during downloads. Async functionality was added, and classes were adjusted for correct margins to ensure the page and downloaded PDF layout correctness. The 'useCorse' was removed, and a DownloadCV component was created along with a button to download the CV on the main CV page. Details inferred for some commits due to limited information provided.",
 					createdAt: '2026-02-12T11:38:52.032Z',
 					_id: '698dbcc172cebcc8a58cb106',
 				},
@@ -1247,7 +1247,7 @@ export const defaultRepositories = [
 					title: 'Portfolio-React - Updates',
 					date: '13/02/2026',
 					description:
-						'The image for the timeline generator card in the Portfolio-React project was replaced in this commit. Additionally, the webHref for the Time Line Generator project was updated to point to the main site. These changes were made by PawDevUK and are aimed at improving the visual representation and user experience of the Portfolio-React project. The impact of these updates is a more cohesive and user-friendly interface for visitors to the site.',
+						'The image for the timeline generator card in the Portfolio-React project was replaced in this commit. Additionally, the webHref for the Timeline Generator project was updated to point to the main site. These changes were made by PawDevUK and are aimed at improving the visual representation and user experience of the Portfolio-React project. The impact of these updates is a more cohesive and user-friendly interface for visitors to the site.',
 					createdAt: '2026-02-14T21:32:53.982Z',
 					_id: '6990ea07403971fca9e74775',
 				},
@@ -1255,7 +1255,7 @@ export const defaultRepositories = [
 					title: 'Portfolio-React - Updates and Refactors',
 					date: '11/02/2026',
 					description:
-						"Today's commits focused on enhancing the Portfolio-React project. The changes included replacing the image for the TLG card, refactoring the articles data structure for improved readability and maintainability, simplifying the TimelineSection component for better user experience, fetching articles from an API to update the state in the TimelineSection component, refining the delete link behavior in the TableRow component, and improving the layout control in the TopIntro component. Additionally, the Time Line Generator project was added along with its associated image assets. These updates aim to enhance the project's functionality, user interface, and code maintainability.",
+						"Today's commits focused on enhancing the Portfolio-React project. The changes included replacing the image for the TLG card, refactoring the articles data structure for improved readability and maintainability, simplifying the TimelineSection component for better user experience, fetching articles from an API to update the state in the TimelineSection component, refining the delete link behavior in the TableRow component, and improving the layout control in the TopIntro component. Additionally, the Timeline Generator project was added along with its associated image assets. These updates aim to enhance the project's functionality, user interface, and code maintainability.",
 					createdAt: '2026-02-14T21:32:55.343Z',
 					_id: '6990ea07403971fca9e74776',
 				},
@@ -1263,7 +1263,7 @@ export const defaultRepositories = [
 					title: 'Portfolio-React - Updates',
 					date: '13/02/2026',
 					description:
-						'The image for the timeline generator card in the Portfolio-React project was replaced in this commit. Additionally, the webHref for the Time Line Generator project was updated to point to the main site. These changes were made by PawDevUK and are aimed at improving the visual representation and user experience of the Portfolio-React project. The impact of these changes is a more cohesive and user-friendly design for visitors to the site.',
+						'The image for the timeline generator card in the Portfolio-React project was replaced in this commit. Additionally, the webHref for the Timeline Generator project was updated to point to the main site. These changes were made by PawDevUK and are aimed at improving the visual representation and user experience of the Portfolio-React project. The impact of these changes is a more cohesive and user-friendly design for visitors to the site.',
 					createdAt: '2026-02-14T21:36:45.190Z',
 					_id: '6990eaed403971fca9e7494a',
 				},
@@ -1271,7 +1271,7 @@ export const defaultRepositories = [
 					title: 'Portfolio-React - Updates',
 					date: '13/02/2026',
 					description:
-						'The image for the timeline generator card in the Portfolio-React project was replaced in this commit. Additionally, the webHref for the Time Line Generator project was updated to point to the main site. These changes were made by PawDevUK and are aimed at enhancing the visual appeal and functionality of the Portfolio-React project. The impact of these updates is a more visually appealing timeline generator card and improved navigation for users accessing the Time Line Generator project from the main site.',
+						'The image for the timeline generator card in the Portfolio-React project was replaced in this commit. Additionally, the webHref for the Timeline Generator project was updated to point to the main site. These changes were made by PawDevUK and are aimed at enhancing the visual appeal and functionality of the Portfolio-React project. The impact of these updates is a more visually appealing timeline generator card and improved navigation for users accessing the Timeline Generator project from the main site.',
 					createdAt: '2026-02-14T21:38:00.134Z',
 					_id: '6990eb38403971fca9e74b28',
 				},
@@ -1284,10 +1284,10 @@ export const defaultRepositories = [
 					_id: '6991e38d90de2d9083a3f7fc',
 				},
 				{
-					title: 'Portfolio-React - Time Line Generator Sync Test',
+					title: 'Portfolio-React - Timeline Generator Sync Test',
 					date: '14/02/2026',
 					description:
-						'The recent commit involved a synchronization test for the Time Line Generator feature in the Portfolio-React project. The changes were made to ensure that the time line feature functions correctly across different components. The impact of this commit is expected to enhance the user experience by providing accurate and synchronized time line data. Details beyond the synchronization test were not provided in the commit messages.',
+						'The recent commit involved a synchronization test for the Timeline Generator feature in the Portfolio-React project. The changes were made to ensure that the Timeline feature functions correctly across different components. The impact of this commit is expected to enhance the user experience by providing accurate and synchronized Timeline data. Details beyond the synchronization test were not provided in the commit messages.',
 					createdAt: '2026-02-15T15:17:33.475Z',
 					_id: '6991e38d90de2d9083a3f7fd',
 				},
@@ -1396,7 +1396,7 @@ export const defaultRepositories = [
 					title: 'TLG - Feature Enhancements and Documentation',
 					date: '25/11/2025',
 					description:
-						'Added comprehensive documentation for the TLG project, including PROJECT_DELIVERABLES.md, SUMMARY.md, and WORK_REPORT.md, which summarize completed documentation, provide an executive overview, and detail current project status. Introduced Article type definition to establish a clear article structure. Enhanced GitHub commit fetching functionality with detailed parsing and multi-repo support, and refactored functions for improved git change tracking. Updated documentation to highlight the Time Line Generator as a Next.js application. These changes aim to improve project clarity and facilitate better tracking of development progress.',
+						'Added comprehensive documentation for the TLG project, including PROJECT_DELIVERABLES.md, SUMMARY.md, and WORK_REPORT.md, which summarize completed documentation, provide an executive overview, and detail current project status. Introduced Article type definition to establish a clear article structure. Enhanced GitHub commit fetching functionality with detailed parsing and multi-repo support, and refactored functions for improved git change tracking. Updated documentation to highlight the Timeline Generator as a Next.js application. These changes aim to improve project clarity and facilitate better tracking of development progress.',
 					createdAt: '2026-02-19T19:36:53.751Z',
 					_id: '699766b7868d06841297f2d9',
 				},
@@ -2149,7 +2149,7 @@ export const defaultRepositories = [
 					title: 'Filesconverto - Feature Enhancements',
 					date: '18/10/2025',
 					description:
-						'Multiple enhancements were made to the filesconverto project. Sample files were added to facilitate testing and demonstration. New pages for routing were introduced to improve navigation. A new CSS type was added to enhance styling. The getBaseUrl function was removed and replaced with closeMenu functionality, while a 404 page was set for incomplete pages. Links were wrapped with buttons to enable onClick actions for closing the mobile menu. The handleRetry function was removed to streamline the code. Truncation was reduced for better display. A random conversion failure feature was added to handle errors more effectively. Checks for uploaded files and selected formats were implemented to ensure proper processing. Additionally, responsive web design (RWD) issues were fixed, and updates were made to the Frontend ToDo and Time Line components to reflect the latest changes.',
+						'Multiple enhancements were made to the filesconverto project. Sample files were added to facilitate testing and demonstration. New pages for routing were introduced to improve navigation. A new CSS type was added to enhance styling. The getBaseUrl function was removed and replaced with closeMenu functionality, while a 404 page was set for incomplete pages. Links were wrapped with buttons to enable onClick actions for closing the mobile menu. The handleRetry function was removed to streamline the code. Truncation was reduced for better display. A random conversion failure feature was added to handle errors more effectively. Checks for uploaded files and selected formats were implemented to ensure proper processing. Additionally, responsive web design (RWD) issues were fixed, and updates were made to the Frontend ToDo and Timeline components to reflect the latest changes.',
 					createdAt: '2026-02-19T19:43:06.241Z',
 					_id: '699767e1868d06841297f325',
 				},

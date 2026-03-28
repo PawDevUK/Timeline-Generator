@@ -23,9 +23,9 @@ export default function Home() {
 	return (
 		<PageBaseLayout>
 			<div className='card-panel mb-6'>
-				<h1 className='text-gray-900 font-semibold text-xl md:text-2xl leading-tight mb-3'>Time Line Generator </h1>
+				<h1 className='text-gray-900 font-semibold text-xl md:text-2xl leading-tight mb-3'>Timeline Generator </h1>
 				<p className='text-gray-600 text-md leading-relaxed'>
-					Time Line Generator (TLG) is a full-stack Next.js application that automatically tracks GitHub repositories and generates AI-powered daily summaries of
+					Timeline Generator (TLG) is a full-stack Next.js application that automatically tracks GitHub repositories and generates AI-powered daily summaries of
 					development activity. Built with TypeScript, TLG fetches commit history from GitHub, analyzes development patterns, and uses OpenAI&apos;s ChatGPT API to create
 					human-readable articles that document your coding journey. The application features secure authentication, repository management, and an interactive timeline
 					interface for browsing your development history.

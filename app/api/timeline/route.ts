@@ -5,7 +5,7 @@ import { combineTimeLine } from '@/app/utils/combineTimeLine';
 import { syncRepository } from '@/lib/repositories/syncRepositories';
 export async function GET(request: NextRequest) {
 	await dbConnect();
-	// Time Line sync with commits pushed to git hub. Every time app loads time line or portfolio loads time line,
+	// Timeline sync with commits pushed to git hub. Every time app loads Timeline or portfolio loads Timeline,
 	// it is updated.
 	// I need to change update till day early as sync can be triggered in the morning and creates the article but later on this
 	// day there is more commits but they are not added to article as app sees that there is article already and skips article generation or update.

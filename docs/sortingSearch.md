@@ -1,6 +1,6 @@
 # Search Results Sorting Implementation Report
 
-**Project:** Time Line Generator (TLG)  
+**Project:** Timeline Generator (TLG)  
 **Feature:** Repository Search Results Sorting  
 **Date:** February 11, 2026  
 **Status:** Planning Phase

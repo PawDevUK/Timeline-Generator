@@ -2,7 +2,7 @@
 
 ## Overview
 
-Time Line Generator (TLG) is partially implemented. Core flows (auth, GitHub data fetch, AI summary, storage, UI) exist but are incomplete and weakly integrated. Security is minimal (plain-text passwords). No automated tests or deployment setup.
+Timeline Generator (TLG) is partially implemented. Core flows (auth, GitHub data fetch, AI summary, storage, UI) exist but are incomplete and weakly integrated. Security is minimal (plain-text passwords). No automated tests or deployment setup.
 
 ## Current State
 

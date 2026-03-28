@@ -21,7 +21,7 @@ function SidebarContent() {
 		<>
 			<div className='flex items-center mb-8'>
 				<Link href='/'>
-					<span className='ml-2 font-bold text-lg main-color'>Time Line Generator</span>
+					<span className='ml-2 font-bold text-lg main-color'>Timeline Generator</span>
 				</Link>
 			</div>
 
@@ -60,7 +60,7 @@ function SidebarContent() {
 									strokeLinejoin='round'
 								/>
 							</svg>
-							Time Line
+							Timeline
 						</a>
 					</li>
 				</ul>
