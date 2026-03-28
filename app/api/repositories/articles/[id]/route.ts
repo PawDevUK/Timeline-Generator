@@ -62,6 +62,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> | { id: string } }) {
 	try {
 		const session = await getServerSession(authOptions);
+		console.log(session?.user.isOwner);
 		if (!session || !session.user?.isOwner) {
 			return NextResponse.json({ error: 'Unauthorized: Owner access required' }, { status: 403 });
 		}
@@ -76,9 +77,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
 		}
 
 		const deletedArticle = repository.TLG?.articles?.find((article) => ((article as { _id?: { toString: () => string } })._id?.toString() ?? '') === id);
-		repository.TLG.articles = (repository.TLG?.articles ?? []).filter(
-			(article) => ((article as { _id?: { toString: () => string } })._id?.toString() ?? '') !== id,
-		);
+		repository.TLG.articles = (repository.TLG?.articles ?? []).filter((article) => ((article as { _id?: { toString: () => string } })._id?.toString() ?? '') !== id);
 
 		const uniqueDays = new Set((repository.TLG?.articles ?? []).map((article) => article.date).filter((d): d is string => Boolean(d)));
 		repository.TLG.daysActiveCommits = uniqueDays.size;
