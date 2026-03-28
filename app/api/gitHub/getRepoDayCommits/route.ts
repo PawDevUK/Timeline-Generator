@@ -5,6 +5,7 @@ import { GitHubCommit } from '@/types/commits.types';
 const token = process.env.GITHUB_TOKEN;
 
 export async function GET(request: Request) {
+	console.log(token);
 	const { searchParams } = new URL(request.url);
 	const user = searchParams.get('user');
 	const repoName = searchParams.get('repoName');
@@ -13,6 +14,9 @@ export async function GET(request: Request) {
 
 	if (!user) {
 		return NextResponse.json({ error: 'No user selected.' }, { status: 400 });
+	}
+	if (!token) {
+		return NextResponse.json({ error: 'No token selected.' }, { status: 400 });
 	}
 	if (!repoName) {
 		return NextResponse.json({ error: 'No repoName selected.' }, { status: 400 });
