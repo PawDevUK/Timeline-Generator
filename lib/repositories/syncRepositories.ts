@@ -40,15 +40,8 @@ export async function syncRepository(baseUrl: string, cutoff?: string) {
 		}
 
 		for (const repository of repositoriesResult.data) {
-			if (!repository.TLG?.tracking || repository.TLG.syncing) {
-				continue; // Skip repositories that are not tracking or already syncing
-			}
 			const user = repository.owner.login;
 			const repoName = repository.name;
-
-			// Set syncing to true at the start
-			repository.TLG.syncing = true;
-			await repository.save();
 
 			// 1) Get latest article date from repository.TLG.articles[]
 			const articleDates = (repository.TLG?.articles ?? [])
@@ -112,7 +105,6 @@ export async function syncRepository(baseUrl: string, cutoff?: string) {
 					console.log(`Skipping ${date} for ${user}/${repoName} - article already exists`);
 					continue;
 				}
-
 				console.log(`Generating article for ${date} with ${dayCommits.length} commits`);
 				const article = await generateDayArticle(dayCommits, repoName, date);
 				newArticles.push(article);
@@ -123,7 +115,6 @@ export async function syncRepository(baseUrl: string, cutoff?: string) {
 				const uniqueDays = new Set((repository.TLG?.articles ?? []).map((article) => article.date).filter((d): d is string => Boolean(d)));
 				repository.TLG.daysActiveCommits = uniqueDays.size;
 				repository.TLG.lastSyncedAt = new Date();
-				repository.TLG.syncing = false;
 				await repository.save();
 				continue;
 			}
@@ -138,7 +129,6 @@ export async function syncRepository(baseUrl: string, cutoff?: string) {
 			repository.TLG.lastArticleDate = latestDate;
 			const uniqueDays = new Set((repository.TLG.articles ?? []).map((article) => article.date).filter((d): d is string => Boolean(d)));
 			repository.TLG.daysActiveCommits = uniqueDays.size;
-			repository.TLG.syncing = false;
 			await repository.save();
 			console.log(`Successfully added ${newArticles.length} new articles`);
 		}
