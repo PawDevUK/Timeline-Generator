@@ -85,9 +85,9 @@ const TimelineList = () => {
 											Delete
 										</button>
 									)}
-									{/* <button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => article._id && handleDelete(article._id)}>
+									<button className='ml-2 px-2 py-1 bg-red-500 text-white rounded' onClick={() => article._id && handleDelete(article._id)}>
 										Delete
-									</button> */}
+									</button>
 									<div className='text-sm text-gray-500 mb-2 font-bold'>{article.date}</div>
 									{/* Description */}
 									<p className='text-gray-700 text-sm'>{article.description}</p>
