@@ -5,7 +5,6 @@ import { GitHubCommit } from '@/types/commits.types';
 const token = process.env.GITHUB_TOKEN;
 
 export async function GET(request: Request) {
-	console.log(token);
 	const { searchParams } = new URL(request.url);
 	const user = searchParams.get('user');
 	const repoName = searchParams.get('repoName');
