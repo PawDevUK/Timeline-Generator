@@ -62,9 +62,9 @@ The first solution is a useful safety net, but it does not solve the original is
 
 ### Issue
 
-Because the previous prompt did not clearly define the expected output, some generated articles in MongoDB have weak structure, poor flow, and repetitive wording.
+Because the previous prompt did not clearly define the expected output, some generated articles in MongoDB documents have weak structure, poor flow, and repetitive wording.
 
-The easiest option would be to clear the relevant MongoDB data and run the app again so improved articles are generated. However, this is only a shortcut. A better approach is to add controlled validation and optional regeneration.
+The easiest option would be to drop the MongoDB data and run the app again, so all improved articles are generated and saved to the database. However, despite it being acceptable in this situation, as there is no unique and personal data, a better approach is to add controlled validation of each database entry and optional regeneration of the ones that are not meeting requirements.
 
 ### Possible Solutions
 
@@ -75,7 +75,13 @@ Validation must always run first. Regeneration should happen only when validatio
 
 ### Implementation Plan
 
+#### Automated system
+
 - Run through articles one by one.
-- Validate each article first (structure, flow, redundancy, repetition).
-- If validation fails, regenerate the article using updated prompts.
-- Replace only failed articles; keep valid ones unchanged.
+- Validate each article with the use of OpenAI API (structure, flow, redundancy, repetition).
+- If validation fails, regenerate the article using updated OpenAI API prompt requests and save it to the database.
+
+#### Manual `Regenerate` button
+
+- Add a `Regenerate` button with `onClick`, which triggers fetching the list of commit messages for the selected date from the GitHub API endpoint.
+- Trigger a request to the OpenAI endpoint and, with a set of new, improved prompts, generate an improved article that is saved to the database.
