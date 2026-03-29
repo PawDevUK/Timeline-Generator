@@ -9,7 +9,7 @@
 
 ## Problem #1: Timeline Generator Produces Repetitive and Redundant Articles
 
-### Issue (Problem #2)
+### Issue
 
 The generated article is not created properly because it contains redundant and repetitive lines, which are confusing and misleading.
 
@@ -55,6 +55,8 @@ The first solution is a useful safety net, but it does not solve the original is
 > 6. Use only action-oriented language: start clauses with "Removed", "Added", "Updated", "Improved", "Corrected", "Refactored", "Simplified", or "Enhanced". Never use personal pronouns like "we", "I", "the team", or "us".
 > 7. Completely ignore and never mention any changes to articles.js, package-lock.json, or README.md.
 > ”
+>
+---
 
 ## Problem #2: Database Entries Need Validation and Possibly Regeneration
 
@@ -64,7 +66,7 @@ Because the previous prompt did not clearly define the expected output, some gen
 
 The easiest option would be to clear the relevant MongoDB data and run the app again so improved articles are generated. However, this is only a shortcut. A better approach is to add controlled validation and optional regeneration.
 
-### Possible Solutions (Problem #2)
+### Possible Solutions
 
 1. Build an automatic validator that scans all articles for structure, flow, redundancy, and repetition. Regenerate only the articles that fail validation.
 2. Add a `Regenerate` button to each article entry as a manual fallback tool.
