@@ -76,7 +76,7 @@ export const authOptions: NextAuthOptions = {
 		async jwt({ token, account, profile }) {
 			// Store login for GitHub
 			if (account?.provider === 'github' && profile) {
-				token.login = (profile as any).login;
+				token.login = (profile as { login: string }).login;
 			}
 			return token;
 		},
