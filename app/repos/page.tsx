@@ -29,10 +29,6 @@ export default function Repos() {
 		fetchRepos();
 	}, []);
 
-	useEffect(() => {
-		console.log(repos);
-	}, [repos]);
-
 	const addTracking = (repo: Repository) => {
 		setRepos((prevRepos) =>
 			prevRepos.map((stored_repo) => (stored_repo.id === repo.id ? { ...stored_repo, TLG: { ...stored_repo.TLG, tracking: !stored_repo.TLG.tracking } } : stored_repo)),
