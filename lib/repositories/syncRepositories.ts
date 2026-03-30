@@ -1,7 +1,7 @@
 // import axios from 'axios';
 // import { Repository } from '../db/models/repository.model';
 import { dbConnect } from '../db/db';
-import { generateDayArticle } from '../chatGPT/generateDayArticle';
+import { generateDayArticle } from '../articles/generateArticle/generateDayArticle';
 import { GetAllRepositories } from '@/lib/db/repository.db';
 import { isValid, parse } from 'date-fns';
 
