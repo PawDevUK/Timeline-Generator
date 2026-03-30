@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { generateDayArticle } from './generateDayArticle';
+import { generateDayArticle } from './generateArticle/generateDayArticle';
 
 // Add handling non existin repo.
 // Add handling requesting to get duplicate reposittory with Timeline.
