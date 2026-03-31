@@ -71,7 +71,7 @@ export async function syncRepository(baseUrl: string, cutoff?: string) {
 			const res = await fetch(url.toString(), {
 				method: 'GET',
 				headers: { Accept: 'application/json' },
-			});
+			}).then();
 
 			if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 			const data = await res.json();
