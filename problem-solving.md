@@ -4,6 +4,8 @@
 
 - [Problem #1: Timeline Generator Produces Repetitive and Redundant Articles](#problem-1-timeline-generator-produces-repetitive-and-redundant-articles)
 - [Problem #2: Database Entries Need Validation and Possibly Regeneration](#problem-2-database-entries-need-validation-and-possibly-regeneration)
+- [Problem 3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
+- [Problem #3: Problem #3: Updating Article Throws 404](#problem-2-database-entries-need-validation-and-possibly-regeneration)
 
 ---
 
@@ -85,3 +87,13 @@ Validation must always run first. Regeneration should happen only when validatio
 
 - Add a `Regenerate` button with `onClick`, which triggers fetching the list of commit messages for the selected date from the GitHub API endpoint.
 - Trigger a request to the OpenAI endpoint and, with a set of new, improved prompts, generate an improved article that is saved to the database.
+
+## Problem #3: Updating Article Throws 404
+
+### Issue
+
+When the article validator runs through database and checks articles for correct structure, it detects a bad one and updates it to the expected structure and flow. However, on save, it throws a 404 error, which causes the article not to be saved or updated. After closer inspection, the PUT request uses an old database queeries where articles were structured as flat documents. But after a few updates to the app, documents are now nested repository objects with articles nested within them.
+
+### Solution
+
+To fix this problem, the database queries need to be updated to correctly target and update the nested article data within the repository documents.
