@@ -4,19 +4,15 @@
 
 - [Problem #1: Timeline Generator Produces Repetitive and Redundant Articles](#problem-1-timeline-generator-produces-repetitive-and-redundant-articles)
 - [Problem #2: Database Entries Need Validation and Possibly Regeneration](#problem-2-database-entries-need-validation-and-possibly-regeneration)
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 - [Problem #3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
 - [Problem #4: Quering MongoDB collectiion by _id](#problem-4-quering-mongodb-collectiion-by-_id)
-=======
+
 - [Problem 3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
 - [Problem #3: Problem #3: Updating Article Throws 404](#problem-2-database-entries-need-validation-and-possibly-regeneration)
-=======
+
 - [Problem #3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
 - [Problem #4: Quering MongoDB collectiion by _id](#problem-4-quering-mongodb-collectiion-by-_id)
->>>>>>> da8576f (fix: correct table of contents and add new problem regarding MongoDB _id querying)
-
->>>>>>> 73f2e35 (feat: add section for updating article issue and solution in problem-solving documentation)
 
 ---
 
