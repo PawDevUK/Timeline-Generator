@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/db/db';
-import { Article } from '@/lib/db/models/article.model';
-import { GetArticle, EditArticle } from '@/lib/db/articles.db';
 import { Repository } from '@/lib/db/models/repository.model';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
@@ -13,13 +11,20 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 		const resolvedParams = params instanceof Promise ? await params : params;
 		const { id } = resolvedParams;
 
-		const result = await GetArticle(Article, id);
+		const article = await Repository.findOne(
+			{ 'TLG.articles._id': id },
+			{
+				'TLG.articles.$': 1,
+				name: 1,
+				owner: 1,
+			},
+		);
 
-		if (!result.success) {
-			return NextResponse.json({ error: result.error }, { status: result.error === 'Article not found' ? 404 : 500 });
+		if (!article) {
+			return NextResponse.json({ error: 'No article found' }, { status: 404 });
 		}
 
-		return NextResponse.json({ article: result.data }, { status: 200 });
+		return NextResponse.json({ article: article }, { status: 200 });
 	} catch (error) {
 		console.error('Error in GET /api/articles/[id]:', error);
 		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
