@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { Repository } from './models/repository.model';
-
+import { ArticleType } from '@/types/article.type';
 //  Get Article by id
 export async function GetArticle(articleId: string) {
 	try {
