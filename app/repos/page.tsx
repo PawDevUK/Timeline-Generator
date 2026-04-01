@@ -7,12 +7,10 @@ import { defaultRepositories } from '@/lib/store/defaultTrackedRepos';
 
 export default function Repos() {
 	const [repos, setRepos] = useState<Repository[]>(defaultRepositories);
-	// const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
 	useEffect(() => {
 		const fetchRepos = async () => {
-			// setLoading(true);
 			setError('');
 			try {
 				const response = await fetch('api/repositories');
@@ -21,8 +19,6 @@ export default function Repos() {
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
 				console.error('Error fetching repos:', err);
-			} finally {
-				// setLoading(false);
 			}
 		};
 
