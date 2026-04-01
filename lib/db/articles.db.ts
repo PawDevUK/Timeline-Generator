@@ -1,10 +1,18 @@
 import mongoose from 'mongoose';
-import { ArticleType } from '@/types/article.type';
+import { Repository } from './models/repository.model';
 
 //  Get Article by id
-export async function GetArticle(Article: typeof mongoose.Model, articleId: string) {
+export async function GetArticle(articleId: string) {
 	try {
-		const article = await Article.findById(articleId);
+		const article = await Repository.findOne(
+			{ 'TLG.articles._id': articleId },
+			{
+				'TLG.articles.$': 1,
+				name: 1,
+				description: 1,
+				createdAt: 1,
+			},
+		);
 		if (!article) {
 			return { success: false, error: 'Article not found' };
 		}
