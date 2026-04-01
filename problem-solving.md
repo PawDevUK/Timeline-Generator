@@ -4,8 +4,8 @@
 
 - [Problem #1: Timeline Generator Produces Repetitive and Redundant Articles](#problem-1-timeline-generator-produces-repetitive-and-redundant-articles)
 - [Problem #2: Database Entries Need Validation and Possibly Regeneration](#problem-2-database-entries-need-validation-and-possibly-regeneration)
-- [Problem 3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
-- [Problem #3: Problem #3: Updating Article Throws 404](#problem-2-database-entries-need-validation-and-possibly-regeneration)
+- [Problem #3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
+- [Problem #4: Quering MongoDB collectiion by _id](#problem-4-quering-mongodb-collectiion-by-_id)
 
 ---
 
@@ -97,3 +97,13 @@ When the article validator runs through database and checks articles for correct
 ### Solution
 
 To fix this problem, the database queries need to be updated to correctly target and update the nested article data within the repository documents.
+
+## Problem #4: Quering MongoDB collectiion by _id
+
+### Issue
+
+MongoDB creates a default _id for every document as a BSON ObjectId type. When querying with_id, TypeScript throws an error because _id is not declared in the initial schema types.
+
+### Solution
+
+To resolve this, extend your TypeScript types to include _id: Types.ObjectId, and use .toString() when comparing_id values in queries.
