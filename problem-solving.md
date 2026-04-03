@@ -8,12 +8,6 @@
 - [Problem #3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
 - [Problem #4: Quering MongoDB collectiion by _id](#problem-4-quering-mongodb-collectiion-by-_id)
 
-- [Problem 3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
-- [Problem #3: Problem #3: Updating Article Throws 404](#problem-2-database-entries-need-validation-and-possibly-regeneration)
-
-- [Problem #3: Updating Article Throws 404](#problem-3-updating-article-throws-404)
-- [Problem #4: Quering MongoDB collectiion by _id](#problem-4-quering-mongodb-collectiion-by-_id)
-
 ---
 
 ## Problem #1: Timeline Generator Produces Repetitive and Redundant Articles
